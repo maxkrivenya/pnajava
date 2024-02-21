@@ -8,6 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - name: Set up JDK 21
+    - uses: actions/checkout@main
       with:
         java-version: '17'
         distribution: 'temurin'
