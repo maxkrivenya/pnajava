@@ -17,6 +17,10 @@
         <java.version>17</java.version>
         <spring-modulith.version>1.1.2</spring-modulith.version>
     </properties>
+    <properties>
+           <sonar.organization>maxkrivenya</sonar.organization>
+           <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
