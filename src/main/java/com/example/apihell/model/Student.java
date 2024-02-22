@@ -9,7 +9,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "fio")
     private String name;
 
     @Column(name = "fac")
