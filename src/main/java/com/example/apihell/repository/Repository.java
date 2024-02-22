@@ -1,4 +1,4 @@
-package com.example.apihell.Repository;
+package com.example.apihell.repository;
 
 import java.util.List;
 import java.util.Optional;
