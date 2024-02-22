@@ -1,6 +1,6 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.Repository.Repository;
+import com.example.apihell.repository.Repository;
 import com.example.apihell.model.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
