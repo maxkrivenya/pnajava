@@ -12,3 +12,5 @@ public class ApiHellApplication {
         System.out.println("hello world");
     }
 }
+
+//sonar test
