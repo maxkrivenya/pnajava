@@ -9,6 +9,5 @@ import static java.lang.System.exit;
 public class ApiHellApplication {
     public static void main(String[] args) {
         SpringApplication.run(ApiHellApplication.class, args);
-        System.out.println("hello world");
     }
 }

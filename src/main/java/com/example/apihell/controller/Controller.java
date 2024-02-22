@@ -1,10 +1,10 @@
-package com.example.apihell.Controller;
+package com.example.apihell.controller;
 
 import com.example.apihell.Repository.Repository;
 import com.example.apihell.model.Student;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,58 +25,64 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class Controller {
-    @Autowired
+    final
     Repository repka;
 
-    @GetMapping("/Students")
-    public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String Name) {
-        try {
-            List<Student> Students = new ArrayList<Student>();
-            if (Name == null) {
-                repka.findAll().forEach(Students::add);
-            } else
-                repka.findByNameContaining(Name).forEach(Students::add);
+    public Controller(Repository repka) {
+        this.repka = repka;
+    }
 
-            if (Students.isEmpty()) {
+    @GetMapping("/student")
+    @Nullable
+    public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
+        try {
+            List<Student> studentList = new ArrayList<>();
+            if (name == null) {
+                repka.findAll().forEach(studentList::add);
+            } else
+                repka.findByNameContaining(name).forEach(studentList::add);
+
+            if (studentList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(Students, HttpStatus.OK);
+            return new ResponseEntity<>(studentList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/Students/{id}")
+    @GetMapping("/student/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") String id) {
-        Optional<Student> StudentData = repka.findById(id);
+        Optional<Student> studentEntry = repka.findById(id);
 
-        if (StudentData.isPresent()) {
-            return new ResponseEntity<>(StudentData.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return studentEntry.map(student -> new ResponseEntity<>(student, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/Students")
-    public ResponseEntity<Student> createStudent(@RequestBody Student Student) {
+    public ResponseEntity<Student> createStudent(@RequestBody Student inputStudent) {
         try {
-            Student _Student = repka
-                    .save(new Student(Student.getId(),Student.getName(), Student.getFac(), Student.getSpec(), Student.getGroup()));
-            return new ResponseEntity<>(_Student, HttpStatus.CREATED);
+            Student newStudent = repka
+                    .save(
+                new Student(inputStudent.getId(),inputStudent.getName(), inputStudent.getFac(), inputStudent.getSpec(), inputStudent.getGroup()
+            ));
+            return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/Students/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student Student) {
-        Optional<Student> StudentData = repka.findById(id);
+    public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student inputStudent) {
+        Optional<Student> studentEntry  = repka.findById(id);
 
-        if (StudentData.isPresent()) {
-            Student _Student = StudentData.get();
-            _Student.setName(Student.getName());
-            _Student.setFac(Student.getFac());
-            return new ResponseEntity<>(repka.save(_Student), HttpStatus.OK);
+        if (studentEntry.isPresent()) {
+            Student newStudent = new Student();
+            inputStudent.setId      (inputStudent.getId()   );
+            inputStudent.setName    (inputStudent.getName() );
+            inputStudent.setFac     (inputStudent.getFac()  );
+            inputStudent.setSpec    (inputStudent.getSpec() );
+            inputStudent.setGroup   (inputStudent.getGroup());
+            return new ResponseEntity<>(repka.save(newStudent), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
