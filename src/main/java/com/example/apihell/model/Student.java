@@ -3,13 +3,13 @@ package com.example.apihell.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "students")
+@Table(name = "student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "fio")
     private String name;
 
     @Column(name = "fac")
