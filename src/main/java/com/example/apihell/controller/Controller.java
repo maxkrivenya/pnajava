@@ -33,8 +33,8 @@ public class Controller {
     @GetMapping("/student")
     @Nullable
     public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
+        List<Student> students = new ArrayList<>();
         try {
-            List<Student> students = new ArrayList<>();
             if (name == null) {
                 repka.findAll().forEach(students::add);
             } else
@@ -45,7 +45,7 @@ public class Controller {
             }
             return new ResponseEntity<>(students, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(students, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -68,7 +68,7 @@ public class Controller {
                     .save(new Student(student.getId(),student.getName(), student.getFac(), student.getSpec(), student.getGroup()));
             return new ResponseEntity<>(tempStudent, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(student, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
