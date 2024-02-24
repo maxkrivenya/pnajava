@@ -1,0 +1,15 @@
+
+.fuckingButton{
+    background-color: antiquewhite;
+    justify-self: left;
+    align-self: end;
+}
+
+
+li{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-content: start;
+   
+}

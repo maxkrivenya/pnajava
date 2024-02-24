@@ -30,6 +30,7 @@ public class Controller {
         this.repka = repka;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/student")
     @Nullable
     public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
