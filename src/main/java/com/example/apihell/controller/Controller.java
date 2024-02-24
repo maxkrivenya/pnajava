@@ -5,21 +5,24 @@ import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+/*
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+*/
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class Controller {
@@ -30,7 +33,6 @@ public class Controller {
         this.repka = repka;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/student")
     @Nullable
     public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
@@ -61,6 +63,7 @@ public class Controller {
         }
     }
 
+    /*
     @PostMapping("/student")
     @Nullable
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
@@ -107,6 +110,6 @@ public class Controller {
         }
 
     }
-
+*/
 
 }

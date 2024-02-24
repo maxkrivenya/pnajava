@@ -6,9 +6,8 @@ import java.util.Optional;
 import com.example.apihell.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
 public interface Repository extends JpaRepository<Student, String> {
     Optional<Student> findById(String id) ;
-
     List<Student> findByNameContaining(String name);
 }
+

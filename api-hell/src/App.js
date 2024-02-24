@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import './api-hell.css'
+import ava from './ava.png';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-          <UsersList />
+
+        <header className="App-header">
+          <div className={"textBox"}>
+            IIS BSUIR:UNIVERSITY
+          </div>
       </header>
+
+        <div className={"App-sidebar"}>
+
+        </div>
+        <div className={"App-body"}>
+          <UserById />
+        </div>
     </div>
   );
 }
-function UsersList() {
+
+/*function MarksList(id) {
         const [data, setData] = useState([]);
         useEffect(() => {
-            fetch('http://localhost:8080/api/student')
+            fetch('http://localhost:8080/api/marks/' + id)
                 .then((res) => {
                     return res.json();
                 })
@@ -36,13 +34,43 @@ function UsersList() {
                 });
         }, []);
         return (
-            <div>
-                <ul className="studentList">
+            <table className="studentList">
                 {data.map((value) => (
-                    <li key={value.id}>{value.id + ' | ' + value.name + ' | ' + value.fac}</li>
+                            <tr key={value.subj}>
+                                <td>{value.mark}</td>
+                                <td>{value.date}</td>
+                            </tr>
                 ))}
-                </ul>
-            </div>
+            </table>
         );
+}*/
+
+function UserById() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:8080/api/student/22070099')
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setData(data);
+            });
+    }, []);
+    return (
+        <div className={"flexRow"}>
+            <img src={ava}  alt={"dead"}/>
+
+            <div className={"flexColumn"}>
+                <div className={"textBox"}>
+                    {data.name}
+                </div>
+                <div className={"textBox"}>
+                    {data.fac} {data.spec} {data.group}
+                </div>
+            </div>
+        </div>
+
+    );
 }
 export default App;
