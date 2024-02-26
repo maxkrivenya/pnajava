@@ -1,6 +1,8 @@
-/** {
+/*
+* {
   border: solid 1px black;
-}*/
+}
+*/
 
 .App-header {
   position: static;
@@ -12,7 +14,7 @@
   height:80px;
   margin:0;
   padding-left: 100px;
-  padding-top: 20px;
+
   margin-bottom: 50px;
   border:0;
 
@@ -21,13 +23,54 @@
   color:#ebebeb;
 }
 
+#logo{
+  position: absolute;
+  left:100px;
+  top:100px;
+}
+
+.myButton{
+  width:100px;
+  height:40px;
+  background-color: #8461A3 ;
+
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  border-style: solid;
+  border-width: 2px;
+  border-bottom-width: 10px;
+  border-radius: 5px;
+  border-color: #9471B3;
+
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+  color:antiquewhite;
+
+  transition: 0.3s;
+}
+
+
+
+.myButton:active{
+  position: relative;
+  top:5px;
+  border-bottom-width: 5px;
+  transition: 0.3s;
+}
+
+
 .searchBar{
   background-color: #EBEBEB;
   border-radius: 5%;
-  border:solid 1px red;
   width:160px;
   height:50px;
   margin-right: 100px;
+  margin-left: 50px;
+  border:0;
 }
 
 .textBox{
@@ -61,7 +104,7 @@
 
 .App-body{
   display:flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   background-color: #EBEBEB;
   border:0;
@@ -120,7 +163,7 @@ body{
 }
 
 .flexRow{
-  width:100%;
+  width:max-content;
   height:max-content;
 
   display:flex;

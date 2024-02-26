@@ -1,5 +1,4 @@
 package com.example.apihell.controller;
-import com.example.apihell.model.Mark;
 import com.example.apihell.repository.MarksRep;
 import com.example.apihell.repository.Repository;
 import com.example.apihell.model.Student;
@@ -7,20 +6,8 @@ import com.example.apihell.repository.SemRep;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-/*
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-*/
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,11 +60,9 @@ public class Controller {
     }
 
     @GetMapping("/student/{id}/marks")
-    public ResponseEntity<List<Integer>> getAllForSubject(@PathVariable("id") String id){
-
+    public ResponseEntity<List<Integer>> getAllForStudent(@PathVariable("id") String id){
         List<Integer> marks = new ArrayList<>();
         try {
-            //marksRep.getMarksByDateBetween(id).forEach(marks::add);
             marks = marksRep.getMarksByDateBetween(id);
             if (marks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -86,7 +71,19 @@ public class Controller {
             return new ResponseEntity<>(marks, HttpStatus.OK);
         } catch (Exception e) {
             throw e;
-            //return new ResponseEntity<>(marks, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/student/{id}/marks/{subject}")
+    public ResponseEntity<List<Integer>> getAllForStudentForSubject(@PathVariable("id") String id, @PathVariable("subject") String subject){
+        List<Integer> marks = new ArrayList<>();
+        try {
+            marks = marksRep.getMarksForStudentForSubject(id, subject);
+            if (marks.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(marks, HttpStatus.OK);
+        } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -108,6 +105,7 @@ public class Controller {
             return new ResponseEntity<>(subjects,HttpStatus.OK);
         }
     }
+
 
     /*
     @PostMapping("/student")

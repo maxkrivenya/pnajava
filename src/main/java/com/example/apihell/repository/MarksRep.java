@@ -12,4 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 
     @Query(value = "select mark from marks where id = ?1", nativeQuery = true)
     List<Integer> getMarksByDateBetween(String studId);
+
+    @Query(value = "select mark from marks where id = ?1 and subj = ?2", nativeQuery = true)
+    List<Integer>  getMarksForStudentForSubject(String studId, String subj);
 }

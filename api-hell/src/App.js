@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import ava from './ava.png';
+import logo from './logo.png';
 function App() {
   return (
     <div className="App">
-        <div className={"flexRow"}>
+        <img src={logo} alt={"iis"} style={{position:"absolute", width:"80px", height:"80px", zIndex:"100"}}></img>
+        <div className={"flexRow"} style={{width:"100%"}}>
             <header className="App-header">
                 <div className={"textBox"}>
                     IIS BSUIR:UNIVERSITY
                 </div>
+                <div className={"flexRow"} style={{paddingTop:"10px"}}>
+                <div className={"myButton"}>Find</div>
                 <input
                     className={"searchBar"} inputMode={"text"} defaultValue={"Input ID"}>
                 </input>
+                </div>
             </header>
         </div>
 
@@ -87,7 +92,7 @@ function UserById() {
             });
     }, []);
     return (
-        <div className={"flexRow"}>
+        <div className={"flexRow"} style={{width:"100%"}}>
             <img src={ava}  alt={"dead"}/>
 
             <div className={"flexColumn"}>
