@@ -21,9 +21,9 @@ public class Student {
 
 
     @Column(name = "group")
-    private int group;
+    private String group;
 
-    public Student(String id, String name, String fac, String spec, int group) {
+    public Student(String id, String name, String fac, String spec, String group) {
         this.id = id;
         this.name = name;
         this.fac = fac;
@@ -66,11 +66,11 @@ public class Student {
         this.spec = spec;
     }
 
-    public int getGroup() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(String group) {
         this.group = group;
     }
 

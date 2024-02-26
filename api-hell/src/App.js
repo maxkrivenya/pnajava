@@ -4,27 +4,33 @@ import ava from './ava.png';
 function App() {
   return (
     <div className="App">
-
-        <header className="App-header">
-          <div className={"textBox"}>
-            IIS BSUIR:UNIVERSITY
-          </div>
-      </header>
+        <div className={"flexRow"}>
+            <header className="App-header">
+                <div className={"textBox"}>
+                    IIS BSUIR:UNIVERSITY
+                </div>
+                <input
+                    className={"searchBar"} inputMode={"text"} defaultValue={"Input ID"}>
+                </input>
+            </header>
+        </div>
 
         <div className={"App-sidebar"}>
-
         </div>
+
         <div className={"App-body"}>
           <UserById />
+            <MarksList />
         </div>
     </div>
   );
 }
 
-/*function MarksList(id) {
+function MarksList() {
+        const subj = ["AILOTSU", "PNAJAVU", "MathAnalysis   "];
         const [data, setData] = useState([]);
         useEffect(() => {
-            fetch('http://localhost:8080/api/marks/' + id)
+            fetch('http://localhost:8080/api/student/25050071/marks')
                 .then((res) => {
                     return res.json();
                 })
@@ -34,21 +40,35 @@ function App() {
                 });
         }, []);
         return (
-            <table className="studentList">
-                {data.map((value) => (
-                            <tr key={value.subj}>
-                                <td>{value.mark}</td>
-                                <td>{value.date}</td>
-                            </tr>
+            <table>
+                {
+                    subj.map(one => (
+                    <tr>
+                        <td>
+                            <div className={"textBox"}>
+                                {one}
+                            </div>
+                        </td>
+                    {
+                        data.map(
+                            mark => (
+                                <td>
+                                    {mark}
+                                </td>
+                            )
+                        )
+                    }
+
+                    </tr>
                 ))}
             </table>
         );
-}*/
+}
 
 function UserById() {
     const [data, setData] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8080/api/student/22070099')
+        fetch('http://localhost:8080/api/student/25050071')
             .then((res) => {
                 return res.json();
             })
@@ -74,3 +94,16 @@ function UserById() {
     );
 }
 export default App;
+
+
+/*
+    let date1, date2
+    for each subject where subj.sem=student.sem && subj.spec=stud.spec
+        for each typeOfLecture
+            SELECT value FROM marks WHERE marks.stud-id = student.id
+                                      AND marks.subject = subject.name
+                                      AND marks.type    = typeOfLecture
+                                      AND marks.when    > date1
+                                      AND marks.when    < date2
+
+ */

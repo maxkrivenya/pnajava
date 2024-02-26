@@ -1,6 +1,9 @@
 package com.example.apihell.controller;
+import com.example.apihell.model.Mark;
+import com.example.apihell.repository.MarksRep;
 import com.example.apihell.repository.Repository;
 import com.example.apihell.model.Student;
+import com.example.apihell.repository.SemRep;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +31,15 @@ import java.util.Optional;
 public class Controller {
     private final
     Repository repka;
+    private final
+    MarksRep marksRep;
+    private final
+    SemRep semRep;
 
-    public Controller(Repository repka) {
+    public Controller(Repository repka, MarksRep marksRep, SemRep semRep) {
         this.repka = repka;
+        this.marksRep = marksRep;
+        this.semRep = semRep;
     }
 
     @GetMapping("/student")
@@ -60,6 +69,43 @@ public class Controller {
             return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/student/{id}/marks")
+    public ResponseEntity<List<Integer>> getAllForSubject(@PathVariable("id") String id){
+
+        List<Integer> marks = new ArrayList<>();
+        try {
+            //marksRep.getMarksByDateBetween(id).forEach(marks::add);
+            marks = marksRep.getMarksByDateBetween(id);
+            if (marks.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(marks, HttpStatus.OK);
+        } catch (Exception e) {
+            throw e;
+            //return new ResponseEntity<>(marks, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/student/{id}/subjects")
+    public ResponseEntity<List<String>> getSubjectsByStudId(@PathVariable("id") String id){
+        Optional<Student> student = repka.findById(id);
+        List<String> subjects = null;
+
+        if(!student.isPresent()) {
+            return new ResponseEntity(subjects, HttpStatus.NO_CONTENT);
+        }
+
+        Student existingStudent = student.get();
+        subjects = semRep.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
+        if(subjects.isEmpty()){
+            return new ResponseEntity<>(subjects,HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(subjects,HttpStatus.OK);
         }
     }
 

@@ -1,20 +1,35 @@
+/*
+* {
+  border: solid 1px black;
+}
+*/
+
 .App-header {
   position: static;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: #A491D3;
   width:100%;
-  min-height: 80px;
   height:80px;
   margin:0;
-  margin-bottom: 20px;
-  padding:0;
   padding-left: 100px;
+  padding-top: 20px;
+  margin-bottom: 50px;
   border:0;
 
   text-align: left;
-  justify-content: center;
-  padding-top: 0px;
   font-size: 30px;
   color:#ebebeb;
+}
+
+.searchBar{
+  background-color: #EBEBEB;
+  border-radius: 5%;
+  border:solid 1px red;
+  width:160px;
+  height:50px;
+  margin-right: 100px;
 }
 
 .textBox{
@@ -22,11 +37,12 @@
   justify-items: center;
   align-items: center;
 
-  height:100%;
-  width:inherit;
+  width:fit-content;
+  height: 30px;
   color:inherit;
 
   padding-bottom: 10px;
+
 }
 
 .App-sidebar{
@@ -48,8 +64,33 @@
 .App-body{
   display:flex;
   justify-content: center;
+  flex-direction: column;
   background-color: #EBEBEB;
   border:0;
+  padding:0;
+  margin:0;
+  margin-left: 80px;
+}
+
+
+table{
+  padding:0;
+  margin:0;
+  border:0;
+  margin-top: 80px;
+}
+
+tr{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  width:auto;
+}
+
+td{
+  min-width: 10%;
+  font-size: 20px;
+  height:30px;
   padding:0;
   margin:0;
 }
@@ -72,10 +113,6 @@ table{
   width:80%;
   padding:10px;
 
-}
-
-tr{
-  min-height: 200px;
 }
 
 td{
@@ -103,13 +140,16 @@ td{
   font-size: 25px;
 
   padding-left: 50px;
-  padding-right: 50px;
   justify-content: space-evenly;
 }
 
 .flexColumn .textBox{
-  border-bottom: 1px solid black;
   align-items:end;
+}
+
+.App-header .textBox{
+  padding-left: 100px;
+  padding-top: 20px;
 }
  /*
 
