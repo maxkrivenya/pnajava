@@ -27,42 +27,52 @@ function App() {
 }
 
 function MarksList() {
-        const subj = ["AILOTSU", "PNAJAVU", "MathAnalysis   "];
-        const [data, setData] = useState([]);
-        useEffect(() => {
-            fetch('http://localhost:8080/api/student/25050071/marks')
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                    setData(data);
-                });
-        }, []);
-        return (
-            <table>
-                {
-                    subj.map(one => (
-                    <tr>
+    const [subj, setSubj] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:8080/api/student/25050071/subjects')
+            .then((res) => {
+                return res.json();
+            })
+            .then((subj) => {
+                setSubj(subj);
+            });
+    }, []);
+
+    console.log(subj);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:8080/api/student/25050071/marks')
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setData(data);
+            });
+    }, []);
+    return (
+        <table>
+            {
+                subj.map(one => (
+                    <tr key={"subj"}>
                         <td>
                             <div className={"textBox"}>
                                 {one}
                             </div>
                         </td>
-                    {
-                        data.map(
-                            mark => (
-                                <td>
-                                    {mark}
-                                </td>
+                        {
+                            data.map(
+                                mark => (
+                                    <td key={""}>
+                                        {mark}
+                                    </td>
+                                )
                             )
-                        )
-                    }
+                        }
 
                     </tr>
                 ))}
-            </table>
-        );
+        </table>
+    );
 }
 
 function UserById() {
@@ -73,7 +83,6 @@ function UserById() {
                 return res.json();
             })
             .then((data) => {
-                console.log(data);
                 setData(data);
             });
     }, []);
@@ -93,6 +102,7 @@ function UserById() {
 
     );
 }
+
 export default App;
 
 
