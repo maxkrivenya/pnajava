@@ -31,6 +31,40 @@ function App() {
   );
 }
 
+function MarksForSubjectInTable({subj}){
+    const [data, setData] = useState([]);
+    let flag = 0;
+    useEffect(() => {
+        fetch('http://localhost:8080/api/student/25050071/marks/' + subj)
+            .then((res) => {
+                try{
+                   if(res.status===204){
+                        flag = 1;
+                        return [];
+                    }
+                    return res.json();
+                }
+                catch(err){
+                    return ("");
+                };
+            })
+            .then((data) => {
+                setData(data);
+            });
+    }, [subj]);
+    if(data===undefined || data===[] || flag === 1){
+        return (<td></td>);
+    }
+    console.log(data);
+    return (
+                data.map((mark) => (
+                    <td>
+                        {mark}
+                    </td>
+        ))
+    );
+}
+
 function MarksList() {
     const [subj, setSubj] = useState([]);
     useEffect(() => {
@@ -43,39 +77,22 @@ function MarksList() {
             });
     }, []);
 
-    console.log(subj);
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        fetch('http://localhost:8080/api/student/25050071/marks')
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                setData(data);
-            });
-    }, []);
     return (
         <table>
+            <tbody>
             {
                 subj.map(one => (
-                    <tr key={"subj"}>
+                    <tr>
                         <td>
                             <div className={"textBox"}>
                                 {one}
                             </div>
                         </td>
-                        {
-                            data.map(
-                                mark => (
-                                    <td key={""}>
-                                        {mark}
-                                    </td>
-                                )
-                            )
-                        }
-
+                        <MarksForSubjectInTable subj = {one}></MarksForSubjectInTable>
                     </tr>
-                ))}
+                ))
+            }
+            </tbody>
         </table>
     );
 }
