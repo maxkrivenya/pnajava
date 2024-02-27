@@ -1,9 +1,9 @@
 package com.example.apihell.service;
 
 import com.example.apihell.model.Student;
-import com.example.apihell.repository.MarksRep;
-import com.example.apihell.repository.Repository;
-import com.example.apihell.repository.SemRep;
+import com.example.apihell.repository.MarksRepository;
+import com.example.apihell.repository.StudentRepository;
+import com.example.apihell.repository.SemesterRepository;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +17,16 @@ import java.util.Optional;
 @Service
 public class StudentService {
     private final
-    Repository repka;
+    StudentRepository studentRepository;
     private final
-    MarksRep marksRep;
+    MarksRepository marksRepository;
     private final
-    SemRep semRep;
+    SemesterRepository semesterRepository;
 
-    public StudentService(Repository repka, MarksRep marksRep, SemRep semRep) {
-        this.repka = repka;
-        this.marksRep = marksRep;
-        this.semRep = semRep;
+    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository) {
+        this.studentRepository = studentRepository;
+        this.marksRepository = marksRepository;
+        this.semesterRepository = semesterRepository;
     }
 
 
@@ -35,9 +35,9 @@ public class StudentService {
             List<Student> students = new ArrayList<>();
             try {
                 if (name == null) {
-                    repka.findAll().forEach(students::add);
+                    studentRepository.findAll().forEach(students::add);
                 } else
-                    repka.findByNameContaining(name).forEach(students::add);
+                    studentRepository.findByNameContaining(name).forEach(students::add);
 
                 if (students.isEmpty()) {
                     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -49,7 +49,7 @@ public class StudentService {
         }
 
         public ResponseEntity<Student> getStudentById(@PathVariable("id") String id) {
-            Optional<Student> studentData = repka.findById(id);
+            Optional<Student> studentData = studentRepository.findById(id);
 
             if (studentData.isPresent()) {
                 return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
@@ -59,7 +59,7 @@ public class StudentService {
         }
 
         public ResponseEntity<List<Integer>> getAllForStudent(@PathVariable("id") String id){
-            List<Integer> marks = marksRep.getMarksByDateBetween(id);
+            List<Integer> marks = marksRepository.getMarksByDateBetween(id);
             if (marks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -69,7 +69,7 @@ public class StudentService {
 
         public ResponseEntity<List<Integer>> getAllForStudentForSubject(@PathVariable("id") String id, @PathVariable("subject") String subject){
             List<Integer> marks;
-            marks = marksRep.getMarksForStudentForSubject(id, subject);
+            marks = marksRepository.getMarksForStudentForSubject(id, subject);
             if (marks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -77,7 +77,7 @@ public class StudentService {
         }
 
         public ResponseEntity<List<String>> getSubjectsByStudId(@PathVariable("id") String id){
-            Optional<Student> student = repka.findById(id);
+            Optional<Student> student = studentRepository.findById(id);
             List<String> subjects = null;
 
             if(!student.isPresent()) {
@@ -85,7 +85,7 @@ public class StudentService {
             }
 
             Student existingStudent = student.get();
-            subjects = semRep.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
+            subjects = semesterRepository.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
             if(subjects.isEmpty()){
                 return new ResponseEntity<>(subjects,HttpStatus.NO_CONTENT);
             }
@@ -97,8 +97,8 @@ public class StudentService {
         @Nullable
         public ResponseEntity<Student> createStudent(@RequestBody Student student) {
             try {
-                Student tempStudent = repka
-                        .save(new Student(student.getId(),student.getName(), student.getFac(), student.getSpec(), student.getGroup()));
+                Student tempStudent = studentRepository
+                        .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup()));
                 return new ResponseEntity<>(tempStudent, HttpStatus.CREATED);
             } catch (Exception e) {
                 return new ResponseEntity<>(student, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,13 +106,13 @@ public class StudentService {
         }
 
         public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student student) {
-            Optional<Student> studentData = repka.findById(id);
+            Optional<Student> studentData = studentRepository.findById(id);
 
             if (studentData.isPresent()) {
                 Student tempStudent = studentData.get();
                 tempStudent.setName(student.getName());
-                tempStudent.setFac(student.getFac());
-                return new ResponseEntity<>(repka.save(tempStudent), HttpStatus.OK);
+                tempStudent.setFaculty(student.getFaculty());
+                return new ResponseEntity<>(studentRepository.save(tempStudent), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -120,7 +120,7 @@ public class StudentService {
 
         public ResponseEntity<HttpStatus> deleteStudent(@PathVariable("id") String id) {
             try {
-                repka.deleteById(id);
+                studentRepository.deleteById(id);
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -129,7 +129,7 @@ public class StudentService {
 
         public ResponseEntity<HttpStatus> deleteAllstudents() {
             try {
-                repka.deleteAll();
+                studentRepository.deleteAll();
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

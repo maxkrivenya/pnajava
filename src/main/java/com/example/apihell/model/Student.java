@@ -12,8 +12,8 @@ public class Student {
     @Column(name = "fio")
     private String name;
 
-    @Column(name = "fac")
-    private String fac;
+    @Column(name = "faculty")
+    private String faculty;
 
 
     @Column(name = "spec")
@@ -23,10 +23,10 @@ public class Student {
     @Column(name = "group")
     private String group;
 
-    public Student(String id, String name, String fac, String spec, String group) {
+    public Student(String id, String name, String faculty, String spec, String group) {
         this.id = id;
         this.name = name;
-        this.fac = fac;
+        this.faculty = faculty;
         this.spec = spec;
         this.group = group;
 
@@ -50,12 +50,12 @@ public class Student {
         this.name = name;
     }
 
-    public String getFac() {
-        return fac;
+    public String getFaculty() {
+        return faculty;
     }
 
-    public void setFac(String fac) {
-        this.fac = fac;
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     public String getSpec() {
@@ -76,7 +76,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student [id=" + id + ", name=" + name + ", fac=" + fac + ", spec=" + spec + ", group=" + group + "]";
+        return "Student [id=" + id + ", name=" + name + ", faculty=" + faculty + ", spec=" + spec + ", group=" + group + "]";
     }
 
 }

@@ -12,11 +12,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
-public class Controller {
+public class StudentController {
 
     private final StudentService studentService;
 
-    public Controller(StudentService studentService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 

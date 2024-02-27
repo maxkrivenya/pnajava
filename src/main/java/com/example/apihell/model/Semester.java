@@ -7,11 +7,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="sem")
-public class Sem {
+public class Semester {
     @Column(name="subj")
-    String subj;
-@Column(name="hours")
-String hours;
+    String subject;
+    @Column(name="hours")
+    String hours;
     @Column(name="control")
     String control;
 
@@ -22,29 +22,29 @@ String hours;
     int retries;
     @Column(name="spec")
     String spec;
-    @Column(name="semnum")
-    int semnum;
+    @Column(name="semesterNumber")
+    int semesterNumber;
 
-    public Sem(String subj, String hours, String control, String lecturer, int retries, String spec, int semnum) {
-        this.subj = subj;
+    public Semester(String subject, String hours, String control, String lecturer, int retries, String spec, int semesterNumber) {
+        this.subject = subject;
         this.hours = hours;
         this.control = control;
         this.lecturer = lecturer;
         this.retries = retries;
         this.spec = spec;
-        this.semnum = semnum;
+        this.semesterNumber = semesterNumber;
     }
 
-    public Sem() {
+    public Semester() {
 
     }
 
-    public String getSubj() {
-        return subj;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setSubj(String subj) {
-        this.subj = subj;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getHours() {
@@ -87,11 +87,11 @@ String hours;
         this.spec = spec;
     }
 
-    public int getSemnum() {
-        return semnum;
+    public int getSemesterNumber() {
+        return semesterNumber;
     }
 
-    public void setSemnum(int semnum) {
-        this.semnum = semnum;
+    public void setSemesterNumber(int semesterNumber) {
+        this.semesterNumber = semesterNumber;
     }
 }

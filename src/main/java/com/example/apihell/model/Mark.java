@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 @Entity
 public class Mark {
     @Column(name="id")
-    private String studId;
+    private String studentId;
     @Column(name="mark")
     private Integer value;
     @Column(name="subj")
-    private String subj;
+    private String subject;
 
     @Id
     @Column(name="date")
@@ -17,20 +17,18 @@ public class Mark {
     @Column(name="type")
     private String type;
 
-    public String getStudId() {
-        return studId;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setStudId(String studId) {
-        this.studId = studId;
+    public void setStudentId(String studentId) { this.studentId = studentId;}
+
+    public String getSubject() {
+        return subject;
     }
 
-    public String getSubj() {
-        return subj;
-    }
-
-    public void setSubj(String subj) {
-        this.subj = subj;
+    public void setSubject(String subj) {
+        this.subject = subj;
     }
 
     public String getDate() {
@@ -56,6 +54,5 @@ public class Mark {
     public void setValue(Integer value) {
         this.value = value;
     }
-
 
 }
