@@ -1,8 +1,6 @@
 package com.example.apihell.model;
 
 import jakarta.persistence.*;
-import org.springframework.data.web.PageableDefault;
-
 @Table(name = "marks")
 @Entity
 public class Mark {
