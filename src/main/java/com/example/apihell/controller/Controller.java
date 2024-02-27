@@ -90,7 +90,6 @@ public class Controller {
         Student existingStudent = student.get();
         subjects = semRep.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
         if(subjects.isEmpty()){
-        if(subjects.isEmpty()){
             return new ResponseEntity<>(subjects,HttpStatus.NO_CONTENT);
         }
         else{
