@@ -61,8 +61,7 @@ public class Controller {
 
     @GetMapping("/student/{id}/marks")
     public ResponseEntity<List<Integer>> getAllForStudent(@PathVariable("id") String id){
-        List<Integer> marks = new ArrayList<>();
-            marks = marksRep.getMarksByDateBetween(id);
+        List<Integer> marks = marksRep.getMarksByDateBetween(id);
             if (marks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -85,11 +84,12 @@ public class Controller {
         List<String> subjects = null;
 
         if(!student.isPresent()) {
-            return new ResponseEntity(subjects, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(subjects, HttpStatus.NO_CONTENT);
         }
 
         Student existingStudent = student.get();
         subjects = semRep.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
+        if(subjects.isEmpty()){
         if(subjects.isEmpty()){
             return new ResponseEntity<>(subjects,HttpStatus.NO_CONTENT);
         }
