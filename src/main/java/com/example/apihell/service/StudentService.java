@@ -5,7 +5,6 @@ import com.example.apihell.repository.MarksRep;
 import com.example.apihell.repository.Repository;
 import com.example.apihell.repository.SemRep;
 import jakarta.annotation.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
