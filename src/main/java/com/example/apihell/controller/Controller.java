@@ -62,16 +62,12 @@ public class Controller {
     @GetMapping("/student/{id}/marks")
     public ResponseEntity<List<Integer>> getAllForStudent(@PathVariable("id") String id){
         List<Integer> marks = new ArrayList<>();
-        try {
             marks = marksRep.getMarksByDateBetween(id);
             if (marks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             return new ResponseEntity<>(marks, HttpStatus.OK);
-        } catch (Exception e) {
-            throw e;
-        }
     }
     @GetMapping("/student/{id}/marks/{subject}")
     public ResponseEntity<List<Integer>> getAllForStudentForSubject(@PathVariable("id") String id, @PathVariable("subject") String subject){
