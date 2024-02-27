@@ -103,7 +103,7 @@ public class Controller {
     }
 
 
-    /*
+
     @PostMapping("/student")
     @Nullable
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
@@ -150,6 +150,5 @@ public class Controller {
         }
 
     }
-*/
 
 }
