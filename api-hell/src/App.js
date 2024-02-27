@@ -3,35 +3,35 @@ import './App.css';
 import ava from './ava.png';
 import logo from './logo.png';
 function App() {
-  return (
-    <div className="App">
-        <img src={logo} alt={"iis"} style={{position:"absolute", width:"80px", height:"80px", zIndex:"100"}}></img>
-        <div className={"flexRow"} style={{width:"100%"}}>
-            <header className="App-header">
-                <div className={"textBox"}>
-                    IIS BSUIR:UNIVERSITY
-                </div>
-                <div className={"flexRow"} style={{paddingTop:"10px"}}>
-                <div className={"myButton"}>Find</div>
-                <input
-                    className={"searchBar"} inputMode={"text"} defaultValue={"Input ID"}>
-                </input>
-                </div>
-            </header>
-        </div>
+    return (
+        <div className="App">
+                <img src={logo} alt={"iis"} style={{position: "absolute", width: "80px", height: "80px", zIndex: "100"}}></img>
+            <div className={"flexRow"} style={{width: "100%"}}>
+                <header className="App-header">
+                    <div className={"textBox"}>
+                        IIS BSUIR:UNIVERSITY
+                    </div>
+                    <div className={"flexRow"} style={{paddingTop: "10px"}}>
+                        <div className={"myButton"}>Find</div>
+                        <input
+                            className={"searchBar"} inputMode={"text"} defaultValue={"Input ID"}>
+                        </input>
+                    </div>
+                </header>
+            </div>
 
-        <div className={"App-sidebar"}>
-        </div>
+            <div className={"App-sidebar"}>
+            </div>
 
-        <div className={"App-body"}>
-          <UserById />
-            <MarksList />
+            <div className={"App-body"}>
+                <UserById/>
+                <MarksList/>
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
-function MarksForSubjectInTable({subj}){
+function MarksForSubjectInTable({subj}) {
     const [data, setData] = useState([]);
     let flag = 0;
     useEffect(() => {

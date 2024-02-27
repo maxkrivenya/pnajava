@@ -29,11 +29,11 @@ public class Student {
         this.fac = fac;
         this.spec = spec;
         this.group = group;
+
     }
 
     public Student() {
     }
-
     public String getId() {
         return id;
     }
