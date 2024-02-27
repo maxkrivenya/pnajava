@@ -7,7 +7,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @SpringBootConfiguration
-public class ApiHellApplicationTests {
+class ApiHellApplicationTests {
     @Test
     void contextLoads() {
         SpringApplication.run(ApiHellApplication.class);
