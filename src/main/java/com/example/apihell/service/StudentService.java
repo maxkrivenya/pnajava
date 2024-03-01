@@ -29,110 +29,88 @@ public class StudentService {
         this.semesterRepository = semesterRepository;
     }
 
-
     @Nullable
-        public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
+        public List<Student> getAllStudents(@RequestParam(required = false) String name) {
             List<Student> students = new ArrayList<>();
             try {
                 if (name == null) {
                     studentRepository.findAll().forEach(students::add);
                 } else
                     studentRepository.findByNameContaining(name).forEach(students::add);
-
-                if (students.isEmpty()) {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-                }
-                return new ResponseEntity<>(students, HttpStatus.OK);
+                    return students;
             } catch (Exception e) {
-                return new ResponseEntity<>(students, HttpStatus.INTERNAL_SERVER_ERROR);
+                return students;
             }
         }
 
-        public ResponseEntity<Student> getStudentById(@PathVariable("id") String id) {
+        public Student getStudentById(@PathVariable("id") String id) {
             Optional<Student> studentData = studentRepository.findById(id);
 
             if (studentData.isPresent()) {
-                return new ResponseEntity<>(studentData.get(), HttpStatus.OK);
+                return studentData.get();
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new Student();
             }
         }
 
-        public ResponseEntity<List<Integer>> getAllForStudent(@PathVariable("id") String id){
-            List<Integer> marks = marksRepository.getMarksByDateBetween(id);
-            if (marks.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(marks, HttpStatus.OK);
+        public List<Integer> getAllForStudent(@PathVariable("id") String id){
+            return marksRepository.getMarksByDateBetween(id);
         }
 
-        public ResponseEntity<List<Integer>> getAllForStudentForSubject(@PathVariable("id") String id, @PathVariable("subject") String subject){
-            List<Integer> marks;
-            marks = marksRepository.getMarksForStudentForSubject(id, subject);
-            if (marks.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(marks, HttpStatus.OK);
+        public List<Integer> getAllForStudentForSubject(@PathVariable("id") String id, @PathVariable("subject") String subject){
+            return marksRepository.getMarksForStudentForSubject(id, subject);
         }
 
-        public ResponseEntity<List<String>> getSubjectsByStudId(@PathVariable("id") String id){
+        public List<String> getSubjectsByStudId(@PathVariable("id") String id){
             Optional<Student> student = studentRepository.findById(id);
             List<String> subjects = null;
-
             if(!student.isPresent()) {
-                return new ResponseEntity<>(subjects, HttpStatus.NO_CONTENT);
+                return subjects;
             }
-
             Student existingStudent = student.get();
             subjects = semesterRepository.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
-            if(subjects.isEmpty()){
-                return new ResponseEntity<>(subjects,HttpStatus.NO_CONTENT);
-            }
-            else{
-                return new ResponseEntity<>(subjects,HttpStatus.OK);
-            }
+            return subjects;
         }
 
         @Nullable
-        public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        public Student createStudent(@RequestBody Student student) {
             try {
                 Student tempStudent = studentRepository
                         .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup()));
-                return new ResponseEntity<>(tempStudent, HttpStatus.CREATED);
+                return tempStudent;
             } catch (Exception e) {
-                return new ResponseEntity<>(student, HttpStatus.INTERNAL_SERVER_ERROR);
+                return student;
             }
         }
 
-        public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student student) {
+        public Student updateStudent(@PathVariable("id") String id, @RequestBody Student student) {
             Optional<Student> studentData = studentRepository.findById(id);
 
             if (studentData.isPresent()) {
                 Student tempStudent = studentData.get();
                 tempStudent.setName(student.getName());
                 tempStudent.setFaculty(student.getFaculty());
-                return new ResponseEntity<>(studentRepository.save(tempStudent), HttpStatus.OK);
+                return student;
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new Student();
             }
         }
 
-        public ResponseEntity<HttpStatus> deleteStudent(@PathVariable("id") String id) {
+        public HttpStatus deleteStudent(@PathVariable("id") String id) {
             try {
                 studentRepository.deleteById(id);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return HttpStatus.NO_CONTENT;
             } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return HttpStatus.INTERNAL_SERVER_ERROR;
             }
         }
 
-        public ResponseEntity<HttpStatus> deleteAllstudents() {
+        public HttpStatus deleteAllstudents() {
             try {
                 studentRepository.deleteAll();
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return HttpStatus.NO_CONTENT;
             } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                return HttpStatus.INTERNAL_SERVER_ERROR;
             }
         }
 }

@@ -23,49 +23,46 @@ public class StudentController {
     @GetMapping("/student")
     @Nullable
     public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
-            return studentService.getAllStudents(name);
+            return new ResponseEntity(studentService.getAllStudents(name), HttpStatus.OK);
     }
 
     @GetMapping("/student/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") String id) {
-        return studentService.getStudentById(id);
+        return new ResponseEntity<>(studentService.getStudentById(id), HttpStatus.OK);
     }
 
     @GetMapping("/student/{id}/marks")
     public ResponseEntity<List<Integer>> getAllForStudent(@PathVariable("id") String id){
-            return studentService.getAllForStudent(id);
+            return new ResponseEntity<>(studentService.getAllForStudent(id), HttpStatus.OK);
     }
     @GetMapping("/student/{id}/marks/{subject}")
     public ResponseEntity<List<Integer>> getAllForStudentForSubject(@PathVariable("id") String id, @PathVariable("subject") String subject){
-            return studentService.getAllForStudentForSubject(id, subject);
+            return new ResponseEntity<>(studentService.getAllForStudentForSubject(id, subject), HttpStatus.OK);
     }
 
     @GetMapping("/student/{id}/subjects")
     public ResponseEntity<List<String>> getSubjectsByStudId(@PathVariable("id") String id){
-        return studentService.getSubjectsByStudId(id);
+        return new ResponseEntity<>(studentService.getSubjectsByStudId(id), HttpStatus.OK);
     }
-
-
 
     @PostMapping("/student")
     @Nullable
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
+        return new ResponseEntity<>(studentService.createStudent(student), HttpStatus.OK);
     }
 
     @PutMapping("/student/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
+        return new ResponseEntity<>(studentService.updateStudent(id, student), HttpStatus.OK);
     }
 
     @DeleteMapping("/student/{id}")
     public ResponseEntity<HttpStatus> deleteStudent(@PathVariable("id") String id) {
-        return studentService.deleteStudent(id);
+        return new ResponseEntity<>(studentService.deleteStudent(id), HttpStatus.OK);
     }
-
 
     @DeleteMapping("/student")
     public ResponseEntity<HttpStatus> deleteAllstudents() {
-        return studentService.deleteAllstudents();
+        return new ResponseEntity<>(studentService.deleteAllstudents(), HttpStatus.OK);
     }
 }
