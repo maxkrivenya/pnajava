@@ -23,7 +23,7 @@ public class StudentController {
     @GetMapping("/student")
     @Nullable
     public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name) {
-            return new ResponseEntity(studentService.getAllStudents(name), HttpStatus.OK);
+            return new ResponseEntity<>(studentService.getAllStudents(name), HttpStatus.OK);
     }
 
     @GetMapping("/student/{id}")

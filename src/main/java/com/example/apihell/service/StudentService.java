@@ -6,7 +6,6 @@ import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.repository.SemesterRepository;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,12 +34,13 @@ public class StudentService {
             try {
                 if (name == null) {
                     studentRepository.findAll().forEach(students::add);
-                } else
+                } else {
                     studentRepository.findByNameContaining(name).forEach(students::add);
-                    return students;
+                }
             } catch (Exception e) {
                 return students;
             }
+            return students;
         }
 
         public Student getStudentById(@PathVariable("id") String id) {
@@ -75,9 +75,8 @@ public class StudentService {
         @Nullable
         public Student createStudent(@RequestBody Student student) {
             try {
-                Student tempStudent = studentRepository
+                return studentRepository
                         .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup()));
-                return tempStudent;
             } catch (Exception e) {
                 return student;
             }
