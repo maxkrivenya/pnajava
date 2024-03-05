@@ -43,14 +43,8 @@ public class StudentService {
             return students;
         }
 
-        public Student getStudentById(@PathVariable("id") String id) {
-            Optional<Student> studentData = studentRepository.findById(id);
-
-            if (studentData.isPresent()) {
-                return studentData.get();
-            } else {
-                return new Student();
-            }
+        public Optional<Student> getStudentById(@PathVariable("id") String id) {
+            return studentRepository.findById(id);
         }
 
         public List<Integer> getAllForStudent(@PathVariable("id") String id){
