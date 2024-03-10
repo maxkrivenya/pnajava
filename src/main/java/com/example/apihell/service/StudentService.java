@@ -7,6 +7,7 @@ import com.example.apihell.repository.SemesterRepository;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class StudentService {
     private final
     StudentRepository studentRepository;
@@ -44,7 +46,13 @@ public class StudentService {
         }
 
         public Optional<Student> getStudentById(@PathVariable("id") String id) {
-            return studentRepository.findById(id);
+            Optional<Student> optionalStudent = studentRepository.findById(id);
+            if(optionalStudent.isEmpty()){
+                return optionalStudent;
+            }
+            Student student = optionalStudent.get();
+            student.setMarks(marksRepository.getMarksByStudentId(id));
+            return Optional.of(student);
         }
 
         public List<Integer> getAllForStudent(@PathVariable("id") String id){
@@ -91,6 +99,7 @@ public class StudentService {
 
         public HttpStatus deleteStudent(@PathVariable("id") String id) {
             try {
+                marksRepository.deleteMarksByStudentId(id);
                 studentRepository.deleteById(id);
                 return HttpStatus.NO_CONTENT;
             } catch (Exception e) {
@@ -101,6 +110,7 @@ public class StudentService {
         public HttpStatus deleteAllstudents() {
             try {
                 studentRepository.deleteAll();
+                marksRepository.deleteAll();
                 return HttpStatus.NO_CONTENT;
             } catch (Exception e) {
                 return HttpStatus.INTERNAL_SERVER_ERROR;

@@ -2,6 +2,8 @@ package com.example.apihell.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "student")
 public class Student {
@@ -23,13 +25,23 @@ public class Student {
     @Column(name = "group")
     private String group;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mark> marks;
+
     public Student(String id, String name, String faculty, String spec, String group) {
         this.id = id;
         this.name = name;
         this.faculty = faculty;
         this.spec = spec;
         this.group = group;
+    }
 
+    public List<Mark> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(List<Mark> marks) {
+        this.marks = marks;
     }
 
     public Student() {

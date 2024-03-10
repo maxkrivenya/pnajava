@@ -80,12 +80,11 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
-    @Nullable
     @PutMapping("/student/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student student) {
         Student student1 = studentService.updateStudent(id, student);
         if(student1 == null){
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(student, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(student1, HttpStatus.OK);
     }
