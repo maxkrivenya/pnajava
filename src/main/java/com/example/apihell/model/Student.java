@@ -9,12 +9,13 @@ import java.util.List;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
     private String id;
 
-    @Column(name = "fio")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "faculty")
+    @Column(name = "fac")
     private String faculty;
 
 

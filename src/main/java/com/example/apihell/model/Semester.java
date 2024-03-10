@@ -22,7 +22,7 @@ public class Semester {
     int retries;
     @Column(name="spec")
     String spec;
-    @Column(name="semesterNumber")
+    @Column(name="semnum")
     int semesterNumber;
 
     public Semester(String subject, String hours, String control, String lecturer, int retries, String spec, int semesterNumber) {
