@@ -82,7 +82,7 @@ public class StudentService {
         public Student createStudent(@RequestBody Student student) {
             try {
                 return studentRepository
-                        .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup()));
+                        .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup(), student.getSemester()));
             } catch (Exception e) {
                 return student;
             }

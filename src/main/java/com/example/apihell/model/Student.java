@@ -27,6 +27,17 @@ public class Student {
     @Column(name = "group")
     private String group;
 
+    @Column(name="sem")
+    private int semester;
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.REMOVE)
     List<Mark> marks;
@@ -43,12 +54,13 @@ public class Student {
         this.marks = marks;
     }
 
-    public Student(String id, String name, String faculty, String spec, String group) {
+    public Student(String id, String name, String faculty, String spec, String group, int semesterNumber) {
         this.id = id;
         this.name = name;
         this.faculty = faculty;
         this.spec = spec;
         this.group = group;
+        this.semester = semesterNumber;
     }
 
     public Student() {

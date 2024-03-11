@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface StudentRepository extends JpaRepository<Student, String> {
     Optional<Student> findById(String id) ;
     List<Student> findByNameContaining(String name);
+
+    List<Student> findAllBySpecAndSemester(String spec, int semesterNumber);
 }
 
