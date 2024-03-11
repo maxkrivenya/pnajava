@@ -1,10 +1,9 @@
 package com.example.apihell.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "profs")
@@ -20,6 +19,23 @@ public class Professor {
     @Column(name="kafedra")
     private String department;
 
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "sem",
+            joinColumns = @JoinColumn(name = "lecturer"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    List<Student> students;
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     public Professor(String name, String title, String department) {
         this.name = name;
         this.title = title;
@@ -27,6 +43,13 @@ public class Professor {
     }
 
     public Professor() {
+    }
+
+    public Professor(String name, String title, String department, List<Student> students) {
+        this.name = name;
+        this.title = title;
+        this.department = department;
+        this.students = students;
     }
 
     public String getName() {

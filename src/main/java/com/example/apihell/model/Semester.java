@@ -1,22 +1,18 @@
 package com.example.apihell.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="sem")
 public class Semester {
+    @Id
+    @GeneratedValue
+    String id;
     @Column(name="subj")
     String subject;
     @Column(name="hours")
     String hours;
-    @Column(name="control")
-    String control;
-
     @Column(name="lecturer")
-    @Id
     String lecturer;
     @Column(name="retries")
     int retries;
@@ -25,14 +21,25 @@ public class Semester {
     @Column(name="semnum")
     int semesterNumber;
 
-    public Semester(String subject, String hours, String control, String lecturer, int retries, String spec, int semesterNumber) {
+    @Column(name="student_id")
+    String studentId;
+
+    public Semester(String subject, String hours, String lecturer, int retries, String spec, int semesterNumber, String studentId) {
         this.subject = subject;
         this.hours = hours;
-        this.control = control;
         this.lecturer = lecturer;
         this.retries = retries;
         this.spec = spec;
         this.semesterNumber = semesterNumber;
+        this.studentId = studentId;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
     public Semester() {
@@ -53,14 +60,6 @@ public class Semester {
 
     public void setHours(String hours) {
         this.hours = hours;
-    }
-
-    public String getControl() {
-        return control;
-    }
-
-    public void setControl(String control) {
-        this.control = control;
     }
 
     public String getLecturer() {

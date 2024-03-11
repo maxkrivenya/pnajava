@@ -1,5 +1,6 @@
 package com.example.apihell.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -45,6 +46,26 @@ public class Student {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.REMOVE)
     List<Skip> skips;
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    List<Professor> professors;
+
+    public List<Skip> getSkips() {
+        return skips;
+    }
+
+    public void setSkips(List<Skip> skips) {
+        this.skips = skips;
+    }
+
+    public List<Professor> getProfessors() {
+        return professors;
+    }
+
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
+    }
 
     public List<Mark> getMarks() {
         return marks;

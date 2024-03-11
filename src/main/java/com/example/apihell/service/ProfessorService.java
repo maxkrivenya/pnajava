@@ -8,15 +8,9 @@ import java.util.List;
 @Service
 public class ProfessorService {
     private final
-    StudentRepository studentRepository;
-    private final
-    SemesterRepository semesterRepository;
-    private final
     ProfessorRepository professorRepository;
 
-    public ProfessorService(StudentRepository studentRepository, SemesterRepository semesterRepository, ProfessorRepository professorRepository) {
-        this.studentRepository = studentRepository;
-        this.semesterRepository = semesterRepository;
+    public ProfessorService(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
     }
 
