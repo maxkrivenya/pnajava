@@ -1,5 +1,6 @@
 package com.example.apihell.controller;
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
@@ -92,9 +93,20 @@ public class StudentController {
     }
 
     @Nullable
-    @GetMapping("/student/{id}/markslist/")
+    @GetMapping("/student/{id}/markslist")
     public ResponseEntity<List<Mark>> getMarksByStudentId(@PathVariable("id") String id){
         List<Mark> list = studentService.getMarksByStudentId(id);
+        if(list.isEmpty()) {
+            return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/student/{id}/allskips")
+    public ResponseEntity<List<Skip>> getAllSkipsByStudentId(@PathVariable("id") String id){
+        List<Skip> list = studentService.getSkipsByStudentId(id);
         if(list.isEmpty()) {
             return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
         }

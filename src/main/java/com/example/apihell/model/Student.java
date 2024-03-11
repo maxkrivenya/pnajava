@@ -31,6 +31,10 @@ public class Student {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.REMOVE)
     List<Mark> marks;
 
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.REMOVE)
+    List<Skip> skips;
+
     public List<Mark> getMarks() {
         return marks;
     }

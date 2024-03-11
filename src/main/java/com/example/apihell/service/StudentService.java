@@ -1,8 +1,10 @@
 package com.example.apihell.service;
 
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.MarksRepository;
+import com.example.apihell.repository.SkipsRepository;
 import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.repository.SemesterRepository;
 import jakarta.annotation.Nullable;
@@ -22,11 +24,14 @@ public class StudentService {
     MarksRepository marksRepository;
     private final
     SemesterRepository semesterRepository;
+    private final
+    SkipsRepository skipsRepository;
 
-    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository) {
+    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository, SkipsRepository skipsRepository) {
         this.studentRepository = studentRepository;
         this.marksRepository = marksRepository;
         this.semesterRepository = semesterRepository;
+        this.skipsRepository = skipsRepository;
     }
 
     @Nullable
@@ -98,7 +103,6 @@ public class StudentService {
 
         public HttpStatus deleteStudent(@PathVariable("id") String id) {
             try {
-                marksRepository.deleteMarksByStudentId(id);
                 studentRepository.deleteById(id);
                 return HttpStatus.NO_CONTENT;
             } catch (Exception e) {
@@ -118,5 +122,9 @@ public class StudentService {
 
         public List<Mark> getMarksByStudentId(String id){
             return marksRepository.getMarksByStudentId(id);
+        }
+
+        public List<Skip> getSkipsByStudentId(String id){
+            return skipsRepository.getAllByStudentId(id);
         }
 }
