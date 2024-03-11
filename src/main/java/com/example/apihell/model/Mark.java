@@ -1,11 +1,15 @@
 package com.example.apihell.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 @Table(name = "marks")
 @Entity
 public class Mark {
-    @Column(name="id")
-    private String studentId;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="student_id")
+    private Student student;
     @Column(name="mark")
     private Integer value;
     @Column(name="subj")
@@ -17,11 +21,13 @@ public class Mark {
     @Column(name="type")
     private String type;
 
-    public String getStudentId() {
-        return studentId;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentId(String studentId) { this.studentId = studentId;}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
     public String getSubject() {
         return subject;

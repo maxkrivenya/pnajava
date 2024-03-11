@@ -1,19 +1,21 @@
 package com.example.apihell.controller;
+import com.example.apihell.model.Mark;
 import com.example.apihell.model.Student;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import com.example.apihell.service.StudentService;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class StudentController {
 
     private final StudentService studentService;
@@ -70,16 +72,6 @@ public class StudentController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping("/student")
-    @Nullable
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        Student student1 = studentService.createStudent(student);
-        if(Objects.equals(student1, new Student())){
-            return new ResponseEntity<>(student, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
-    }
-
     @PutMapping("/student/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody Student student) {
         Student student1 = studentService.updateStudent(id, student);
@@ -96,7 +88,18 @@ public class StudentController {
 
     @DeleteMapping("/student")
     public ResponseEntity<HttpStatus> deleteAllStudents() {
-        return new ResponseEntity<>(studentService.deleteAllstudents());
+        return new ResponseEntity<>(studentService.deleteAllStudents());
     }
 
+    @Nullable
+    @GetMapping("/student/{id}/markslist/")
+    public ResponseEntity<List<Mark>> getMarksByStudentId(@PathVariable("id") String id){
+        List<Mark> list = studentService.getMarksByStudentId(id);
+        if(list.isEmpty()) {
+            return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+    }
 }

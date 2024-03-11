@@ -5,7 +5,7 @@ import logo from './logo.png';
 function App() {
     return (
         <div className="App">
-                <img src={logo} alt={"iis"} style={{position: "absolute", width: "80px", height: "80px", zIndex: "100"}}></img>
+            <img src={logo} alt={"iis"} style={{position: "absolute", width: "80px", height: "80px", zIndex: "100"}}></img>
             <div className={"flexRow"} style={{width: "100%"}}>
                 <header className="App-header">
                     <div className={"textBox"}>
@@ -33,13 +33,11 @@ function App() {
 
 function MarksForSubjectInTable({subj}) {
     const [data, setData] = useState([]);
-    let flag = 0;
     useEffect(() => {
         fetch('http://localhost:8080/api/student/25050071/marks/' + subj)
             .then((res) => {
                 try{
-                   if(res.status===204){
-                        flag = 1;
+                    if(res.status===204){
                         return [];
                     }
                     return res.json();
@@ -52,15 +50,15 @@ function MarksForSubjectInTable({subj}) {
                 setData(data);
             });
     }, [subj]);
-    if(data===undefined || data===[] || flag === 1){
+    if(data===undefined || data===[]){
         return (<td></td>);
     }
     console.log(data);
     return (
-                data.map((mark) => (
-                    <td>
-                        {mark}
-                    </td>
+        data.map((mark) => (
+            <td>
+                {mark}
+            </td>
         ))
     );
 }
@@ -81,14 +79,14 @@ function MarksList() {
         <table>
             <tbody>
             {
-                subj.map(one => (
+                subj.map(subject => (
                     <tr>
                         <td>
                             <div className={"textBox"}>
-                                {one}
+                                {subject}
                             </div>
                         </td>
-                        <MarksForSubjectInTable subj = {one}></MarksForSubjectInTable>
+                        <MarksForSubjectInTable subj = {subject}></MarksForSubjectInTable>
                     </tr>
                 ))
             }
