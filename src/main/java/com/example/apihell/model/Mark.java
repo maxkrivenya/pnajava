@@ -10,6 +10,7 @@ public class Mark {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="student_id")
     private Student student;
+
     @Column(name="mark")
     private Integer value;
 

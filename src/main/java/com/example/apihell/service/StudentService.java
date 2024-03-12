@@ -24,16 +24,19 @@ public class StudentService {
     SemesterRepository semesterRepository;
     private final
     SkipsRepository skipsRepository;
-
     private final
     ProfessorRepository professorRepository;
+    private final
+    GroupRepository groupRepository;
 
-    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository, SkipsRepository skipsRepository, ProfessorRepository professorRepository) {
+
+    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository, SkipsRepository skipsRepository, ProfessorRepository professorRepository, GroupRepository groupRepository) {
         this.studentRepository = studentRepository;
         this.marksRepository = marksRepository;
         this.semesterRepository = semesterRepository;
         this.skipsRepository = skipsRepository;
         this.professorRepository = professorRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Nullable
@@ -76,7 +79,8 @@ public class StudentService {
                 return subjects;
             }
             Student existingStudent = student.get();
-            subjects = semesterRepository.getSubjectsBySpecAndSemNum(existingStudent.getSpec(), 2);
+            String degree = groupRepository.getDegreeById(existingStudent.getGroup());
+            subjects = semesterRepository.getSubjectsBySpecAndSemNum(degree, existingStudent.getSemesterNumber());
             return subjects;
         }
 
@@ -84,7 +88,7 @@ public class StudentService {
         public Student createStudent(@RequestBody Student student) {
             try {
                 return studentRepository
-                        .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup(), student.getSemesterNumber()));
+                        .save(new Student(student.getId(),student.getName(), student.getSemesterNumber(), student.getGroup()));
             } catch (Exception e) {
                 return student;
             }
@@ -96,7 +100,6 @@ public class StudentService {
             if (studentData.isPresent()) {
                 Student tempStudent = studentData.get();
                 tempStudent.setName(student.getName());
-                tempStudent.setFaculty(student.getFaculty());
                 return student;
             } else {
                 return new Student();
