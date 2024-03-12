@@ -8,7 +8,7 @@ public class Semester {
     @Id
     @GeneratedValue
     String id;
-    @Column(name="subj")
+    @Column(name="subject")
     String subject;
     @Column(name="hours")
     String hours;
@@ -18,7 +18,7 @@ public class Semester {
     int retries;
     @Column(name="spec")
     String spec;
-    @Column(name="semnum")
+    @Column(name="semester_number")
     int semesterNumber;
 
     @Column(name="student_id")

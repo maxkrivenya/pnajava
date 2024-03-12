@@ -1,5 +1,6 @@
 package com.example.apihell.controller;
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Professor;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import jakarta.annotation.Nullable;
@@ -114,4 +115,27 @@ public class StudentController {
             return new ResponseEntity<>(list, HttpStatus.OK);
         }
     }
+
+    @GetMapping("/student/{id}/professors")
+    public ResponseEntity<List<Professor>> getProfessorsForStudent(@PathVariable("id") String id){
+        List<Professor> list = studentService.getProfessorsByStudentId(id);
+        if(list.isEmpty()) {
+            return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+    }
+    @GetMapping("/student/{id}/professorsnames")
+    public ResponseEntity<List<String>> getProfessorNamesForStudent(@PathVariable("id") String id){
+        List<String> list = studentService.getProfessorsNamesByStudentId(id);
+        if(list.isEmpty()) {
+            return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+    }
 }
+
+

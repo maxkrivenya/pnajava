@@ -1,12 +1,10 @@
 package com.example.apihell.service;
 
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Professor;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
-import com.example.apihell.repository.MarksRepository;
-import com.example.apihell.repository.SkipsRepository;
-import com.example.apihell.repository.StudentRepository;
-import com.example.apihell.repository.SemesterRepository;
+import com.example.apihell.repository.*;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,11 +25,15 @@ public class StudentService {
     private final
     SkipsRepository skipsRepository;
 
-    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository, SkipsRepository skipsRepository) {
+    private final
+    ProfessorRepository professorRepository;
+
+    public StudentService(StudentRepository studentRepository, MarksRepository marksRepository, SemesterRepository semesterRepository, SkipsRepository skipsRepository, ProfessorRepository professorRepository) {
         this.studentRepository = studentRepository;
         this.marksRepository = marksRepository;
         this.semesterRepository = semesterRepository;
         this.skipsRepository = skipsRepository;
+        this.professorRepository = professorRepository;
     }
 
     @Nullable
@@ -82,7 +84,7 @@ public class StudentService {
         public Student createStudent(@RequestBody Student student) {
             try {
                 return studentRepository
-                        .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup(), student.getSemester()));
+                        .save(new Student(student.getId(),student.getName(), student.getFaculty(), student.getSpec(), student.getGroup(), student.getSemesterNumber()));
             } catch (Exception e) {
                 return student;
             }
@@ -127,4 +129,20 @@ public class StudentService {
         public List<Skip> getSkipsByStudentId(String id){
             return skipsRepository.getAllByStudentId(id);
         }
+
+        public List<Professor> getProfessorsByStudentId(String id){
+            List<String> names = semesterRepository.getLecturersByStudentId(id);
+            List<Professor> professors = new ArrayList<>();
+            names.forEach(name -> {
+                Optional<Professor> maybeProfessor = professorRepository.findById(name);
+                if(maybeProfessor.isPresent()) {
+                    professors.add(maybeProfessor.get());
+                }
+            });
+            return professors;
+        }
+
+    public List<String> getProfessorsNamesByStudentId(String id){
+        return semesterRepository.getLecturersByStudentId(id);
+    }
 }

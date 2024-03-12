@@ -12,12 +12,14 @@ public class Mark {
     private Student student;
     @Column(name="mark")
     private Integer value;
-    @Column(name="subj")
+
+    @Column(name="subject")
     private String subject;
 
     @Id
     @Column(name="date")
     private String date;
+
     @Column(name="type")
     private String type;
 

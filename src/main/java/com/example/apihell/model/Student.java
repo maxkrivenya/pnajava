@@ -17,9 +17,8 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "fac")
+    @Column(name = "faculty")
     private String faculty;
-
 
     @Column(name = "spec")
     private String spec;
@@ -28,15 +27,15 @@ public class Student {
     @Column(name = "group")
     private String group;
 
-    @Column(name="sem")
-    private int semester;
+    @Column(name="semester_number")
+    private int semesterNumber;
 
-    public int getSemester() {
-        return semester;
+    public int getSemesterNumber() {
+        return semesterNumber;
     }
 
-    public void setSemester(int semester) {
-        this.semester = semester;
+    public void setSemesterNumber(int semester) {
+        this.semesterNumber = semester;
     }
 
     @JsonManagedReference
@@ -81,7 +80,7 @@ public class Student {
         this.faculty = faculty;
         this.spec = spec;
         this.group = group;
-        this.semester = semesterNumber;
+        this.semesterNumber = semesterNumber;
     }
 
     public Student() {

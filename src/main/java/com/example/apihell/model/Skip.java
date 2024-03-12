@@ -6,6 +6,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="skips")
 public class Skip {
+
+    @Id
+    @Column(name="date")
+    private String date;
+
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="stud_id")
@@ -14,7 +19,7 @@ public class Skip {
     @Column(name="subject")
     private String subject;
 
-    @Column(name="sem")
+    @Column(name="semester_number")
     private int semesterNumber;
 
     @Column(name="hours")
@@ -24,13 +29,10 @@ public class Skip {
         return hours;
     }
 
+
     public void setHours(int hours) {
         this.hours = hours;
     }
-
-    @Id
-    @Column(name="date")
-    private String date;
 
 
     public Skip(Student student, String subject, int semesterNumber, String date, int hours) {

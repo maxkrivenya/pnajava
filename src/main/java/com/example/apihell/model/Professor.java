@@ -13,10 +13,10 @@ public class Professor {
     @Column(name="name")
     private String name;
 
-    @Column(name="dolzhnost")
+    @Column(name="title")
     private String title;
 
-    @Column(name="kafedra")
+    @Column(name="department")
     private String department;
 
     @JsonManagedReference
