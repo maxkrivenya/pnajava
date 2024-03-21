@@ -23,5 +23,7 @@ public class MarksService {
     public List<Mark> getAll(){
         return marksRepository.getAll();
     }
+
+    public List<Mark> getMarksBySubject(String subject){return marksRepository.getMarksBySubject(subject);}
 }
 

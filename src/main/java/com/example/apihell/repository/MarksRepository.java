@@ -16,6 +16,8 @@ public interface MarksRepository extends JpaRepository<Mark, String> {
 
     List<Mark> getMarksByProfessor(String professorName);
 
+    List<Mark> getMarksBySubject(String subject);
+
     @Query(value="SELECT * FROM marks", nativeQuery = true)
     List<Mark> getAll();
 }

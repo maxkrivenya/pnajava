@@ -12,6 +12,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/marks")
+@Transactional
 public class MarksController {
     private final
     MarksService marksService;
@@ -43,6 +44,16 @@ public class MarksController {
     @GetMapping("/student/{studentId}")
     ResponseEntity<List<Mark>> getMarksByStudentId(@PathVariable(name="studentId") String studentId){
         List<Mark> marks = marksService.getMarksByStudId(studentId);
+        if(marks.isEmpty()) {
+            return new ResponseEntity<>(marks, HttpStatus.NO_CONTENT);
+        }else{
+            return new ResponseEntity<>(marks, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/subject/{subject}")
+    ResponseEntity<List<Mark>> getMarksBySubject(@PathVariable(name="subject") String subject){
+        List<Mark> marks = marksService.getMarksBySubject(subject);
         if(marks.isEmpty()) {
             return new ResponseEntity<>(marks, HttpStatus.NO_CONTENT);
         }else{
