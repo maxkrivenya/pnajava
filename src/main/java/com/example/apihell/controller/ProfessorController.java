@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import com.example.apihell.service.ProfessorService;
-
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")

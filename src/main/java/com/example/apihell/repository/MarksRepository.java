@@ -9,10 +9,13 @@ public interface MarksRepository extends JpaRepository<Mark, String> {
     @Query(value = "select mark from marks where student_id = ?1", nativeQuery = true)
     List<Integer> getMarksByDateBetween(String studId);
 
-    @Query(value = "select mark from marks where student_id = ?1 and subj = ?2", nativeQuery = true)
+    @Query(value = "select mark from marks where student_id = ?1 and subject = ?2", nativeQuery = true)
     List<Integer>  getMarksForStudentForSubject(String studentId, String subject);
 
     List<Mark> getMarksByStudentId(String id);
 
-    void deleteMarksByStudentId(String studentId);
+    List<Mark> getMarksByProfessor(String professorName);
+
+    @Query(value="SELECT * FROM marks", nativeQuery = true)
+    List<Mark> getAll();
 }

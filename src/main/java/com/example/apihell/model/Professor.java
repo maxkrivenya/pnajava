@@ -20,7 +20,7 @@ public class Professor {
     private String department;
 
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "sem",
             joinColumns = @JoinColumn(name = "lecturer"),

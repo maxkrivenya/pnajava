@@ -48,7 +48,7 @@ public class Student {
     List<Skip> skips;
 
     @JsonBackReference
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     List<Professor> professors;
 
     public List<Skip> getSkips() {

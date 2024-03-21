@@ -126,7 +126,7 @@ public class StudentController {
             return new ResponseEntity<>(list, HttpStatus.OK);
         }
     }
-    @GetMapping("/student/{id}/professorsnames")
+    @GetMapping("/student/{id}/professors/names")
     public ResponseEntity<List<String>> getProfessorNamesForStudent(@PathVariable("id") String id){
         List<String> list = studentService.getProfessorsNamesByStudentId(id);
         if(list.isEmpty()) {

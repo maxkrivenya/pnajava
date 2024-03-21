@@ -21,8 +21,30 @@ public class Mark {
     @Column(name="date")
     private String date;
 
+    public Mark(Student student, Integer value, String subject, String date, String type, String professor) {
+        this.student = student;
+        this.value = value;
+        this.subject = subject;
+        this.date = date;
+        this.type = type;
+        this.professor = professor;
+    }
+
+    public Mark(){}
+
     @Column(name="type")
     private String type;
+
+    @Column(name="professor")
+    private String professor;
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
+    }
 
     public Student getStudent() {
         return student;
