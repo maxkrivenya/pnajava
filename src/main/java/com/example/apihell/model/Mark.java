@@ -1,65 +1,41 @@
 package com.example.apihell.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-@Table(name = "marks")
+
 @Entity
+@Table(name="marks")
 public class Mark {
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="student_id")
-    private Student student;
-
-    @Column(name="mark")
-    private Integer value;
-
-    @Column(name="subject")
-    private String subject;
-
     @Id
+    @Column(name="id")
+    private String id;
     @Column(name="date")
     private String date;
-
-    public Mark(Student student, Integer value, String subject, String date, String type, String professor) {
-        this.student = student;
-        this.value = value;
-        this.subject = subject;
-        this.date = date;
-        this.type = type;
-        this.professor = professor;
-    }
+    @Column(name="value")
+    private Integer value;
+    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Student student;
+    @JoinColumn(name = "professor-id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Professor professor;
+    @JoinColumn(name="subject-id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Subject subject;
 
     public Mark(){}
 
-    @Column(name="type")
-    private String type;
-
-    @Column(name="professor")
-    private String professor;
-
-    public String getProfessor() {
-        return professor;
+    public Mark(String id, String date, Integer value) {
+        this.id = id;
+        this.date = date;
+        this.value = value;
     }
 
-    public void setProfessor(String professor) {
-        this.professor = professor;
+    public String getId() {
+        return id;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subj) {
-        this.subject = subj;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -70,14 +46,6 @@ public class Mark {
         this.date = date;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Integer getValue() {
         return value;
     }
@@ -86,4 +54,27 @@ public class Mark {
         this.value = value;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
 }

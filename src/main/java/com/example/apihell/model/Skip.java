@@ -1,56 +1,67 @@
 package com.example.apihell.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="skips")
 public class Skip {
-
     @Id
+    @Column(name="id")
+    private String id;
     @Column(name="date")
     private String date;
+    @Column(name="value")
+    private Integer value;
+    @Column(name="reasonable")
+    private Boolean reasonable;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="stud_id")
+    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Student student;
-
-    @Column(name="subject")
-    private String subject;
-
-    @Column(name="semester_number")
-    private int semesterNumber;
-
-    @Column(name="hours")
-    private int hours;
-
-    public int getHours() {
-        return hours;
-    }
-
-
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-
-    public Skip(Student student, String subject, int semesterNumber, String date, int hours) {
-        this.student = student;
-        this.subject = subject;
-        this.semesterNumber = semesterNumber;
+    @JoinColumn(name = "professor-id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Professor professor;
+    @JoinColumn(name="subject-id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Subject subject;
+    public Skip(){}
+    public Skip(String id, String date, Integer value, Boolean reasonable) {
+        this.id = id;
         this.date = date;
-        this.hours = hours;
+        this.value = value;
+        this.reasonable = reasonable;
     }
 
-    public Skip(String subject, int semesterNumber, String date, int hours) {
-        this.subject = subject;
-        this.semesterNumber = semesterNumber;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
         this.date = date;
-        this.hours = hours;
     }
 
-    public Skip() {
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public Boolean getReasonable() {
+        return reasonable;
+    }
+
+    public void setReasonable(Boolean reasonable) {
+        this.reasonable = reasonable;
     }
 
     public Student getStudent() {
@@ -61,27 +72,19 @@ public class Skip {
         this.student = student;
     }
 
-    public String getSubject() {
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
-    }
-
-    public int getSemesterNumber() {
-        return semesterNumber;
-    }
-
-    public void setSemesterNumber(int semesterNumber) {
-        this.semesterNumber = semesterNumber;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

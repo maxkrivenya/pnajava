@@ -6,12 +6,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "profs")
+@Table(name = "professors")
 public class Professor {
 
     @Id
-    @Column(name="name")
-    private String name;
+    @Column(name="id")
+    private String id;
 
     @Column(name="title")
     private String title;
@@ -19,45 +19,22 @@ public class Professor {
     @Column(name="department")
     private String department;
 
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinTable(
-            name = "sem",
-            joinColumns = @JoinColumn(name = "lecturer"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    List<Student> students;
+    @OneToMany(fetch = FetchType.LAZY)
+    List<Mark> marks;
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public Professor(String name, String title, String department) {
-        this.name = name;
+    public Professor(){}
+    public Professor(String id, String title, String department) {
+        this.id = id;
         this.title = title;
         this.department = department;
     }
 
-    public Professor() {
+    public String getId() {
+        return id;
     }
 
-    public Professor(String name, String title, String department, List<Student> students) {
-        this.name = name;
-        this.title = title;
-        this.department = department;
-        this.students = students;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

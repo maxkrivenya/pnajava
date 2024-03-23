@@ -1,9 +1,7 @@
 package com.example.apihell.model;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -13,58 +11,51 @@ public class Student {
     @Id
     @Column(name="id")
     private String id;
+    @Column(name="group-id")
+    private String groupId;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name="semester_number")
-    private int semesterNumber;
-
-    @Column(name="group")
-    private String group;
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public int getSemesterNumber() {
-        return semesterNumber;
-    }
-
-    public void setSemesterNumber(int semester) {
-        this.semesterNumber = semester;
-    }
-
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "student")
+    private PersonalData personalData;
+    @OneToMany(fetch = FetchType.EAGER)
     List<Mark> marks;
-
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER)
     List<Skip> skips;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    List<Professor> professors;
+    public Student(){}
 
-    public List<Skip> getSkips() {
-        return skips;
-    }
-
-    public void setSkips(List<Skip> skips) {
+    public Student(String id, String groupId, Integer semesterNumber, PersonalData personalData, List<Mark> marks, List<Skip> skips) {
+        this.id = id;
+        this.groupId = groupId;
+        this.personalData = personalData;
+        this.marks = marks;
         this.skips = skips;
     }
 
-    public List<Professor> getProfessors() {
-        return professors;
+    public Student(String id, String groupId, Integer semesterNumber) {
+        this.id = id;
+        this.groupId = groupId;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public PersonalData getPersonalData() {
+        return personalData;
+    }
+
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
     }
 
     public List<Mark> getMarks() {
@@ -75,35 +66,11 @@ public class Student {
         this.marks = marks;
     }
 
-    public Student(String id, String name, int semesterNumber, String group) {
-        this.id = id;
-        this.name = name;
-        this.semesterNumber = semesterNumber;
-        this.group = group;
+    public List<Skip> getSkips() {
+        return skips;
     }
 
-    public Student() {
+    public void setSkips(List<Skip> skips) {
+        this.skips = skips;
     }
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Student [id=" + id + ", name=" + name + "]";
-    }
-
 }
