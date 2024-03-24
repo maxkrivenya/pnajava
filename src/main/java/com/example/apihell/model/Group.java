@@ -34,39 +34,30 @@ public class Group {
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public String getDegree() {
         return degree;
     }
-
     public void setDegree(String degree) {
         this.degree = degree;
     }
-
     public String getFaculty() {
         return faculty;
     }
-
     public void setFaculty(String faculty) {
         this.faculty = faculty;
     }
-
     public Integer getSemesterNumber() {
         return semesterNumber;
     }
-
     public void setSemesterNumber(Integer semesterNumber) {
         this.semesterNumber = semesterNumber;
     }
-
     public String getEducationType() {
         return educationType;
     }
-
     public void setEducationType(String educationType) {
         this.educationType = educationType;
     }

@@ -1,85 +1,44 @@
 package com.example.apihell.model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.apihell.base.Person;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student extends Person {
 
-    @Id
-    @Column(name="id")
-    private String id;
     @Column(name="group-id")
     private String groupId;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "student")
-    private PersonalData personalData;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @JsonManagedReference
+    private List<Mark> marks;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="student-id", referencedColumnName = "id")
     @JsonManagedReference
-    List<Mark> marks;
+    private List<Skip> skips;
 
-    /*
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="student-id", referencedColumnName = "id")
-    @JsonManagedReference
-    List<Skip> skips;
-    */
-    public Student(){}
-
-    public Student(String id, String groupId, PersonalData personalData, List<Mark> marks, List<Skip> skips) {
-        this.id = id;
+    public Student(){ super(); }
+    public Student(String id, String surname, String name, String patronim, String groupId) {
+        super(id, surname, name, patronim);
         this.groupId = groupId;
-        this.personalData = personalData;
+    }
+    public Student(String id, String surname, String name, String patronim, String groupId, List<Mark> marks, List<Skip> skips) {
+        super(id, surname, name, patronim);
+        this.groupId = groupId;
         this.marks = marks;
-  //      this.skips = skips;
-    }
-
-    public Student(String id, String groupId) {
-        this.id = id;
-        this.groupId = groupId;
-    }
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public PersonalData getPersonalData() {
-        return personalData;
-    }
-
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
-    public List<Mark> getMarks() {
-        return marks;
-    }
-
-    public void setMarks(List<Mark> marks) {
-        this.marks = marks;
-    }
-/*
-    public List<Skip> getSkips() {
-        return skips;
-    }
-
-    public void setSkips(List<Skip> skips) {
         this.skips = skips;
     }
 
- */
+    public String getGroupId() { return groupId; }
+    public void setGroupId(String groupId) { this.groupId = groupId; }
+    public List<Mark> getMarks() { return marks; }
+    public void setMarks(List<Mark> marks) { this.marks = marks; }
+    public List<Skip> getSkips() { return skips; }
+    public void setSkips(List<Skip> skips) { this.skips = skips; }
+
 }

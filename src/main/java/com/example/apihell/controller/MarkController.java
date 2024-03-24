@@ -1,13 +1,10 @@
 package com.example.apihell.controller;
-
 import com.example.apihell.model.Mark;
 import com.example.apihell.service.MarkService;
 import jakarta.transaction.Transactional;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -16,7 +13,6 @@ import java.util.List;
 @Transactional
 public class MarkController {
     private final MarkService markService;
-
     public MarkController(MarkService markService) {
         this.markService = markService;
     }

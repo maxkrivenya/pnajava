@@ -1,63 +1,35 @@
 package com.example.apihell.model;
 
+import com.example.apihell.base.LectureResult;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="skips")
-public class Skip {
-    @Id
-    @Column(name="id")
-    private String id;
-    @Column(name="date")
-    private String date;
-    @Column(name="value")
-    private Integer value;
+public class Skip extends LectureResult {
+
     @Column(name="reasonable")
     private Boolean reasonable;
 
-    @JoinColumn(name="student-id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "student-id", referencedColumnName = "id")
+    @JsonBackReference
     private Student student;
 
-    /*
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Professor professor;
-    @JoinColumn(name="subject-id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Subject subject;
-   */
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "subject-id", referencedColumnName = "id")
+    @JsonBackReference
+    transient Subject subject;
 
     public Skip(){}
     public Skip(String id, String date, Integer value, Boolean reasonable) {
-        this.id = id;
-        this.date = date;
-        this.value = value;
+        super(id,date,value);
         this.reasonable = reasonable;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
     }
 
     public Boolean getReasonable() {
@@ -76,22 +48,13 @@ public class Skip {
         this.student = student;
     }
 
-    /*
-    public Professor getProfessor() {
-        return professor;
-    }
+    public Professor getProfessor() { return professor;}
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
+    public void setProfessor(Professor professor) { this.professor = professor; }
 
-    public Subject getSubject() {
-        return subject;
-    }
+    public Subject getSubject() { return subject; }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
+    public void setSubject(Subject subject) { this.subject = subject; }
 
-     */
+
 }
