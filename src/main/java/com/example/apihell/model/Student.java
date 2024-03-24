@@ -16,22 +16,29 @@ public class Student {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "student")
     private PersonalData personalData;
-    @OneToMany(fetch = FetchType.EAGER)
-    List<Mark> marks;
-    @OneToMany(fetch = FetchType.EAGER)
-    List<Skip> skips;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @JsonManagedReference
+    List<Mark> marks;
+
+    /*
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @JsonManagedReference
+    List<Skip> skips;
+    */
     public Student(){}
 
-    public Student(String id, String groupId, Integer semesterNumber, PersonalData personalData, List<Mark> marks, List<Skip> skips) {
+    public Student(String id, String groupId, PersonalData personalData, List<Mark> marks, List<Skip> skips) {
         this.id = id;
         this.groupId = groupId;
         this.personalData = personalData;
         this.marks = marks;
-        this.skips = skips;
+  //      this.skips = skips;
     }
 
-    public Student(String id, String groupId, Integer semesterNumber) {
+    public Student(String id, String groupId) {
         this.id = id;
         this.groupId = groupId;
     }
@@ -65,7 +72,7 @@ public class Student {
     public void setMarks(List<Mark> marks) {
         this.marks = marks;
     }
-
+/*
     public List<Skip> getSkips() {
         return skips;
     }
@@ -73,4 +80,6 @@ public class Student {
     public void setSkips(List<Skip> skips) {
         this.skips = skips;
     }
+
+ */
 }

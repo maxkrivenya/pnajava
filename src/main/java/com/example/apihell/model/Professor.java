@@ -18,10 +18,10 @@ public class Professor {
 
     @Column(name="department")
     private String department;
-
+/*
     @OneToMany(fetch = FetchType.LAZY)
     List<Mark> marks;
-
+*/
     public Professor(){}
     public Professor(String id, String title, String department) {
         this.id = id;

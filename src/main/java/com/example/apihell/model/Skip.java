@@ -18,12 +18,16 @@ public class Skip {
     @JoinColumn(name="student-id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Student student;
+
+    /*
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Professor professor;
     @JoinColumn(name="subject-id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
+   */
+
     public Skip(){}
     public Skip(String id, String date, Integer value, Boolean reasonable) {
         this.id = id;
@@ -72,6 +76,7 @@ public class Skip {
         this.student = student;
     }
 
+    /*
     public Professor getProfessor() {
         return professor;
     }
@@ -87,4 +92,6 @@ public class Skip {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
+
+     */
 }

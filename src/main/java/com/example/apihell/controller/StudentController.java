@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/student")
 @Transactional
 public class StudentController {
     private final StudentService studentService;
@@ -20,7 +20,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable("id") String id) {
         Student student = studentService.getStudentById(id);
         if (student==null) {
@@ -31,7 +31,7 @@ public class StudentController {
         }
     }
 
-    @GetMapping("/student/{id}/personaldata")
+    @GetMapping("/{id}/personaldata")
     public ResponseEntity<PersonalData> getStudentPersonalDataById(@PathVariable("id") String id) {
         Student student = studentService.getStudentById(id);
         if (student==null) {

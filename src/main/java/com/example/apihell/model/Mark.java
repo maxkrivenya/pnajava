@@ -1,5 +1,6 @@
 package com.example.apihell.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,16 +13,20 @@ public class Mark {
     private String date;
     @Column(name="value")
     private Integer value;
-    @JoinColumn(name="student-id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "student-id", referencedColumnName = "id")
+    @JsonBackReference
     private Student student;
-    @JoinColumn(name = "professor-id", referencedColumnName = "id")
+
+    /*
+v
     @ManyToOne(fetch = FetchType.LAZY)
     private Professor professor;
     @JoinColumn(name="subject-id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
-
+*/
     public Mark(){}
 
     public Mark(String id, String date, Integer value) {
@@ -62,6 +67,7 @@ public class Mark {
         this.student = student;
     }
 
+    /*
     public Professor getProfessor() {
         return professor;
     }
@@ -77,4 +83,5 @@ public class Mark {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
+    */
 }

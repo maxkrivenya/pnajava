@@ -17,9 +17,10 @@ public class Subject {
     @Column(name = "semester-id")
     String semesterId;
 
+    /*
     @OneToMany(fetch = FetchType.LAZY)
     List<Mark> marks;
-
+*/
     public Subject(){}
     public Subject(String id, String name, String fullName, String semesterId) {
         this.id = id;
