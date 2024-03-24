@@ -11,12 +11,12 @@ public class Skip extends LectureResult {
     @Column(name="reasonable")
     private Boolean reasonable;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "student-id", referencedColumnName = "id")
     @JsonBackReference
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
     @JsonBackReference
     private Professor professor;

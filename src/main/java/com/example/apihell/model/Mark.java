@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Table(name="marks")
 public class Mark extends LectureResult {
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "student-id", referencedColumnName = "id")
     @JsonBackReference
     private Student student;

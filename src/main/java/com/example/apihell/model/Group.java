@@ -20,7 +20,7 @@ public class Group {
     @Column(name="education-type")
     private String educationType;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name="group-id")
     @JsonBackReference
     private List<Student> students;

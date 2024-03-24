@@ -42,8 +42,8 @@ public class GroupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) throws Exception{
+    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id){
         groupService.deleteGroupById(id);
-        return ResponseEntity.ok("deleted");
+        return ResponseEntity.ok("deleted group" + id);
     }
 }

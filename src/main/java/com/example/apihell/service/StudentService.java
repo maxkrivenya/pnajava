@@ -26,4 +26,8 @@ public class StudentService {
         Group group = groupRepository.getGroupById(id);
         return studentRepository.getStudentsByGroup(group);
     }
+
+    public void deleteStudentById(String id){
+        studentRepository.deleteStudentById(id);
+    }
 }

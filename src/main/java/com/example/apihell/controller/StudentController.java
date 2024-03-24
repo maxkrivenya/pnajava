@@ -54,4 +54,10 @@ public class StudentController {
         }
     }
 
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) throws Exception{
+        studentService.deleteStudentById(id);
+        return ResponseEntity.ok("deleted student " + id);
+    }
 }

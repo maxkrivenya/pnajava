@@ -9,13 +9,13 @@ import java.util.List;
 @Table(name = "student")
 public class Student extends Person {
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    //@JoinColumn(name="student-id", referencedColumnName = "id")
     @JsonManagedReference
     private List<Mark> marks;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="student-id", referencedColumnName = "id")
+    @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    //@JoinColumn(name="student-id", referencedColumnName = "id")
     @JsonManagedReference
     private List<Skip> skips;
 
@@ -53,5 +53,9 @@ public class Student extends Person {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+     public String toString(){
+        return this.getSurname() + this.getName() + this.getPatronim();
     }
 }

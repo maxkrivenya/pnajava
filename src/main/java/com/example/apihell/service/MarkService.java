@@ -16,4 +16,8 @@ public class MarkService{
     public List<Mark> getMarksByStudentId(String id){
         return markRepository.getMarksByStudentId(id);
     }
+
+    public void deleteMarkById(String id){
+        markRepository.deleteMarkById(id);
+    }
 }
