@@ -1,14 +1,13 @@
 package com.example.apihell.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 public class Group {
-
     @Id
     @Column(name="id")
     private String id;
@@ -21,6 +20,11 @@ public class Group {
     @Column(name="education-type")
     private String educationType;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="group-id")
+    @JsonBackReference
+    private List<Student> students;
+
     public Group(){
     }
     public Group(String id, String degree, String faculty, Integer semesterNumber, String educationType) {
@@ -31,9 +35,7 @@ public class Group {
         this.educationType = educationType;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
     public void setId(String id) {
         this.id = id;
     }
@@ -60,5 +62,12 @@ public class Group {
     }
     public void setEducationType(String educationType) {
         this.educationType = educationType;
+    }
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

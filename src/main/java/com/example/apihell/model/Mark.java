@@ -13,10 +13,15 @@ public class Mark extends LectureResult {
     @JsonBackReference
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
     @JsonBackReference
     private Professor professor;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "subject-id", referencedColumnName = "id")
+    @JsonBackReference
+    private Subject subject;
 
     public Mark(){
         super();
@@ -29,4 +34,6 @@ public class Mark extends LectureResult {
     public void setStudent(Student student) { this.student = student; }
     public Professor getProfessor() { return professor; }
     public void setProfessor(Professor professor) { this.professor = professor; }
+    public Subject getSubject() { return subject; }
+    public void setSubject(Subject subject) { this.subject = subject; }
 }

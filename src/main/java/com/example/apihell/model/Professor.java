@@ -15,12 +15,12 @@ public class Professor extends Person {
     @Column(name="department")
     private String department;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="professor-id", referencedColumnName = "id")
     @JsonManagedReference
     private List<Mark> marks;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="professor-id", referencedColumnName = "id")
     @JsonManagedReference
     private List<Skip> skips;

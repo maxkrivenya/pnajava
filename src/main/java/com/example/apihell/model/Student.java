@@ -9,9 +9,6 @@ import java.util.List;
 @Table(name = "student")
 public class Student extends Person {
 
-    @Column(name="group-id")
-    private String groupId;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="student-id", referencedColumnName = "id")
     @JsonManagedReference
@@ -22,23 +19,39 @@ public class Student extends Person {
     @JsonManagedReference
     private List<Skip> skips;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "group-id")
+    @JsonManagedReference
+    private Group group;
+
     public Student(){ super(); }
-    public Student(String id, String surname, String name, String patronim, String groupId) {
+
+    public Student(String id, String surname, String name, String patronim, List<Mark> marks) {
         super(id, surname, name, patronim);
-        this.groupId = groupId;
-    }
-    public Student(String id, String surname, String name, String patronim, String groupId, List<Mark> marks, List<Skip> skips) {
-        super(id, surname, name, patronim);
-        this.groupId = groupId;
         this.marks = marks;
+    }
+
+    public List<Mark> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(List<Mark> marks) {
+        this.marks = marks;
+    }
+
+    public List<Skip> getSkips() {
+        return skips;
+    }
+
+    public void setSkips(List<Skip> skips) {
         this.skips = skips;
     }
 
-    public String getGroupId() { return groupId; }
-    public void setGroupId(String groupId) { this.groupId = groupId; }
-    public List<Mark> getMarks() { return marks; }
-    public void setMarks(List<Mark> marks) { this.marks = marks; }
-    public List<Skip> getSkips() { return skips; }
-    public void setSkips(List<Skip> skips) { this.skips = skips; }
+    public Group getGroup() {
+        return group;
+    }
 
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 }
