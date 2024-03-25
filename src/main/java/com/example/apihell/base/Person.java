@@ -6,11 +6,11 @@ import java.io.Serializable;
 public abstract class Person implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @Column(name="surname", nullable = false)
+    @Column(name="surname")
     private String surname;
-    @Column(name="name", nullable = false)
+    @Column(name="name")
     private String name;
     @Column(name="patronim", nullable = true)
     private String patronim;
@@ -21,6 +21,13 @@ public abstract class Person implements Serializable {
         this.surname = surname;
         this.name = name;
         this.patronim = patronim;
+    }
+
+    protected Person(Person person) {
+        this.id = person.id;
+        this.name = person.name;
+        this.surname = person.surname;
+        this.patronim = person.patronim;
     }
 
     public String getId() {

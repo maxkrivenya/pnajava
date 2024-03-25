@@ -2,7 +2,6 @@ package com.example.apihell.service;
 
 import com.example.apihell.model.Group;
 import com.example.apihell.repository.GroupRepository;
-import jakarta.xml.ws.WebFault;
 import org.springframework.stereotype.Service;
 
 @Service

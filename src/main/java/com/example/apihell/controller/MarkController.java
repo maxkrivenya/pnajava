@@ -37,7 +37,7 @@ public class MarkController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) throws Exception{
+    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id){
         markService.deleteMarkById(id);
         return ResponseEntity.ok("deleted mark" + id);
     }

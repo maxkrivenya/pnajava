@@ -5,6 +5,7 @@ import com.example.apihell.model.Student;
 import com.example.apihell.service.StudentService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,9 +55,16 @@ public class StudentController {
         }
     }
 
+    @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Student> createStudent(@RequestBody Student student){
+        Student savedStudent = studentService.addStudent(student);
+        return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
+    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) throws Exception{
+
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
         studentService.deleteStudentById(id);
         return ResponseEntity.ok("deleted student " + id);
     }

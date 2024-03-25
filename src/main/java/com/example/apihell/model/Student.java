@@ -1,5 +1,6 @@
 package com.example.apihell.model;
 import com.example.apihell.base.Person;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -7,15 +8,14 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
+@JsonIgnoreProperties({"marks","group","skips"})
 public class Student extends Person {
 
     @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    //@JoinColumn(name="student-id", referencedColumnName = "id")
     @JsonManagedReference
     private List<Mark> marks;
 
     @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    //@JoinColumn(name="student-id", referencedColumnName = "id")
     @JsonManagedReference
     private List<Skip> skips;
 
@@ -29,6 +29,14 @@ public class Student extends Person {
     public Student(String id, String surname, String name, String patronim, List<Mark> marks) {
         super(id, surname, name, patronim);
         this.marks = marks;
+    }
+
+    public Student(Person person) {
+        super(person);
+    }
+
+    public Student(String id, String surname, String name, String patronim) {
+        super(id, surname, name, patronim);
     }
 
     public List<Mark> getMarks() {
@@ -58,4 +66,5 @@ public class Student extends Person {
      public String toString(){
         return this.getSurname() + this.getName() + this.getPatronim();
     }
+
 }
