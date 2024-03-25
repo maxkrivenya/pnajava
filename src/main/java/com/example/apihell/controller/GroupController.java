@@ -1,10 +1,12 @@
 package com.example.apihell.controller;
 
+import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Student;
 import com.example.apihell.service.GroupService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,9 +43,31 @@ public class GroupController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id){
+    @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Group> createGroup(@RequestBody Group group){
+        Group savedGroup  = groupService.save(group);
+        return new ResponseEntity<>(savedGroup, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Group> updateGroup(@PathVariable String id, @RequestBody Group group){
+        Group updatedGroup  = groupService.getGroupById(id);
+        if(updatedGroup == null){
+            throw new ResourceNotFoundException("no such group!");
+        }
+        updatedGroup.setId(group.getId());
+        updatedGroup.setDegree(group.getDegree());
+        updatedGroup.setFaculty(group.getFaculty());
+        updatedGroup.setEducationType(group.getEducationType());
+        updatedGroup.setSemesterNumber(group.getSemesterNumber());
+
+        groupService.save(updatedGroup);
+        return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
         groupService.deleteGroupById(id);
-        return ResponseEntity.ok("deleted group" + id);
+        return ResponseEntity.ok("deleted group " + id);
     }
 }

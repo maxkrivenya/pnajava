@@ -7,4 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SkipRepository extends JpaRepository<Skip, String> {
     List<Skip> getSkipsByStudent(Student student);
+
+    Skip getSkipById(String id);
+
+    void deleteSkipById(String id);
+    Skip save(Skip skip);
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Table(name = "groups")
 public class Group implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id")
     private String id;
     @Column(name="degree")

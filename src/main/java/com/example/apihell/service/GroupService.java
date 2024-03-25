@@ -31,4 +31,8 @@ public class GroupService {
     public void deleteGroupById(String id){
         groupRepository.deleteById(id);
     }
+
+    public Group save(Group group){
+        return groupRepository.save(group);
+    }
 }

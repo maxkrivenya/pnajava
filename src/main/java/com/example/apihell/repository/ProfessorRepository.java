@@ -4,5 +4,8 @@ import com.example.apihell.model.Professor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProfessorRepository extends JpaRepository<Professor, String> {
-    public Professor getProfessorById(String id);
+    Professor getProfessorById(String id);
+    Professor save(Professor professor);
+    void deleteProfessorById(String id);
+
 }

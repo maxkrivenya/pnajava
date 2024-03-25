@@ -13,5 +13,6 @@ public interface GroupRepository extends JpaRepository<Group, String> {
     );
 
     void deleteById(String id);
-}
 
+    Group save(Group group);
+    }

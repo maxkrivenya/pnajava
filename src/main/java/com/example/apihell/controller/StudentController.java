@@ -1,5 +1,6 @@
 package com.example.apihell.controller;
 
+import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Mark;
 import com.example.apihell.model.Student;
 import com.example.apihell.service.StudentService;
@@ -57,13 +58,26 @@ public class StudentController {
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Student> createStudent(@RequestBody Student student){
-        Student savedStudent = studentService.addStudent(student);
+        Student savedStudent  = studentService.save(student);
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
+    @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Student> updateStudent(@PathVariable String id, @RequestBody Student student){
+        Student updatedStudent  = studentService.getStudentById(id);
+        if(updatedStudent == null){
+            throw new ResourceNotFoundException("no such student!");
+        }
+        updatedStudent.setId(student.getId());
+        updatedStudent.setName(student.getName());
+        updatedStudent.setSurname(student.getSurname());
+        updatedStudent.setSurname(student.getPatronim());
 
+        studentService.save(updatedStudent);
+        return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+    }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
         studentService.deleteStudentById(id);
         return ResponseEntity.ok("deleted student " + id);

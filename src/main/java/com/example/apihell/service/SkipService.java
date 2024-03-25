@@ -21,4 +21,16 @@ public class SkipService{
         Student student = studentRepository.getStudentById(id);
         return skipRepository.getSkipsByStudent(student);
     }
+
+    public Skip save(Skip skip){
+        return skipRepository.save(skip);
+    }
+
+    public Skip getSkipById(String id){
+        return skipRepository.getSkipById(id);
+    }
+
+    public void deleteSkipById(String id){
+        skipRepository.deleteSkipById(id);
+    }
 }

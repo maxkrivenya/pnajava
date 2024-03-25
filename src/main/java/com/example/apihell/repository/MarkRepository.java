@@ -9,6 +9,8 @@ import java.util.List;
 public interface MarkRepository extends JpaRepository<Mark, String> {
     @Nullable
     List<Mark> getMarksByStudentId(String id);
-
+    Mark getMarkById(String id);
     void deleteMarkById(String id);
+
+    Mark save(Mark mark);
 }

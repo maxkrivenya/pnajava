@@ -11,9 +11,14 @@ public class ProfessorService {
     public ProfessorService(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
     }
-
     @Nullable
     public Professor getProfessorById(String id){
         return professorRepository.getProfessorById(id);
+    }
+    public Professor save(Professor professor){
+        return professorRepository.save(professor);
+    }
+    public void deleteProfessorById(String id){
+        professorRepository.deleteProfessorById(id);
     }
 }

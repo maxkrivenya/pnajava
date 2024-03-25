@@ -5,7 +5,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class LectureResult implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id")
     private String id;
     @Column(name="date", nullable = false)

@@ -17,7 +17,15 @@ public class MarkService{
         return markRepository.getMarksByStudentId(id);
     }
 
+    public Mark save(Mark mark){
+        return markRepository.save(mark);
+    }
+
     public void deleteMarkById(String id){
         markRepository.deleteMarkById(id);
+    }
+
+    public Mark getMarkById(String id) {
+        return markRepository.getMarkById(id);
     }
 }

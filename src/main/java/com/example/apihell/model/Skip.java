@@ -2,21 +2,23 @@ package com.example.apihell.model;
 
 import com.example.apihell.base.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="skips")
+@JsonIgnoreProperties({"student","professor","subject"})
 public class Skip extends LectureResult {
 
     @Column(name="reasonable")
     private Boolean reasonable;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "student-id", referencedColumnName = "id")
     @JsonBackReference
     private Student student;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
     @JsonBackReference
     private Professor professor;
@@ -24,7 +26,7 @@ public class Skip extends LectureResult {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject-id", referencedColumnName = "id")
     @JsonBackReference
-    transient Subject subject;
+    private Subject subject;
 
     public Skip(){}
     public Skip(String id, String date, Integer value, Boolean reasonable) {

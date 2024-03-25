@@ -1,6 +1,7 @@
 package com.example.apihell.model;
 
 import com.example.apihell.base.Person;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "professors")
+@JsonIgnoreProperties({"marks","skips"})
 public class Professor extends Person {
     @Column(name="title")
     private String title;

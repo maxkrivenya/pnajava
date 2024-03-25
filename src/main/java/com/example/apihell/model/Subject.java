@@ -1,5 +1,6 @@
 package com.example.apihell.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -8,8 +9,10 @@ import java.util.List;
 
 @Entity
 @Table(name="subjects")
+@JsonIgnoreProperties({"marks","skips"})
 public class Subject implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     String id;
     @Column(name = "name")
@@ -19,16 +22,13 @@ public class Subject implements Serializable {
     @Column(name = "semester-id")
     String semesterId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="subject-id", referencedColumnName = "id")
+    @OneToMany(mappedBy ="subject",cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<Mark> marks;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="subject-id", referencedColumnName = "id")
+    @OneToMany(mappedBy ="subject",cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<Skip> skips;
-
     public Subject(){}
     public Subject(String id, String name, String fullName, String semesterId) {
         this.id = id;
