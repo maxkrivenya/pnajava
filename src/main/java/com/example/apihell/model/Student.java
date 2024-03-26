@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
-@JsonIgnoreProperties({"marks","group","skips"})
+//@JsonIgnoreProperties({"marks","group","skips"})
 public class Student extends Person {
 
     @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

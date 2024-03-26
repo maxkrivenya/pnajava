@@ -1,6 +1,7 @@
 package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.model.Group;
 import com.example.apihell.model.Subject;
 import com.example.apihell.service.SubjectService;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,25 @@ public class SubjectController {
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    ResponseEntity<Subject> getSubjectById(@PathVariable(name="id") String id){
+        Subject subject = subjectService.getSubjectById(id);
+        if(subject==null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(subject, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/groups")
+    ResponseEntity<List<Group>> getGroupsById(@PathVariable(name="id") String id){
+        Subject subject = subjectService.getSubjectById(id);
+        if(subject==null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(subject.getGroups(), HttpStatus.OK);
+    }
+
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Subject> createSubject(@RequestBody Subject subject){

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "professors")
-@JsonIgnoreProperties({"marks","skips"})
+//@JsonIgnoreProperties({"marks","skips", "subjects"})
 public class Professor extends Person {
     @Column(name="title")
     private String title;
@@ -27,6 +27,14 @@ public class Professor extends Person {
     @JsonManagedReference
     private List<Skip> skips;
 
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="subject-professor",
+            joinColumns = @JoinColumn(name = "professor-id"),
+            inverseJoinColumns = @JoinColumn(name = "subject-id"))
+    @JsonManagedReference
+    private List<Subject> subjects;
+
     public Professor(){}
     public Professor(String id, String title, String department) {
         this.setId(id);
@@ -37,4 +45,10 @@ public class Professor extends Person {
     public void setTitle(String title) { this.title = title; }
     public String getDepartment() { return department; }
     public void setDepartment(String department) { this.department = department; }
+    public List<Mark> getMarks() { return marks; }
+    public void setMarks(List<Mark> marks) { this.marks = marks; }
+    public List<Skip> getSkips() { return skips; }
+    public void setSkips(List<Skip> skips)  { this.skips = skips; }
+    public List<Subject> getSubjects() { return subjects; }
+    public void setSubjects(List<Subject> subjects) { this.subjects = subjects; }
 }

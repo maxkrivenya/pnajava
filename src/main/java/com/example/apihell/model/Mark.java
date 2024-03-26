@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="marks")
-@JsonIgnoreProperties({"student","professor","subject"})
+//@JsonIgnoreProperties({"student","professor","subject"})
 public class Mark extends LectureResult {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)

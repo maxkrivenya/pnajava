@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="skips")
-@JsonIgnoreProperties({"student","professor","subject"})
+//@JsonIgnoreProperties({"student","professor","subject"})
 public class Skip extends LectureResult {
 
     @Column(name="reasonable")

@@ -1,5 +1,6 @@
 package com.example.apihell.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="subjects")
-@JsonIgnoreProperties({"marks","skips"})
+//@JsonIgnoreProperties({"marks","skips", "professors"})
 public class Subject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -29,6 +30,23 @@ public class Subject implements Serializable {
     @OneToMany(mappedBy ="subject",cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<Skip> skips;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="subject-professor",
+            joinColumns = @JoinColumn(name = "subject-id"),
+            inverseJoinColumns = @JoinColumn(name = "professor-id"))
+    @JsonBackReference
+    private List<Professor> professors;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="exams",
+            joinColumns = @JoinColumn(name = "subject-id"),
+            inverseJoinColumns = @JoinColumn(name = "group-id"))
+    @JsonBackReference
+    private List<Group> groups;
+
     public Subject(){}
     public Subject(String id, String name, String fullName, String semesterId) {
         this.id = id;
@@ -49,4 +67,8 @@ public class Subject implements Serializable {
     public void setMarks(List<Mark> marks) { this.marks = marks; }
     public List<Skip> getSkips() { return skips; }
     public void setSkips(List<Skip> skips) { this.skips = skips; }
+    public List<Professor> getProfessors() { return professors; }
+    public void setProfessors(List<Professor> professors) { this.professors = professors; }
+    public List<Group> getGroups() { return groups; }
+    public void setGroups(List<Group> groups) { this.groups = groups; }
 }

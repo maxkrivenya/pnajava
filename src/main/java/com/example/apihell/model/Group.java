@@ -1,6 +1,9 @@
 package com.example.apihell.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "groups")
+//@JsonIgnoreProperties({"students","subjects"})
 public class Group implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,6 +30,14 @@ public class Group implements Serializable {
     @JoinColumn(name="group-id")
     @JsonBackReference
     private List<Student> students;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="exams",
+            joinColumns = @JoinColumn(name = "group-id"),
+            inverseJoinColumns = @JoinColumn(name = "subject-id"))
+    @JsonManagedReference
+    private List<Subject> subjects;
 
     public Group(){
     }
