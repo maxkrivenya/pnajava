@@ -26,12 +26,12 @@ public class Group implements Serializable {
     @Column(name="education-type")
     private String educationType;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name="group-id")
     @JsonBackReference
     private List<Student> students;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(
             name="exams",
             joinColumns = @JoinColumn(name = "group-id"),

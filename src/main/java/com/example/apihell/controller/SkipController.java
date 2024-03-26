@@ -28,7 +28,6 @@ public class SkipController {
         return new ResponseEntity<>(skips, HttpStatus.OK);
     }
 
-
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Skip> createSkip(@RequestBody Skip skip){
         Skip savedSkip  = skipService.save(skip);
@@ -50,8 +49,24 @@ public class SkipController {
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
+    public ResponseEntity<String> deleteSkipById(@PathVariable(name="id") String id) {
+        Skip skip = skipService.getSkipById(id);
+        if(skip==null) {
+            return new ResponseEntity<>("NO SUCH ENTITY", HttpStatus.NO_CONTENT);
+        }
+        skipService.deleteSkip(skip);
+        Skip deletedSkip = skipService.getSkipById(id);
+        System.out.println(deletedSkip.getId() + ' ' + deletedSkip.getDate());
+        return ResponseEntity.ok("deleted skip " + id + ' ' + skip.getId());
+    }
+
+    @DeleteMapping(path = "/delete/byId/{id}")
+    public ResponseEntity<String> deleteSkipByIdv2(@PathVariable(name="id") String id) {
+        Skip skip = skipService.getSkipById(id);
+        if(skip==null) {
+            return new ResponseEntity<>("NO SUCH ENTITY", HttpStatus.NO_CONTENT);
+        }
         skipService.deleteSkipById(id);
-        return ResponseEntity.ok("deleted skip " + id);
+        return ResponseEntity.ok("deleted skip " + id + ' ' + skip.getId());
     }
 }

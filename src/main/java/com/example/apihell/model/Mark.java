@@ -10,17 +10,17 @@ import jakarta.persistence.*;
 //@JsonIgnoreProperties({"student","professor","subject"})
 public class Mark extends LectureResult {
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student-id", referencedColumnName = "id")
     @JsonBackReference
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
     @JsonBackReference
     private Professor professor;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject-id", referencedColumnName = "id")
     @JsonBackReference
     private Subject subject;

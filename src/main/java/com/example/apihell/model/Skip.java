@@ -8,29 +8,49 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="skips")
 //@JsonIgnoreProperties({"student","professor","subject"})
-public class Skip extends LectureResult {
+public class Skip {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name="id")
+    private String id;
+    @Column(name="date", nullable = false)
+    private String date;
+    @Column(name="value", nullable = false)
+    private Integer value;
+
+    public Skip() {
+
+    }
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
+    public Integer getValue() { return value; }
+    public void setValue(Integer value) { this.value = value; }
     @Column(name="reasonable")
     private Boolean reasonable;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student-id", referencedColumnName = "id")
     @JsonBackReference
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professor-id", referencedColumnName = "id")
     @JsonBackReference
     private Professor professor;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject-id", referencedColumnName = "id")
     @JsonBackReference
     private Subject subject;
 
-    public Skip(){}
     public Skip(String id, String date, Integer value, Boolean reasonable) {
-        super(id,date,value);
+        this.id = id;
+        this.date = date;
+        this.value = value;
         this.reasonable = reasonable;
     }
 

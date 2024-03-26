@@ -30,6 +30,10 @@ public class SkipService{
         return skipRepository.getSkipById(id);
     }
 
+    public void deleteSkip(Skip skip){
+        skipRepository.delete(skip);
+    }
+
     public void deleteSkipById(String id){
         skipRepository.deleteSkipById(id);
     }

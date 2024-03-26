@@ -2,6 +2,7 @@ package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.service.StudentService;
 import jakarta.transaction.Transactional;
@@ -43,6 +44,19 @@ public class StudentController {
             return new ResponseEntity<>(student.getMarks(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(student.getMarks(), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/{id}/skips")
+    public ResponseEntity<List<Skip>> getStudentsSkipsById(@PathVariable("id") String id) {
+        Student student = studentService.getStudentById(id);
+        if(student==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (student.getMarks().isEmpty()) {
+            return new ResponseEntity<>(student.getSkips(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(student.getSkips(), HttpStatus.OK);
         }
     }
 

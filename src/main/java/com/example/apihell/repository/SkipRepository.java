@@ -10,6 +10,9 @@ public interface SkipRepository extends JpaRepository<Skip, String> {
 
     Skip getSkipById(String id);
 
+    void delete(Skip skip);
+
     void deleteSkipById(String id);
+
     Skip save(Skip skip);
 }

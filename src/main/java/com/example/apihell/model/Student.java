@@ -11,32 +11,77 @@ import java.util.List;
 //@JsonIgnoreProperties({"marks","group","skips"})
 public class Student extends Person {
 
-    @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    @Column(name="surname")
+    private String surname;
+    @Column(name="name")
+    private String name;
+    @Column(name="patronim", nullable = true)
+    private String patronim;
+
+    @OneToMany(mappedBy ="student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
     private List<Mark> marks;
 
-    @OneToMany(mappedBy ="student",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy ="student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
     private List<Skip> skips;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "group-id")
     @JsonManagedReference
     private Group group;
 
-    public Student(){ super(); }
-
-    public Student(String id, String surname, String name, String patronim, List<Mark> marks) {
-        super(id, surname, name, patronim);
-        this.marks = marks;
-    }
-
-    public Student(Person person) {
-        super(person);
-    }
-
     public Student(String id, String surname, String name, String patronim) {
-        super(id, surname, name, patronim);
+        this.id = id;
+        this.surname = surname;
+        this.name = name;
+        this.patronim = patronim;
+    }
+
+    public Student(String id, String surname, String name, String patronim, List<Mark> marks, List<Skip> skips, Group group) {
+        this.id = id;
+        this.surname = surname;
+        this.name = name;
+        this.patronim = patronim;
+        this.marks = marks;
+        this.skips = skips;
+        this.group = group;
+    }
+    public Student(){}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPatronim() {
+        return patronim;
+    }
+
+    public void setPatronim(String patronim) {
+        this.patronim = patronim;
     }
 
     public List<Mark> getMarks() {
@@ -62,9 +107,4 @@ public class Student extends Person {
     public void setGroup(Group group) {
         this.group = group;
     }
-
-     public String toString(){
-        return this.getSurname() + this.getName() + this.getPatronim();
-    }
-
 }
