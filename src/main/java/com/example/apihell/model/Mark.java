@@ -1,8 +1,7 @@
 package com.example.apihell.model;
 
-import com.example.apihell.base.LectureResult;
+import com.example.apihell.model.mappedSuperclass.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity

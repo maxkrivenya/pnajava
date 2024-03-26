@@ -1,7 +1,6 @@
 package com.example.apihell.model;
 
-import com.example.apihell.base.Person;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.example.apihell.model.mappedSuperclass.Person;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -35,52 +34,14 @@ public class Professor extends Person {
     @JsonManagedReference
     private List<Subject> subjects;
 
-    public Professor(){}
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-    @Column(name="surname")
-    private String surname;
-    @Column(name="name")
-    private String name;
-    @Column(name="patronim", nullable = true)
-    private String patronim;
+    public Professor(){
+        super();
+    }
 
-    public Professor(String title, String department, List<Mark> marks, List<Skip> skips, List<Subject> subjects, String id, String surname, String name, String patronim) {
+    public Professor(String id, String surname, String name, String patronim, String title, String department) {
+        super(id, surname, name, patronim);
         this.title = title;
         this.department = department;
-        this.marks = marks;
-        this.skips = skips;
-        this.subjects = subjects;
-        this.id = id;
-        this.surname = surname;
-        this.name = name;
-        this.patronim = patronim;
-    }
-
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    public String getSurname() {
-        return surname;
-    }
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getPatronim() {
-        return patronim;
-    }
-    public void setPatronim(String patronim) {
-        this.patronim = patronim;
     }
 
     public String getTitle() {

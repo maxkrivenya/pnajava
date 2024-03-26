@@ -1,14 +1,13 @@
 package com.example.apihell.model;
 
-import com.example.apihell.base.LectureResult;
+import com.example.apihell.model.mappedSuperclass.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="skips")
 //@JsonIgnoreProperties({"student","professor","subject"})
-public class Skip {
+public class Skip extends LectureResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

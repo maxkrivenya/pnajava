@@ -1,5 +1,7 @@
-package com.example.apihell.base;
+package com.example.apihell.model.mappedSuperclass;
+
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 @MappedSuperclass
