@@ -96,4 +96,10 @@ public class StudentController {
         studentService.deleteStudentById(id);
         return ResponseEntity.ok("deleted student " + id);
     }
+
+    @GetMapping(path="/cache")
+    public HttpStatus logCache(){
+        studentService.logCache();
+        return HttpStatus.NO_CONTENT;
+    }
 }

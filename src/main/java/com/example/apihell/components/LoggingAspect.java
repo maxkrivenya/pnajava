@@ -13,24 +13,6 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
     private final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Before("execution(* com.example.apihell.components.CacheComponent.get*(..))")
-    public void logCacheGet(JoinPoint joinPoint) {
-        String methodName = joinPoint.getSignature().getName();
-        logger.info("Cache get method invoked: {}", methodName);
-    }
-
-    @Before("execution(* com.example.apihell.components.CacheComponent.put*(..))")
-    public void logCachePut(JoinPoint joinPoint) {
-        String methodName = joinPoint.getSignature().getName();
-        logger.info("Cache put method invoked: {}", methodName);
-    }
-
-    @Before("execution(* com.example.apihell.components.CacheComponent.remove*(..))")
-    public void logCacheRemove(JoinPoint joinPoint) {
-        String methodName = joinPoint.getSignature().getName();
-        logger.info("Cache remove method invoked: {}", methodName);
-    }
-
     @Pointcut("execution(* com.example.apihell.service.*.*(..))")
     public void serviceMethods() { }
 

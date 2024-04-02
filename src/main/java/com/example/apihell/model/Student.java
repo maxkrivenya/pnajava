@@ -2,7 +2,6 @@ package com.example.apihell.model;
 import com.example.apihell.model.base.Person;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity

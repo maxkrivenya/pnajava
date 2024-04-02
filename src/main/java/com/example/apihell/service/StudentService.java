@@ -9,4 +9,5 @@ public interface StudentService {
     public List<Student> getStudentsByGroupId(String id);
     public void deleteStudentById(String id);
     public Student save(Student student);
+    public void logCache();
 }
