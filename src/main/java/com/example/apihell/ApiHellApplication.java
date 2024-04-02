@@ -8,3 +8,5 @@ public class ApiHellApplication {
         SpringApplication.run(ApiHellApplication.class, args);
     }
 }
+
+//sonar test
