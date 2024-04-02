@@ -55,8 +55,6 @@ public class SkipController {
             return new ResponseEntity<>("NO SUCH ENTITY", HttpStatus.NO_CONTENT);
         }
         skipService.deleteSkip(skip);
-        Skip deletedSkip = skipService.getSkipById(id);
-        System.out.println(deletedSkip.getId() + ' ' + deletedSkip.getDate());
         return ResponseEntity.ok("deleted skip " + id + ' ' + skip.getId());
     }
 

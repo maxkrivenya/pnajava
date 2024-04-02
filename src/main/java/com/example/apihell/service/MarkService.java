@@ -1,31 +1,15 @@
 package com.example.apihell.service;
 
 import com.example.apihell.model.Mark;
-import com.example.apihell.repository.MarkRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class MarkService{
-    private final MarkRepository markRepository;
-    public MarkService(MarkRepository markRepository) {
-        this.markRepository = markRepository;
-    }
+public interface MarkService {
+    public List<Mark> getMarksByStudentId(String id);
 
-    public List<Mark> getMarksByStudentId(String id){
-        return markRepository.getMarksByStudentId(id);
-    }
+    public Mark save(Mark mark);
 
-    public Mark save(Mark mark){
-        return markRepository.save(mark);
-    }
+    public void deleteMarkById(String id);
 
-    public void deleteMarkById(String id){
-        markRepository.deleteMarkById(id);
-    }
-
-    public Mark getMarkById(String id) {
-        return markRepository.getMarkById(id);
-    }
+    public Mark getMarkById(String id);
 }

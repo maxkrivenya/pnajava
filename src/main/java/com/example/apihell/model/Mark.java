@@ -1,12 +1,11 @@
 package com.example.apihell.model;
 
-import com.example.apihell.model.mappedSuperclass.LectureResult;
+import com.example.apihell.model.base.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="marks")
-//@JsonIgnoreProperties({"student","professor","subject"})
 public class Mark extends LectureResult {
 
     @ManyToOne(fetch = FetchType.EAGER)

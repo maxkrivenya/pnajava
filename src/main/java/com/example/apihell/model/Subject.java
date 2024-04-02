@@ -1,7 +1,6 @@
 package com.example.apihell.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name="subjects")
-//@JsonIgnoreProperties({"marks","skips", "professors"})
 public class Subject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

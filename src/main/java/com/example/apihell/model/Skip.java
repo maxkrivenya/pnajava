@@ -1,33 +1,12 @@
 package com.example.apihell.model;
 
-import com.example.apihell.model.mappedSuperclass.LectureResult;
+import com.example.apihell.model.base.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="skips")
-//@JsonIgnoreProperties({"student","professor","subject"})
 public class Skip extends LectureResult {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name="id")
-    private String id;
-    @Column(name="date", nullable = false)
-    private String date;
-    @Column(name="value", nullable = false)
-    private Integer value;
-
-    public Skip() {
-
-    }
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
-    public Integer getValue() { return value; }
-    public void setValue(Integer value) { this.value = value; }
     @Column(name="reasonable")
     private Boolean reasonable;
 
@@ -47,11 +26,11 @@ public class Skip extends LectureResult {
     private Subject subject;
 
     public Skip(String id, String date, Integer value, Boolean reasonable) {
-        this.id = id;
-        this.date = date;
-        this.value = value;
+        super(id,date,value);
         this.reasonable = reasonable;
     }
+
+    public Skip() {super(); }
 
     public Boolean getReasonable() {
         return reasonable;

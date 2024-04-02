@@ -1,4 +1,4 @@
-package com.example.apihell.model.mappedSuperclass;
+package com.example.apihell.model.base;
 
 import jakarta.persistence.*;
 

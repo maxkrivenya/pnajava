@@ -1,4 +1,4 @@
-package com.example.apihell.model.mappedSuperclass;
+package com.example.apihell.model.base;
 
 import jakarta.persistence.*;
 
@@ -16,8 +16,8 @@ public abstract class Person implements Serializable {
     @Column(name="patronim", nullable = true)
     private String patronim;
 
-    public Person(){}
-    public Person(String id, String surname, String name, String patronim) {
+    protected Person(){}
+    protected Person(String id, String surname, String name, String patronim) {
         this.id = id;
         this.surname = surname;
         this.name = name;

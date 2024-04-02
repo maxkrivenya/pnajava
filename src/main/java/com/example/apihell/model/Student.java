@@ -1,5 +1,5 @@
 package com.example.apihell.model;
-import com.example.apihell.model.mappedSuperclass.Person;
+import com.example.apihell.model.base.Person;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
-//@JsonIgnoreProperties({"marks","group","skips"})
 public class Student extends Person {
     @OneToMany(mappedBy ="student", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonManagedReference
