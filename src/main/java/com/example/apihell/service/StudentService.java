@@ -12,6 +12,5 @@ public interface StudentService {
     public Student save(Student student);
     public void logCache();
 
-    //List<Professor> getProfessorsByStudentId(String id);
-    List<String> getProfessorsByStudentId(String id);
+    List<Professor> getProfessorsByStudentId(String id);
 }

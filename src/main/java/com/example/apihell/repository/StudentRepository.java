@@ -1,12 +1,10 @@
 package com.example.apihell.repository;
 
 import com.example.apihell.model.Group;
-import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -42,11 +40,9 @@ public interface StudentRepository extends JpaRepository<Student, String> {
             "\tselect p.* from professors p  \n" +
             "\tinner join subj_to_prof stp on stp.\"professor-id\" = p.id\n" +
             ") \n" +
-            "select fp.surname from find_professors fp"
+            "select fp.* from find_professors fp"
             ,
         nativeQuery = true
     )
     List<String> getProfessorsByStudentId(String id);
-
-    // List<Professor> getProfessorsByStudentId(String id);
 }

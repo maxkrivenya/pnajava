@@ -11,6 +11,7 @@ import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -61,34 +62,26 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
-/*    public List<Professor> getProfessorsByStudentId(String id){
+    public List<Professor> getProfessorsByStudentId(String id){
         String cacheKey = CacheComponent.MULTI_CACHE_KEY +
                 CacheComponent.PROFESSOR_CACHE_KEY +
                 "from" +
                 CacheComponent.STUDENT_CACHE_KEY +
                 id;
-        List<Professor> professors = (List<Professor>) cache.get(cacheKey);
+        List<Professor> professors;
+        professors = (List<Professor>) cache.get(cacheKey);
+
         if(professors==null){
-            professors = studentRepository.getProfessorsByStudentId(id);
+            professors = new ArrayList<>();
+            List<String> stringProfessors =  studentRepository.getProfessorsByStudentId(id);
+            for(String stringProfessor : stringProfessors){
+                    professors.add(new Professor(stringProfessor));
+            }
             cache.put(cacheKey,professors);
         }
         return professors;
     }
 
- */
-public List<String> getProfessorsByStudentId(String id){
-    String cacheKey = CacheComponent.MULTI_CACHE_KEY +
-            CacheComponent.PROFESSOR_CACHE_KEY +
-            "from" +
-            CacheComponent.STUDENT_CACHE_KEY +
-            id;
-    List<String> professors = (List<String>) cache.get(cacheKey);
-    if(professors==null){
-        professors = studentRepository.getProfessorsByStudentId(id);
-        cache.put(cacheKey,professors);
-    }
-    return professors;
-}
 
     public void logCache(){
         cache.log();

@@ -4,6 +4,7 @@ import com.example.apihell.model.base.Person;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,6 +38,19 @@ public class Professor extends Person {
         super();
     }
 
+    public Professor(String string){
+        String[] params = string.split(",");
+        if(params.length < 5){return;}
+        this.setId(params[0]);
+        this.title = params[1];
+        this.department = params[2];
+        this.setSurname(params[3]);
+        this.setName(params[4]);
+        this.setPatronim(params[5]);
+        this.setMarks(new ArrayList<>());
+        this.setSkips(new ArrayList<>());
+        this.setSubjects(new ArrayList<>());
+    }
     public Professor(String id, String surname, String name, String patronim, String title, String department) {
         super(id, surname, name, patronim);
         this.title = title;

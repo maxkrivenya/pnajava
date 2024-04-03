@@ -1,6 +1,5 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.components.CacheComponent;
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Mark;
 import com.example.apihell.model.Professor;
@@ -100,10 +99,11 @@ public class StudentController {
     }
 
     @GetMapping(path="/professors/{id}")
-    public ResponseEntity<List<String>> getProfessorsByStudentId(@PathVariable(name="id") String id){
+    public ResponseEntity<List<Professor>> getProfessorsByStudentId(@PathVariable(name="id") String id){
 
-        List<String> professors = studentService.getProfessorsByStudentId(id);
-        if(professors.isEmpty() || professors==null){
+        List<Professor> professors = studentService.getProfessorsByStudentId(id);
+
+        if(professors.isEmpty()){
             return new ResponseEntity<>(professors, HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(professors, HttpStatus.OK);

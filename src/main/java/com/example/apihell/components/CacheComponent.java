@@ -12,7 +12,6 @@ public class CacheComponent {
     public static final String CACHE_INFO_GET      = "CACHE TAKE   : ";
     public static final String CACHE_INFO_REMOVE   = "CACHE REMOVE : ";
     public static final String CACHE_INFO_PUT      = "CACHE PUT    : ";
-
     public static final String MULTI_CACHE_KEY      = "list_";
     public static final String STUDENT_CACHE_KEY    = "student";
     public static final String PROFESSOR_CACHE_KEY  = "professor";
