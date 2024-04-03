@@ -1,7 +1,9 @@
 package com.example.apihell.controller;
 
+import com.example.apihell.components.CacheComponent;
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Professor;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.service.StudentService;
@@ -95,6 +97,16 @@ public class StudentController {
     public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
         studentService.deleteStudentById(id);
         return ResponseEntity.ok("deleted student " + id);
+    }
+
+    @GetMapping(path="/professors/{id}")
+    public ResponseEntity<List<String>> getProfessorsByStudentId(@PathVariable(name="id") String id){
+
+        List<String> professors = studentService.getProfessorsByStudentId(id);
+        if(professors.isEmpty() || professors==null){
+            return new ResponseEntity<>(professors, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(professors, HttpStatus.OK);
     }
 
     @GetMapping(path="/cache")

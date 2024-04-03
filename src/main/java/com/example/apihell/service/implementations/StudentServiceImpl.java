@@ -2,6 +2,7 @@ package com.example.apihell.service.implementations;
 
 import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Group;
+import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
 import com.example.apihell.repository.StudentRepository;
@@ -59,6 +60,35 @@ public class StudentServiceImpl implements StudentService {
     public Student save(Student student){
         return studentRepository.save(student);
     }
+
+/*    public List<Professor> getProfessorsByStudentId(String id){
+        String cacheKey = CacheComponent.MULTI_CACHE_KEY +
+                CacheComponent.PROFESSOR_CACHE_KEY +
+                "from" +
+                CacheComponent.STUDENT_CACHE_KEY +
+                id;
+        List<Professor> professors = (List<Professor>) cache.get(cacheKey);
+        if(professors==null){
+            professors = studentRepository.getProfessorsByStudentId(id);
+            cache.put(cacheKey,professors);
+        }
+        return professors;
+    }
+
+ */
+public List<String> getProfessorsByStudentId(String id){
+    String cacheKey = CacheComponent.MULTI_CACHE_KEY +
+            CacheComponent.PROFESSOR_CACHE_KEY +
+            "from" +
+            CacheComponent.STUDENT_CACHE_KEY +
+            id;
+    List<String> professors = (List<String>) cache.get(cacheKey);
+    if(professors==null){
+        professors = studentRepository.getProfessorsByStudentId(id);
+        cache.put(cacheKey,professors);
+    }
+    return professors;
+}
 
     public void logCache(){
         cache.log();
