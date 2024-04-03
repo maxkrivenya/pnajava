@@ -19,7 +19,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     @Nullable
     public Professor getProfessorById(String id){
-        String cacheKey = cache.professorCacheKey + id;
+        String cacheKey = CacheComponent.PROFESSOR_CACHE_KEY + id;
         Professor professor = (Professor) cache.get(cacheKey);
         if(professor==null){
             professor = professorRepository.getProfessorById(id);
@@ -28,13 +28,17 @@ public class ProfessorServiceImpl implements ProfessorService {
         return professor;
     }
     public Professor save(Professor professor){
-        String cacheKey = cache.professorCacheKey + professor.getId();
+        String cacheKey = CacheComponent.PROFESSOR_CACHE_KEY + professor.getId();
         cache.remove(cacheKey);
         cache.put(cacheKey,professor);
         return professorRepository.save(professor);
     }
     public void deleteProfessorById(String id){
-        cache.remove(cache.professorCacheKey + id);
+        cache.remove(CacheComponent.PROFESSOR_CACHE_KEY + id);
         professorRepository.deleteProfessorById(id);
+    }
+
+    public void logCache(){
+        cache.log();
     }
 }

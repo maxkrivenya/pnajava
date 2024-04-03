@@ -17,7 +17,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     public List<Subject> getAllByName(String name){
-        String cacheKey = cache.multiCacheKey + cache.subjectCacheKey + name;
+        String cacheKey = CacheComponent.MULTI_CACHE_KEY + CacheComponent.SUBJECT_CACHE_KEY + name;
         List<Subject> subjects = (List<Subject>) cache.get(cacheKey);
         if(subjects==null){
             subjects = subjectRepository.getAllByName(name);
@@ -26,7 +26,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjects;
     }
     public Subject getSubjectById(String id){
-        String cacheKey = cache.subjectCacheKey + id;
+        String cacheKey = CacheComponent.SUBJECT_CACHE_KEY + id;
         Subject subject = (Subject) cache.get(cacheKey);
         if(subject==null){
             subject = subjectRepository.getSubjectById(id);
@@ -35,12 +35,18 @@ public class SubjectServiceImpl implements SubjectService {
         return subject;
     }
     public Subject save(Subject subject){
-        String cacheKey = cache.subjectCacheKey + subject.getId();
+        String cacheKey = CacheComponent.SUBJECT_CACHE_KEY + subject.getId();
         cache.remove(cacheKey);
         cache.put(cacheKey, subject);
         return subjectRepository.save(subject);
     }
     public void deleteSubjectById(String id){
+        cache.remove(CacheComponent.SUBJECT_CACHE_KEY + id);
         subjectRepository.deleteSubjectById(id);
+
+    }
+
+    public void logCache(){
+        cache.log();
     }
 }

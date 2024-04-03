@@ -18,7 +18,7 @@ public class MarkServiceImpl implements MarkService {
 
     public List<Mark> getMarksByStudentId(String id){
         List<Mark> marks;
-        String cacheKey = cache.multiCacheKey + cache.markCacheKey + id;
+        String cacheKey = CacheComponent.MULTI_CACHE_KEY + CacheComponent.MARK_CACHE_KEY + id;
         marks = (List<Mark>) cache.get(cacheKey);
         if(marks == null){
             marks =  markRepository.getMarksByStudentId(id);
@@ -27,20 +27,23 @@ public class MarkServiceImpl implements MarkService {
         return marks;
     }
     public Mark save(Mark mark){
-        cache.remove(cache.markCacheKey + mark.getId());
-        cache.put(cache.markCacheKey + mark.getId(),mark);
+        cache.remove(CacheComponent.MARK_CACHE_KEY + mark.getId());
+        cache.put(CacheComponent.MARK_CACHE_KEY + mark.getId(),mark);
         return markRepository.save(mark);
     }
     public void deleteMarkById(String id){
-        cache.remove(cache.markCacheKey + id);
+        cache.remove(CacheComponent.MARK_CACHE_KEY + id);
         markRepository.deleteMarkById(id);
     }
     public Mark getMarkById(String id) {
-        Mark mark = (Mark) cache.get(cache.markCacheKey + id);
+        Mark mark = (Mark) cache.get(CacheComponent.MARK_CACHE_KEY + id);
         if(mark==null){
             mark = markRepository.getMarkById(id);
-            cache.put(cache.markCacheKey + id, mark);
+            cache.put(CacheComponent.MARK_CACHE_KEY + id, mark);
         }
         return mark;
+    }
+    public void logCache(){
+        cache.log();
     }
 }

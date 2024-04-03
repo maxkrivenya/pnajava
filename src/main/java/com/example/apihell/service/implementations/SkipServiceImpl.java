@@ -1,11 +1,8 @@
 package com.example.apihell.service.implementations;
 
 import com.example.apihell.components.CacheComponent;
-import com.example.apihell.model.Mark;
 import com.example.apihell.model.Skip;
-import com.example.apihell.model.Student;
 import com.example.apihell.repository.SkipRepository;
-import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.SkipService;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +10,17 @@ import java.util.List;
 
 @Service
 public class SkipServiceImpl implements SkipService {
-    private final StudentRepository studentRepository;
     private final SkipRepository skipRepository;
     private final CacheComponent cache;
 
-    public SkipServiceImpl(CacheComponent cache, StudentRepository studentRepository, SkipRepository skipRepository) {
-        this.studentRepository = studentRepository;
+    public SkipServiceImpl(CacheComponent cache, SkipRepository skipRepository) {
         this.skipRepository = skipRepository;
         this.cache = cache;
     }
 
     public List<Skip> getSkipsByStudentId(String id){
         List<Skip> skips;
-        String cacheKey = cache.multiCacheKey + cache.skipCacheKey + id;
+        String cacheKey = CacheComponent.MULTI_CACHE_KEY + CacheComponent.SKIP_CACHE_KEY + id;
         skips = (List<Skip>) cache.get(cacheKey);
         if(skips == null){
             skips =  skipRepository.getSkipsByStudentId(id);
@@ -34,12 +29,12 @@ public class SkipServiceImpl implements SkipService {
         return skips;
     }
     public Skip save(Skip skip){
-        cache.remove(cache.skipCacheKey);
-        cache.put(cache.skipCacheKey + skip.getId(), skip);
+        cache.remove(CacheComponent.SKIP_CACHE_KEY);
+        cache.put(CacheComponent.SKIP_CACHE_KEY + skip.getId(), skip);
         return skipRepository.save(skip);
     }
     public Skip getSkipById(String id){
-        String cacheKey = cache.skipCacheKey + id;
+        String cacheKey = CacheComponent.SKIP_CACHE_KEY + id;
         Skip skip = (Skip)cache.get(cacheKey);
         if(skip==null){
             skip = skipRepository.getSkipById(id);
@@ -48,11 +43,14 @@ public class SkipServiceImpl implements SkipService {
         return skip;
     }
     public void deleteSkip(Skip skip){
-        cache.remove(cache.skipCacheKey + skip.getId());
+        cache.remove(CacheComponent.SKIP_CACHE_KEY + skip.getId());
         skipRepository.delete(skip);
     }
     public void deleteSkipById(String id){
-        cache.remove(cache.skipCacheKey + id);
+        cache.remove(CacheComponent.SKIP_CACHE_KEY + id);
         skipRepository.deleteSkipById(id);
+    }
+    public void logCache(){
+        cache.log();
     }
 }

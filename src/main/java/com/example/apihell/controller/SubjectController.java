@@ -76,4 +76,10 @@ public class SubjectController {
         subjectService.deleteSubjectById(id);
         return ResponseEntity.ok("deleted subject " + id);
     }
+
+    @GetMapping(path="/cache")
+    public HttpStatus logCache(){
+        subjectService.logCache();
+        return HttpStatus.NO_CONTENT;
+    }
 }

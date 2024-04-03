@@ -33,7 +33,7 @@ public class StudentServiceImpl implements StudentService {
             return student;
         }else{
             student = studentRepository.getStudentById(id);
-            cache.put(cache.studentCacheKey + id, student);
+            cache.put(CacheComponent.STUDENT_CACHE_KEY + id, student);
             return student;
         }
     }
@@ -44,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
             group = groupRepository.getGroupById(id);
             cache.put(groupKey, group);
         }
-        String studentsKey = cache.multiCacheKey + cache.studentCacheKey + id;
+        String studentsKey = CacheComponent.MULTI_CACHE_KEY + CacheComponent.STUDENT_CACHE_KEY + id;
         List<Student> students = (List<Student>) cache.get(studentsKey);
         if(students == null){
             students = studentRepository.getStudentsByGroup(group);
@@ -54,7 +54,7 @@ public class StudentServiceImpl implements StudentService {
     }
     public void deleteStudentById(String id){
         studentRepository.deleteStudentById(id);
-        cache.remove(cache.studentCacheKey + id);
+        cache.remove(CacheComponent.STUDENT_CACHE_KEY + id);
     }
     public Student save(Student student){
         return studentRepository.save(student);

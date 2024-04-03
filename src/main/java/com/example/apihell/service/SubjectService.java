@@ -9,4 +9,5 @@ public interface SubjectService {
     public Subject getSubjectById(String id);
     public Subject save(Subject subject);
     public void deleteSubjectById(String id);
+    public void logCache();
 }

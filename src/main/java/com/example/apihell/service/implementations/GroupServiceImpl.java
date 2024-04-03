@@ -18,7 +18,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     public Group getGroupById(String id){
-        String cacheId = cache.groupCacheKey + id;
+        String cacheId = CacheComponent.GROUP_CACHE_KEY + id;
         Group group = (Group) cache.get(cacheId);
         if(group == null){
             group = groupRepository.getGroupById(id);
@@ -28,11 +28,14 @@ public class GroupServiceImpl implements GroupService {
     }
         public void deleteGroupById(String id){
             groupRepository.deleteById(id);
-            cache.remove(cache.groupCacheKey + id);
+            cache.remove(CacheComponent.GROUP_CACHE_KEY + id);
         }
         public Group save(Group group){
-            cache.remove(cache.groupCacheKey + group.getId());
-            cache.put(cache.groupCacheKey + group.getId(), group);
+            cache.remove(CacheComponent.GROUP_CACHE_KEY + group.getId());
+            cache.put(CacheComponent.GROUP_CACHE_KEY + group.getId(), group);
             return groupRepository.save(group);
         }
+    public void logCache(){
+        cache.log();
+    }
     }

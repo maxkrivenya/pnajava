@@ -52,8 +52,14 @@ public class ProfessorController {
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
+    public ResponseEntity<String> deleteProfessorById(@PathVariable(name="id") String id) {
         professorService.deleteProfessorById(id);
         return ResponseEntity.ok("deleted professor " + id);
+    }
+
+    @GetMapping(path="/cache")
+    public HttpStatus logCache(){
+        professorService.logCache();
+        return HttpStatus.NO_CONTENT;
     }
 }

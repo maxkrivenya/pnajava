@@ -8,20 +8,20 @@ import java.util.LinkedHashMap;
 @Slf4j
 @Component
 public class CacheComponent {
-    private static final Integer  MAX_CACHE_SIZE = 3;
-    public final String CACHE_INFO_GET      = "CACHE TAKE   : ";
-    public final String CACHE_INFO_REMOVE   = "CACHE REMOVE : ";
-    public final String CACHE_INFO_PUT      = "CACHE PUT    : ";
+    private static final Integer  MAX_CACHE_SIZE = 5;
+    public static final String CACHE_INFO_GET      = "CACHE TAKE   : ";
+    public static final String CACHE_INFO_REMOVE   = "CACHE REMOVE : ";
+    public static final String CACHE_INFO_PUT      = "CACHE PUT    : ";
 
-    public final String multiCacheKey       = "list_";
-    public final String studentCacheKey     = "student";
-    public final String professorCacheKey   = "professor";
-    public final String subjectCacheKey     = "subject";
-    public final String markCacheKey        = "mark";
-    public final String skipCacheKey        = "skip";
-    public final String groupCacheKey       = "group";
+    public static final String MULTI_CACHE_KEY      = "list_";
+    public static final String STUDENT_CACHE_KEY    = "student";
+    public static final String PROFESSOR_CACHE_KEY  = "professor";
+    public static final String SUBJECT_CACHE_KEY    = "subject";
+    public static final String MARK_CACHE_KEY       = "mark";
+    public static final String SKIP_CACHE_KEY       = "skip";
+    public static final String GROUP_CACHE_KEY      = "group";
 
-    private final Map<String, Object> cache = new LinkedHashMap<>(MAX_CACHE_SIZE, 0.75f, true) {
+    private static final Map<String, Object> cache = new LinkedHashMap<>(MAX_CACHE_SIZE, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, Object> eldest) {
             if(size() > MAX_CACHE_SIZE) {

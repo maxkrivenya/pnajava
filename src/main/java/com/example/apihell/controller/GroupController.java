@@ -70,4 +70,10 @@ public class GroupController {
         groupService.deleteGroupById(id);
         return ResponseEntity.ok("deleted group " + id);
     }
+
+    @GetMapping(path="/cache")
+    public HttpStatus logCache(){
+        groupService.logCache();
+        return HttpStatus.NO_CONTENT;
+    }
 }

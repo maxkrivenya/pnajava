@@ -67,4 +67,10 @@ public class SkipController {
         skipService.deleteSkipById(id);
         return ResponseEntity.ok("deleted skip " + id + ' ' + skip.getId());
     }
+
+    @GetMapping(path="/cache")
+    public HttpStatus logCache(){
+        skipService.logCache();
+        return HttpStatus.NO_CONTENT;
+    }
 }

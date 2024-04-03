@@ -63,5 +63,11 @@ public class MarkController {
         markService.deleteMarkById(id);
         return ResponseEntity.ok("deleted mark " + id);
     }
+
+    @GetMapping(path="/cache")
+    public HttpStatus logCache(){
+        markService.logCache();
+        return HttpStatus.NO_CONTENT;
+    }
 }
 
