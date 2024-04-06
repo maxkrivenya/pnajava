@@ -11,6 +11,6 @@ public interface StudentService {
     public void deleteStudentById(String id);
     public Student save(Student student);
     public void logCache();
-
+    public boolean studentExists(String id);
     List<Professor> getProfessorsByStudentId(String id);
 }

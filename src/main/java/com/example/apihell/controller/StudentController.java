@@ -5,7 +5,9 @@ import com.example.apihell.model.Mark;
 import com.example.apihell.model.Professor;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
+import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.StudentService;
+import com.example.apihell.service.utils.StudentDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,18 +22,19 @@ import java.util.List;
 @Transactional
 public class StudentController {
     private final StudentService studentService;
-
-    public StudentController(StudentService studentService) {
+    private final StudentDTOMapper studentDTOMapper;
+    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper) {
         this.studentService = studentService;
+        this.studentDTOMapper = studentDTOMapper;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable("id") String id) {
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") String id) {
         Student student = studentService.getStudentById(id);
         if (student == null) {
-            return new ResponseEntity<>(student, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(student, HttpStatus.OK);
+            return new ResponseEntity<>(studentDTOMapper.wrap(student) , HttpStatus.OK);
         }
     }
 
@@ -72,24 +75,20 @@ public class StudentController {
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
-        Student savedStudent  = studentService.save(student);
-        return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
+    public ResponseEntity<Student> createStudent(@RequestBody StudentDTO studentDTO){
+        Student student = studentDTOMapper.unwrap(studentDTO);
+        studentService.save(student);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> updateStudent(@PathVariable String id, @RequestBody Student student){
-        Student updatedStudent  = studentService.getStudentById(id);
-        if(updatedStudent == null){
-            throw new ResourceNotFoundException("no such student!");
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO){
+        if(!studentService.studentExists(id)){
+           throw new ResourceNotFoundException("no such student!");
         }
-        updatedStudent.setId(student.getId());
-        updatedStudent.setName(student.getName());
-        updatedStudent.setSurname(student.getSurname());
-        updatedStudent.setSurname(student.getPatronim());
-
-        studentService.save(updatedStudent);
-        return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+        Student student = studentDTOMapper.unwrap(studentDTO);
+        student.setId(id);
+        return new ResponseEntity<>(studentDTOMapper.wrap(studentService.save(student)), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")

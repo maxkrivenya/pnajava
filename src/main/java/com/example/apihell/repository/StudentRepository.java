@@ -40,7 +40,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
             "\tselect p.* from professors p  \n" +
             "\tinner join subj_to_prof stp on stp.\"professor-id\" = p.id\n" +
             ") \n" +
-            "select fp.* from find_professors fp"
+            "select fp.id, fp.surname, fp.name, fp.patronim, fp.department, fp.title from find_professors fp"
             ,
         nativeQuery = true
     )

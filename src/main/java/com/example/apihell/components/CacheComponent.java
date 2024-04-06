@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 @Slf4j
 @Component
 public class CacheComponent {
-    private static final Integer  MAX_CACHE_SIZE = 5;
+    private static final Integer  MAX_CACHE_SIZE    = 5;
     public static final String CACHE_INFO_GET      = "CACHE TAKE   : ";
     public static final String CACHE_INFO_REMOVE   = "CACHE REMOVE : ";
     public static final String CACHE_INFO_PUT      = "CACHE PUT    : ";
@@ -42,6 +42,7 @@ public class CacheComponent {
     }
 
     public void remove(String key) {
+        log.info(CACHE_INFO_REMOVE + key);
         cache.remove(key);
     }
 

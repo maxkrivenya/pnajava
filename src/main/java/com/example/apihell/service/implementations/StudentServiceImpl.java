@@ -59,6 +59,16 @@ public class StudentServiceImpl implements StudentService {
         cache.remove(CacheComponent.STUDENT_CACHE_KEY + id);
     }
     public Student save(Student student){
+        String cacheKey = CacheComponent.STUDENT_CACHE_KEY + student.getId();
+        Student existing = (Student)cache.get(cacheKey);
+        cache.remove(cacheKey);
+        if(existing==null){
+            existing = studentRepository.getStudentById(student.getId());
+        }
+        if(existing != null){
+            existing.fill(student);
+            return studentRepository.save(existing);
+        }
         return studentRepository.save(student);
     }
 
@@ -82,7 +92,17 @@ public class StudentServiceImpl implements StudentService {
         return professors;
     }
 
-
+    public boolean studentExists(String id){
+        String cacheKey = CacheComponent.STUDENT_CACHE_KEY + id;
+        Student student = (Student)cache.get(cacheKey);
+        if(student == null){
+            student = studentRepository.getStudentById(id);
+            if(student == null){
+                return false;
+            }
+        }
+        return true;
+    }
     public void logCache(){
         cache.log();
     }
