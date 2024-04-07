@@ -3,7 +3,9 @@ package com.example.apihell.controller;
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Subject;
+import com.example.apihell.model.dto.SubjectDTO;
 import com.example.apihell.service.SubjectService;
+import com.example.apihell.service.utils.SubjectDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,17 +20,19 @@ import java.util.List;
 @Transactional
 public class SubjectController {
     private final SubjectService subjectService;
-    public SubjectController(SubjectService subjectService) {
+    private final SubjectDTOMapper subjectDTOMapper;
+    public SubjectController(SubjectService subjectService, SubjectDTOMapper subjectDTOMapper) {
         this.subjectService = subjectService;
+        this.subjectDTOMapper = subjectDTOMapper;
     }
 
     @GetMapping("/byName/{name}")
-    ResponseEntity<List<Subject>> getAllByName(@PathVariable(name="name") String name){
+    ResponseEntity<List<SubjectDTO>> getAllByName(@PathVariable(name="name") String name){
         List<Subject> list = subjectService.getAllByName(name);
         if(list.isEmpty()){
-            return new ResponseEntity<>(list,HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(list.stream().map(subjectDTOMapper::wrap).toList(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

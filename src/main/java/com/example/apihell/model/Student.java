@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "student")
-@JsonIgnoreProperties({"marks", "skips", "group"})
 public class Student extends Person {
 
     @Column(name="group-id")

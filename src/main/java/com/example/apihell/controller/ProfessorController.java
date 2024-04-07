@@ -2,7 +2,10 @@ package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Professor;
+import com.example.apihell.model.dto.ProfessorDTO;
 import com.example.apihell.service.ProfessorService;
+import com.example.apihell.service.utils.ProfessorDTOMapper;
+import com.example.apihell.service.utils.SubjectDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,17 +18,22 @@ import org.springframework.web.bind.annotation.*;
 @Transactional
 public class ProfessorController {
     private final ProfessorService professorService;
-    public ProfessorController(ProfessorService professorService) {
+    private final ProfessorDTOMapper professorDTOMapper;
+    private final SubjectDTOMapper subjectDTOMapper;
+
+    public ProfessorController(ProfessorService professorService, ProfessorDTOMapper professorDTOMapper, SubjectDTOMapper subjectDTOMapper) {
         this.professorService = professorService;
+        this.professorDTOMapper = professorDTOMapper;
+        this.subjectDTOMapper = subjectDTOMapper;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Professor> getProfessorById(@PathVariable(name="id") String id){
+    public ResponseEntity<ProfessorDTO> getProfessorById(@PathVariable(name="id") String id){
         Professor professor = professorService.getProfessorById(id);
         if(professor==null) {
-            return new ResponseEntity<>(new Professor(), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(professor, HttpStatus.OK);
+        return new ResponseEntity<>(professorDTOMapper.wrap(professor), HttpStatus.OK);
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
