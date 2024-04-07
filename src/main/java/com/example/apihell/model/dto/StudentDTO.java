@@ -8,8 +8,8 @@ public record StudentDTO (
         String name,
         String patronim,
         String group,
-        List<Integer> marks,
-        List<Integer> skips
+        List<MarkDTO> marks,
+        List<SkipDTO> skips
 )
 {
 

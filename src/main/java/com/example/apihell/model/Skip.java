@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Table(name="skips")
 public class Skip extends LectureResult {
     @Column(name="reasonable")
-    private Boolean reasonable;
+    private Boolean isJustified;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student-id", referencedColumnName = "id")
@@ -25,18 +25,18 @@ public class Skip extends LectureResult {
     @JsonBackReference
     private Subject subject;
 
-    public Skip(String id, String date, Integer value, Boolean reasonable) {
+    public Skip(String id, String date, Integer value, Boolean isJustified) {
         super(id,date,value);
-        this.reasonable = reasonable;
+        this.isJustified = isJustified;
     }
 
     public Skip() {super(); }
 
-    public Boolean getReasonable() {
-        return reasonable;
+    public Boolean getIsJustified() {
+        return isJustified;
     }
-    public void setReasonable(Boolean reasonable) {
-        this.reasonable = reasonable;
+    public void setIsJustified(Boolean reasonable) {
+        this.isJustified = reasonable;
     }
     public Student getStudent() {
         return student;

@@ -5,8 +5,12 @@ import com.example.apihell.model.Mark;
 import com.example.apihell.model.Professor;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
+import com.example.apihell.model.dto.MarkDTO;
+import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.StudentService;
+import com.example.apihell.service.utils.MarkDTOMapper;
+import com.example.apihell.service.utils.SkipDTOMapper;
 import com.example.apihell.service.utils.StudentDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -14,7 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -23,9 +29,13 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
     private final StudentDTOMapper studentDTOMapper;
-    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper) {
+    private final MarkDTOMapper markDTOMapper;
+    private final SkipDTOMapper skipDTOMapper;
+    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
         this.studentService = studentService;
         this.studentDTOMapper = studentDTOMapper;
+        this.markDTOMapper = markDTOMapper;
+        this.skipDTOMapper = skipDTOMapper;
     }
 
     @GetMapping("/{id}")
@@ -39,28 +49,32 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/marks")
-    public ResponseEntity<List<Mark>> getStudentsMarksById(@PathVariable("id") String id) {
+    public ResponseEntity<List<MarkDTO>> getStudentsMarksById(@PathVariable("id") String id) {
         Student student = studentService.getStudentById(id);
         if(student==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        List<MarkDTO> marks = new ArrayList<>();
+        student.getMarks().forEach(mark -> marks.add(markDTOMapper.wrap(mark)));
         if (student.getMarks().isEmpty()) {
-            return new ResponseEntity<>(student.getMarks(), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(student.getMarks(), HttpStatus.OK);
+            return new ResponseEntity<>(marks, HttpStatus.OK);
         }
     }
 
     @GetMapping("/{id}/skips")
-    public ResponseEntity<List<Skip>> getStudentsSkipsById(@PathVariable("id") String id) {
+    public ResponseEntity<List<SkipDTO>> getStudentsSkipsById(@PathVariable("id") String id) {
         Student student = studentService.getStudentById(id);
         if(student==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (student.getMarks().isEmpty()) {
-            return new ResponseEntity<>(student.getSkips(), HttpStatus.NO_CONTENT);
+        List<SkipDTO> skips = new ArrayList<>();
+        student.getSkips().forEach(skip -> skips.add(skipDTOMapper.wrap(skip)));
+        if (student.getSkips().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(student.getSkips(), HttpStatus.OK);
+            return new ResponseEntity<>(skips, HttpStatus.OK);
         }
     }
 

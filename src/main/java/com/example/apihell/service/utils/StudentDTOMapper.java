@@ -5,11 +5,15 @@ import com.example.apihell.model.base.LectureResult;
 import com.example.apihell.model.dto.StudentDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 @Service
 public class StudentDTOMapper{
+    private final  MarkDTOMapper markDTOMapper;
+    private final  SkipDTOMapper skipDTOMapper;
+    public StudentDTOMapper(MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
+        this.markDTOMapper = markDTOMapper;
+        this.skipDTOMapper = skipDTOMapper;
+    }
+
     public StudentDTO wrap(Student student){
         return new StudentDTO(
           student.getId(),
@@ -17,18 +21,10 @@ public class StudentDTOMapper{
           student.getName(),
           student.getPatronim(),
           student.getGroupId(),
-          student.getMarks()
-                 .stream()
-                 .map(LectureResult::getValue)
-                 .toList()
-          ,
-          student.getSkips()
-                  .stream()
-                  .map(LectureResult::getValue)
-                  .toList()
+          student.getMarks().stream().map(markDTOMapper::wrap).toList(),
+          student.getSkips().stream().map(skipDTOMapper::wrap).toList()
         );
     }
-
     public Student unwrap(StudentDTO studentDTO){
         Student student = new Student();
 
@@ -40,6 +36,4 @@ public class StudentDTOMapper{
 
         return student;
     }
-
-
 }
