@@ -1,8 +1,11 @@
 package com.example.apihell.controller;
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Mark;
-import com.example.apihell.model.Student;
+import com.example.apihell.model.dto.MarkDTO;
+import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.MarkService;
+import com.example.apihell.service.utils.MarkDTOMapper;
+import com.example.apihell.service.utils.StudentDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,36 +19,41 @@ import java.util.List;
 @Transactional
 public class MarkController {
     private final MarkService markService;
-    public MarkController(MarkService markService) {
+    private final MarkDTOMapper markDTOMapper;
+    private final StudentDTOMapper studentDTOMapper;
+
+    public MarkController(MarkService markService, MarkDTOMapper markDTOMapper, StudentDTOMapper studentDTOMapper) {
         this.markService = markService;
+        this.markDTOMapper = markDTOMapper;
+        this.studentDTOMapper = studentDTOMapper;
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<List<Mark>> getMarksByStudentId(@PathVariable(name="id") String id){
-        List<Mark> marks = markService.getMarksByStudentId(id);
+    ResponseEntity<List<MarkDTO>> getMarksByStudentId(@PathVariable(name="id") String id){
+        List<MarkDTO> marks = markService.getMarksByStudentId(id).stream().map(markDTOMapper::wrap).toList();
         if(marks.isEmpty()){
-            return new ResponseEntity<>(marks, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(marks, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/student")
-    ResponseEntity<Student> getStudentThroughMarks(@PathVariable(name="id") String id){
+    ResponseEntity<StudentDTO> getStudentThroughMarks(@PathVariable(name="id") String id){
         List<Mark> marks = markService.getMarksByStudentId(id);
         if(marks.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(marks.get(0).getStudent(),HttpStatus.OK);
+        return new ResponseEntity<>(studentDTOMapper.wrap(marks.get(0).getStudent()),HttpStatus.OK);
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Mark> createMark(@RequestBody Mark mark){
-        Mark savedMark  = markService.save(mark);
+    public ResponseEntity<MarkDTO> createMark(@RequestBody Mark mark){
+        MarkDTO savedMark  = markDTOMapper.wrap(markService.save(mark));
         return new ResponseEntity<>(savedMark, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Mark> updateMark(@PathVariable String id, @RequestBody Mark mark){
+    public ResponseEntity<MarkDTO> updateMark(@PathVariable String id, @RequestBody Mark mark){
         Mark updatedMark  = markService.getMarkById(id);
         if(updatedMark == null){
             throw new ResourceNotFoundException("no such mark!");
@@ -55,7 +63,7 @@ public class MarkController {
         updatedMark.setValue(mark.getValue());
 
         markService.save(updatedMark);
-        return new ResponseEntity<>(updatedMark, HttpStatus.OK);
+        return new ResponseEntity<>(markDTOMapper.wrap(updatedMark), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")

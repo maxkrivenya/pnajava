@@ -36,8 +36,8 @@ public class SubjectController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Subject> getSubjectById(@PathVariable(name="id") String id){
-        Subject subject = subjectService.getSubjectById(id);
+    ResponseEntity<SubjectDTO> getSubjectById(@PathVariable(name="id") String id){
+        SubjectDTO subject = subjectDTOMapper.wrap(subjectService.getSubjectById(id));
         if(subject==null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -55,13 +55,13 @@ public class SubjectController {
 
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Subject> createSubject(@RequestBody Subject subject){
-        Subject savedSubject  = subjectService.save(subject);
+    public ResponseEntity<SubjectDTO> createSubject(@RequestBody Subject subject){
+        SubjectDTO savedSubject  = subjectDTOMapper.wrap(subjectService.save(subject));
         return new ResponseEntity<>(savedSubject, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Subject> updateSubject(@PathVariable String id, @RequestBody Subject subject){
+    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable String id, @RequestBody Subject subject){
         Subject updatedSubject  = subjectService.getSubjectById(id);
         if(updatedSubject == null){
             throw new ResourceNotFoundException("no such subject!");
@@ -72,7 +72,7 @@ public class SubjectController {
         updatedSubject.setSemesterId(subject.getSemesterId());
 
         subjectService.save(updatedSubject);
-        return new ResponseEntity<>(updatedSubject, HttpStatus.OK);
+        return new ResponseEntity<>(subjectDTOMapper.wrap(updatedSubject), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")

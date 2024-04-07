@@ -1,7 +1,9 @@
 package com.example.apihell.controller;
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Skip;
+import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.service.SkipService;
+import com.example.apihell.service.utils.SkipDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,27 +17,30 @@ import java.util.List;
 @Transactional
 public class SkipController {
     private final SkipService skipService;
-    public SkipController(SkipService skipService) {
+    private final SkipDTOMapper skipDTOMapper;
+
+    public SkipController(SkipService skipService, SkipDTOMapper skipDTOMapper) {
         this.skipService = skipService;
+        this.skipDTOMapper = skipDTOMapper;
     }
 
     @GetMapping("/student/{id}")
-    ResponseEntity<List<Skip>> getSkipsByStudentId(@PathVariable(name="id") String id){
-        List<Skip> skips = skipService.getSkipsByStudentId(id);
+    ResponseEntity<List<SkipDTO>> getSkipsByStudentId(@PathVariable(name="id") String id){
+        List<SkipDTO> skips = skipService.getSkipsByStudentId(id).stream().map(skipDTOMapper::wrap).toList();
         if(skips.isEmpty()){
-            return new ResponseEntity<>(skips, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(skips, HttpStatus.OK);
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Skip> createSkip(@RequestBody Skip skip){
+    public ResponseEntity<SkipDTO> createSkip(@RequestBody Skip skip){
         Skip savedSkip  = skipService.save(skip);
-        return new ResponseEntity<>(savedSkip, HttpStatus.CREATED);
+        return new ResponseEntity<>(skipDTOMapper.wrap(savedSkip), HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Skip> updateSkip(@PathVariable String id, @RequestBody Skip skip){
+    public ResponseEntity<SkipDTO> updateSkip(@PathVariable String id, @RequestBody Skip skip){
         Skip updatedSkip  = skipService.getSkipById(id);
         if(updatedSkip == null){
             throw new ResourceNotFoundException("no such skip!");
@@ -45,7 +50,7 @@ public class SkipController {
         updatedSkip.setValue(skip.getValue());
 
         skipService.save(updatedSkip);
-        return new ResponseEntity<>(updatedSkip, HttpStatus.OK);
+        return new ResponseEntity<>(skipDTOMapper.wrap(updatedSkip), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")

@@ -1,15 +1,15 @@
 package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
-import com.example.apihell.model.Mark;
 import com.example.apihell.model.Professor;
-import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.MarkDTO;
+import com.example.apihell.model.dto.ProfessorDTO;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.StudentService;
 import com.example.apihell.service.utils.MarkDTOMapper;
+import com.example.apihell.service.utils.ProfessorDTOMapper;
 import com.example.apihell.service.utils.SkipDTOMapper;
 import com.example.apihell.service.utils.StudentDTOMapper;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -31,11 +30,14 @@ public class StudentController {
     private final StudentDTOMapper studentDTOMapper;
     private final MarkDTOMapper markDTOMapper;
     private final SkipDTOMapper skipDTOMapper;
-    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
+    private final ProfessorDTOMapper professorDTOMapper;
+
+    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper, ProfessorDTOMapper professorDTOMapper) {
         this.studentService = studentService;
         this.studentDTOMapper = studentDTOMapper;
         this.markDTOMapper = markDTOMapper;
         this.skipDTOMapper = skipDTOMapper;
+        this.professorDTOMapper = professorDTOMapper;
     }
 
     @GetMapping("/{id}")
@@ -112,9 +114,9 @@ public class StudentController {
     }
 
     @GetMapping(path="/professors/{id}")
-    public ResponseEntity<List<Professor>> getProfessorsByStudentId(@PathVariable(name="id") String id){
+    public ResponseEntity<List<ProfessorDTO>> getProfessorsByStudentId(@PathVariable(name="id") String id){
 
-        List<Professor> professors = studentService.getProfessorsByStudentId(id);
+        List<ProfessorDTO> professors = studentService.getProfessorsByStudentId(id).stream().map(professorDTOMapper::wrap).toList();
 
         if(professors.isEmpty()){
             return new ResponseEntity<>(professors, HttpStatus.NO_CONTENT);

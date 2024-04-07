@@ -37,13 +37,13 @@ public class ProfessorController {
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Professor> createProfessor(@RequestBody Professor professor){
-        Professor savedProfessor  = professorService.save(professor);
+    public ResponseEntity<ProfessorDTO> createProfessor(@RequestBody Professor professor){
+        ProfessorDTO savedProfessor  = professorDTOMapper.wrap(professorService.save(professor));
         return new ResponseEntity<>(savedProfessor, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Professor> updateProfessor(@PathVariable String id, @RequestBody Professor professor){
+    public ResponseEntity<ProfessorDTO> updateProfessor(@PathVariable String id, @RequestBody Professor professor){
         Professor updatedProfessor  = professorService.getProfessorById(id);
         if(updatedProfessor == null){
             throw new ResourceNotFoundException("no such professor!");
@@ -56,7 +56,7 @@ public class ProfessorController {
         updatedProfessor.setPatronim(professor.getPatronim());
 
         professorService.save(updatedProfessor);
-        return new ResponseEntity<>(updatedProfessor, HttpStatus.OK);
+        return new ResponseEntity<>(professorDTOMapper.wrap(updatedProfessor), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")
