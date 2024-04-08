@@ -2,7 +2,9 @@ package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Professor;
+import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.ProfessorDTO;
+import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.ProfessorService;
 import com.example.apihell.service.utils.ProfessorDTOMapper;
 import com.example.apihell.service.utils.SubjectDTOMapper;
@@ -37,9 +39,10 @@ public class ProfessorController {
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfessorDTO> createProfessor(@RequestBody Professor professor){
-        ProfessorDTO savedProfessor  = professorDTOMapper.wrap(professorService.save(professor));
-        return new ResponseEntity<>(savedProfessor, HttpStatus.CREATED);
+    public ResponseEntity<Professor> createProfessor(@RequestBody ProfessorDTO professorDTO){
+        Professor professor = professorDTOMapper.unwrap(professorDTO);
+        professorService.save(professor);
+        return new ResponseEntity<>(professor, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

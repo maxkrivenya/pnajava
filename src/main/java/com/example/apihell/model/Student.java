@@ -24,6 +24,7 @@ public class Student extends Person {
     private Group group;
 
     public Student(){}
+
     public Student(String id, String surname, String name, String patronim) {
         super(id, surname, name, patronim);
     }
@@ -43,16 +44,21 @@ public class Student extends Person {
     public List<Mark> getMarks() {
         return marks;
     }
+
     public void setMarks(List<Mark> marks) {
         this.marks = marks;
     }
+
     public List<Skip> getSkips() {
         return skips;
     }
+
     public void setSkips(List<Skip> skips) { this.skips = skips; }
+
     public Group getGroup() {
         return group;
     }
+
     public void setGroup(Group group) {
         this.group = group;
     }

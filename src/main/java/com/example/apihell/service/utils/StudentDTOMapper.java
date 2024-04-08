@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class StudentDTOMapper{
     private final  MarkDTOMapper markDTOMapper;
     private final  SkipDTOMapper skipDTOMapper;
+
     public StudentDTOMapper(MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
         this.markDTOMapper = markDTOMapper;
         this.skipDTOMapper = skipDTOMapper;
@@ -24,6 +25,7 @@ public class StudentDTOMapper{
           student.getSkips().stream().map(skipDTOMapper::wrap).toList()
         );
     }
+
     public Student unwrap(StudentDTO studentDTO){
         Student student = new Student();
 

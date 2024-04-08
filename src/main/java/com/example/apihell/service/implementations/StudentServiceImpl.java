@@ -39,6 +39,7 @@ public class StudentServiceImpl implements StudentService {
             return student;
         }
     }
+
     public List<Student> getStudentsByGroupId(String id){
         String groupKey = "group" + id;
         Group group = (Group) cache.get(groupKey);
@@ -54,10 +55,12 @@ public class StudentServiceImpl implements StudentService {
         }
         return students;
     }
+
     public void deleteStudentById(String id){
         studentRepository.deleteStudentById(id);
         cache.remove(CacheComponent.STUDENT_CACHE_KEY + id);
     }
+
     public Student save(Student student){
         String cacheKey = CacheComponent.STUDENT_CACHE_KEY + student.getId();
         Student existing = (Student)cache.get(cacheKey);
@@ -72,21 +75,13 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
-    public List<Professor> getProfessorsByStudentId(String id){
-        String cacheKey = CacheComponent.MULTI_CACHE_KEY +
-                CacheComponent.PROFESSOR_CACHE_KEY +
-                "from" +
-                CacheComponent.STUDENT_CACHE_KEY +
-                id;
-        List<Professor> professors;
-        professors = (List<Professor>) cache.get(cacheKey);
+    public List<String> getSameSurname(){
+        String cacheKey = "sameSurname";
+        List<String> professors;
+        professors = (List<String>) cache.get(cacheKey);
 
         if(professors==null){
-            professors = new ArrayList<>();
-            List<String> stringProfessors =  studentRepository.getProfessorsByStudentId(id);
-            for(String stringProfessor : stringProfessors){
-                    professors.add(new Professor(stringProfessor));
-            }
+            professors = studentRepository.getSameSurname();
             cache.put(cacheKey,professors);
         }
         return professors;
@@ -103,6 +98,7 @@ public class StudentServiceImpl implements StudentService {
         }
         return true;
     }
+
     public void logCache(){
         cache.log();
     }

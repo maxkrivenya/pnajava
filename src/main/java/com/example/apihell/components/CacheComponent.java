@@ -20,7 +20,7 @@ public class CacheComponent {
     public static final String SKIP_CACHE_KEY       = "skip";
     public static final String GROUP_CACHE_KEY      = "group";
 
-    private static final Map<String, Object> cache = new LinkedHashMap<>(MAX_CACHE_SIZE, 0.75f, true) {
+    private static final Map<String, Object> CACHE = new LinkedHashMap<>(MAX_CACHE_SIZE, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, Object> eldest) {
             if(size() > MAX_CACHE_SIZE) {
@@ -33,22 +33,21 @@ public class CacheComponent {
 
     public void put(String key, Object value) {
         log.info(CACHE_INFO_PUT + key);
-        cache.put(key, value);
+        CACHE.put(key, value);
     }
 
     public Object get(String key) {
         log.info(CACHE_INFO_GET + key);
-        return cache.get(key);
+        return CACHE.get(key);
     }
 
     public void remove(String key) {
         log.info(CACHE_INFO_REMOVE + key);
-        cache.remove(key);
+        CACHE.remove(key);
     }
 
     public void log(){
-        for (Map.Entry<String, Object> mapElement :
-                cache.entrySet()) {
+        for (Map.Entry<String, Object> mapElement : CACHE.entrySet()) {
             String key = mapElement.getKey();
             Object value = mapElement.getValue();
             log.info("key: '" + key + "', value: '" + value + "'");

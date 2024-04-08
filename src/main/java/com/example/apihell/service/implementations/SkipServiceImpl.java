@@ -28,11 +28,13 @@ public class SkipServiceImpl implements SkipService {
         }
         return skips;
     }
+
     public Skip save(Skip skip){
         cache.remove(CacheComponent.SKIP_CACHE_KEY);
         cache.put(CacheComponent.SKIP_CACHE_KEY + skip.getId(), skip);
         return skipRepository.save(skip);
     }
+
     public Skip getSkipById(String id){
         String cacheKey = CacheComponent.SKIP_CACHE_KEY + id;
         Skip skip = (Skip)cache.get(cacheKey);
@@ -42,14 +44,17 @@ public class SkipServiceImpl implements SkipService {
         }
         return skip;
     }
+
     public void deleteSkip(Skip skip){
         cache.remove(CacheComponent.SKIP_CACHE_KEY + skip.getId());
         skipRepository.delete(skip);
     }
+
     public void deleteSkipById(String id){
         cache.remove(CacheComponent.SKIP_CACHE_KEY + id);
         skipRepository.deleteSkipById(id);
     }
+
     public void logCache(){
         cache.log();
     }

@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProfessorRepository extends JpaRepository<Professor, String> {
     Professor getProfessorById(String id);
+
     Professor save(Professor professor);
+
     void deleteProfessorById(String id);
 
 }

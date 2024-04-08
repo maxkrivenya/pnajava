@@ -11,6 +11,7 @@ import java.util.List;
 public class MarkServiceImpl implements MarkService {
     private final MarkRepository markRepository;
     private final CacheComponent cache;
+
     public MarkServiceImpl(CacheComponent cache, MarkRepository markRepository) {
         this.markRepository = markRepository;
         this.cache = cache;
@@ -26,15 +27,18 @@ public class MarkServiceImpl implements MarkService {
         }
         return marks;
     }
+
     public Mark save(Mark mark){
         cache.remove(CacheComponent.MARK_CACHE_KEY + mark.getId());
         cache.put(CacheComponent.MARK_CACHE_KEY + mark.getId(),mark);
         return markRepository.save(mark);
     }
+
     public void deleteMarkById(String id){
         cache.remove(CacheComponent.MARK_CACHE_KEY + id);
         markRepository.deleteMarkById(id);
     }
+
     public Mark getMarkById(String id) {
         Mark mark = (Mark) cache.get(CacheComponent.MARK_CACHE_KEY + id);
         if(mark==null){
@@ -43,6 +47,7 @@ public class MarkServiceImpl implements MarkService {
         }
         return mark;
     }
+
     public void logCache(){
         cache.log();
     }

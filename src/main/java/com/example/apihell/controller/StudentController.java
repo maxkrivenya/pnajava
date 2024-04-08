@@ -113,13 +113,13 @@ public class StudentController {
         return ResponseEntity.ok("deleted student " + id);
     }
 
-    @GetMapping(path="/professors/{id}")
-    public ResponseEntity<List<ProfessorDTO>> getProfessorsByStudentId(@PathVariable(name="id") String id){
+    @GetMapping(path="/sameSurname")
+    public ResponseEntity<List<String>> getProfessorsByStudentId(){
 
-        List<ProfessorDTO> professors = studentService.getProfessorsByStudentId(id).stream().map(professorDTOMapper::wrap).toList();
+        List<String> professors = studentService.getSameSurname();
 
         if(professors.isEmpty()){
-            return new ResponseEntity<>(professors, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(professors, HttpStatus.OK);
     }

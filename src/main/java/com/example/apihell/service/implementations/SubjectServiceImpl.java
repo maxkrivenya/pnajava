@@ -11,6 +11,7 @@ import java.util.List;
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final CacheComponent cache;
+
     public SubjectServiceImpl(CacheComponent cache, SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
         this.cache = cache;
@@ -25,6 +26,7 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subjects;
     }
+
     public Subject getSubjectById(String id){
         String cacheKey = CacheComponent.SUBJECT_CACHE_KEY + id;
         Subject subject = (Subject) cache.get(cacheKey);
@@ -34,12 +36,14 @@ public class SubjectServiceImpl implements SubjectService {
         }
         return subject;
     }
+
     public Subject save(Subject subject){
         String cacheKey = CacheComponent.SUBJECT_CACHE_KEY + subject.getId();
         cache.remove(cacheKey);
         cache.put(cacheKey, subject);
         return subjectRepository.save(subject);
     }
+
     public void deleteSubjectById(String id){
         cache.remove(CacheComponent.SUBJECT_CACHE_KEY + id);
         subjectRepository.deleteSubjectById(id);

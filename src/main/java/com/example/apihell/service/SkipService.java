@@ -14,5 +14,6 @@ public interface SkipService{
     public void deleteSkip(Skip skip);
 
     public void deleteSkipById(String id);
+
     public void logCache();
 }

@@ -51,6 +51,7 @@ public class Professor extends Person {
         this.setSkips(new ArrayList<>());
         this.setSubjects(new ArrayList<>());
     }
+
     public Professor(String id, String surname, String name, String patronim, String title, String department) {
         super(id, surname, name, patronim);
         this.title = title;

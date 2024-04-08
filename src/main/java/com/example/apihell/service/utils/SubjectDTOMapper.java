@@ -16,6 +16,7 @@ public class SubjectDTOMapper{
                 subject.getSemesterId()
         );
     }
+
     public Subject unwrap(SubjectDTO subjectDTO){
         Subject subject = new Subject();
 

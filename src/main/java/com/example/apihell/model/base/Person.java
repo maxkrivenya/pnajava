@@ -17,6 +17,7 @@ public abstract class Person implements Serializable {
     private String patronim;
 
     protected Person(){}
+
     protected Person(String id, String surname, String name, String patronim) {
         this.id = id;
         this.surname = surname;

@@ -21,6 +21,7 @@ import java.util.List;
 public class SubjectController {
     private final SubjectService subjectService;
     private final SubjectDTOMapper subjectDTOMapper;
+
     public SubjectController(SubjectService subjectService, SubjectDTOMapper subjectDTOMapper) {
         this.subjectService = subjectService;
         this.subjectDTOMapper = subjectDTOMapper;
@@ -52,7 +53,6 @@ public class SubjectController {
         }
         return new ResponseEntity<>(subject.getGroups(), HttpStatus.OK);
     }
-
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SubjectDTO> createSubject(@RequestBody Subject subject){

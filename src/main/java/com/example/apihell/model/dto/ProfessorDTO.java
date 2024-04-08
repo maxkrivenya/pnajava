@@ -2,7 +2,7 @@ package com.example.apihell.model.dto;
 
 import java.util.List;
 
-public record ProfessorDTO (
+public record ProfessorDTO(
         String surname,
         String name,
         String patronim,

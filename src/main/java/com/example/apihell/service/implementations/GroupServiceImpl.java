@@ -26,15 +26,18 @@ public class GroupServiceImpl implements GroupService {
         }
         return group;
     }
-        public void deleteGroupById(String id){
+
+    public void deleteGroupById(String id){
             groupRepository.deleteById(id);
             cache.remove(CacheComponent.GROUP_CACHE_KEY + id);
-        }
-        public Group save(Group group){
-            cache.remove(CacheComponent.GROUP_CACHE_KEY + group.getId());
-            cache.put(CacheComponent.GROUP_CACHE_KEY + group.getId(), group);
-            return groupRepository.save(group);
-        }
+    }
+
+    public Group save(Group group){
+        cache.remove(CacheComponent.GROUP_CACHE_KEY + group.getId());
+        cache.put(CacheComponent.GROUP_CACHE_KEY + group.getId(), group);
+        return groupRepository.save(group);
+    }
+
     public void logCache(){
         cache.log();
     }

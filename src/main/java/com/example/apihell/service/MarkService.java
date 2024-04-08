@@ -12,5 +12,6 @@ public interface MarkService {
     public void deleteMarkById(String id);
 
     public Mark getMarkById(String id);
+
     public void logCache();
 }

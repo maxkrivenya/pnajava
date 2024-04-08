@@ -45,6 +45,7 @@ public class Subject implements Serializable {
     private List<Group> groups;
 
     public Subject(){}
+
     public Subject(String id, String name, String fullName, String semesterId) {
         this.id = id;
         this.name = name;
@@ -53,19 +54,34 @@ public class Subject implements Serializable {
     }
 
     public String getId() { return id; }
+
     public void setId(String id) { this.id = id; }
+
     public String getName() { return name; }
+
     public void setName(String name) { this.name = name; }
+
     public String getFullName() { return fullName; }
+
     public void setFullName(String fullName) { this.fullName = fullName; }
+
     public String getSemesterId() { return semesterId; }
+
     public void setSemesterId(String semesterId) { this.semesterId = semesterId; }
+
     public List<Mark> getMarks() { return marks; }
+
     public void setMarks(List<Mark> marks) { this.marks = marks; }
+
     public List<Skip> getSkips() { return skips; }
+
     public void setSkips(List<Skip> skips) { this.skips = skips; }
+
     public List<Professor> getProfessors() { return professors; }
+
     public void setProfessors(List<Professor> professors) { this.professors = professors; }
+
     public List<Group> getGroups() { return groups; }
+
     public void setGroups(List<Group> groups) { this.groups = groups; }
 }

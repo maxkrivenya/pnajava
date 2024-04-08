@@ -35,19 +35,24 @@ public class Skip extends LectureResult {
     public Boolean getIsJustified() {
         return isJustified;
     }
+
     public void setIsJustified(Boolean reasonable) {
         this.isJustified = reasonable;
     }
+
     public Student getStudent() {
         return student;
     }
+
     public void setStudent(Student student) {
         this.student = student;
     }
+
     public Professor getProfessor() { return professor;}
+
     public void setProfessor(Professor professor) { this.professor = professor; }
+
     public Subject getSubject() { return subject; }
+
     public void setSubject(Subject subject) { this.subject = subject; }
-
-
 }

@@ -1,6 +1,6 @@
 package com.example.apihell.model.dto;
 
-public record SkipDTO (
+public record SkipDTO(
         int value,
         boolean isJustified,
         String subjectName,

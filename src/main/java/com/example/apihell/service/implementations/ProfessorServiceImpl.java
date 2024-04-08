@@ -27,12 +27,14 @@ public class ProfessorServiceImpl implements ProfessorService {
         }
         return professor;
     }
+
     public Professor save(Professor professor){
         String cacheKey = CacheComponent.PROFESSOR_CACHE_KEY + professor.getId();
         cache.remove(cacheKey);
         cache.put(cacheKey,professor);
         return professorRepository.save(professor);
     }
+
     public void deleteProfessorById(String id){
         cache.remove(CacheComponent.PROFESSOR_CACHE_KEY + id);
         professorRepository.deleteProfessorById(id);

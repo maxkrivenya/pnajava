@@ -1,6 +1,6 @@
 package com.example.apihell.model.dto;
 
-public record SubjectDTO (
+public record SubjectDTO(
         String name,
         String fullName,
 

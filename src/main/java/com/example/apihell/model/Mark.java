@@ -26,14 +26,20 @@ public class Mark extends LectureResult {
     public Mark(){
         super();
     }
+
     public Mark(String id, String date, Integer value) {
         super(id,date,value);
     }
 
     public Student getStudent() { return student; }
+
     public void setStudent(Student student) { this.student = student; }
+
     public Professor getProfessor() { return professor; }
+
     public void setProfessor(Professor professor) { this.professor = professor; }
+
     public Subject getSubject() { return subject; }
+
     public void setSubject(Subject subject) { this.subject = subject; }
 }
