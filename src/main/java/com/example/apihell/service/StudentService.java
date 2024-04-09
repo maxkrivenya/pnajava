@@ -18,5 +18,5 @@ public interface StudentService {
 
     public boolean studentExists(String id);
 
-    List<String> getSameSurname();
+    List<String> getSameSurnameLike(String surnameLike);
 }

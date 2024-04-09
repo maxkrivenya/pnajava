@@ -19,8 +19,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     @Override
     Student save(Student student);
 
-    @Query(value="select distinct s.surname from student s inner join professors p on s.surname = p.surname",
+    @Query(value="select distinct s.surname from student s inner join professors p on p.surname like ?1 and s.surname like ?1",
         nativeQuery = true
     )
-    List<String> getSameSurname();
+    List<String> getSameSurnameLike(String parameter);
 }

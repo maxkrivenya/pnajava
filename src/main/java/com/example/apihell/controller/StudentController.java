@@ -1,10 +1,8 @@
 package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
-import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.MarkDTO;
-import com.example.apihell.model.dto.ProfessorDTO;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.StudentService;
@@ -30,14 +28,12 @@ public class StudentController {
     private final StudentDTOMapper studentDTOMapper;
     private final MarkDTOMapper markDTOMapper;
     private final SkipDTOMapper skipDTOMapper;
-    private final ProfessorDTOMapper professorDTOMapper;
 
-    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper, ProfessorDTOMapper professorDTOMapper) {
+    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
         this.studentService = studentService;
         this.studentDTOMapper = studentDTOMapper;
         this.markDTOMapper = markDTOMapper;
         this.skipDTOMapper = skipDTOMapper;
-        this.professorDTOMapper = professorDTOMapper;
     }
 
     @GetMapping("/{id}")
@@ -113,10 +109,10 @@ public class StudentController {
         return ResponseEntity.ok("deleted student " + id);
     }
 
-    @GetMapping(path="/sameSurname")
-    public ResponseEntity<List<String>> getProfessorsByStudentId(){
+    @GetMapping(path="/sameSurname/{surnameLike}")
+    public ResponseEntity<List<String>> getProfessorsByStudentId(@PathVariable(name = "surnameLike") String surnameLike){
 
-        List<String> professors = studentService.getSameSurname();
+        List<String> professors = studentService.getSameSurnameLike(surnameLike);
 
         if(professors.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

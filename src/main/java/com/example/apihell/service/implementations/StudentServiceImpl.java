@@ -75,13 +75,15 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
-    public List<String> getSameSurname(){
-        String cacheKey = "sameSurname";
+    public List<String> getSameSurnameLike(String surnameLike){
+        String cacheKey = "sameSurnameLike" + surnameLike;
         List<String> professors;
         professors = (List<String>) cache.get(cacheKey);
 
+        String queryParam = "%" + surnameLike + "%";
+
         if(professors==null){
-            professors = studentRepository.getSameSurname();
+            professors = studentRepository.getSameSurnameLike(queryParam);
             cache.put(cacheKey,professors);
         }
         return professors;

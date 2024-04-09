@@ -2,9 +2,7 @@ package com.example.apihell.controller;
 
 import com.example.apihell.exception.ResourceNotFoundException;
 import com.example.apihell.model.Professor;
-import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.ProfessorDTO;
-import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.ProfessorService;
 import com.example.apihell.service.utils.ProfessorDTOMapper;
 import com.example.apihell.service.utils.SubjectDTOMapper;
