@@ -27,7 +27,6 @@ public class StudentServiceImpl implements StudentService {
         this.groupRepository = groupRepository;
     }
 
-    @Nullable
     public Student getStudentById(String id){
         String key = "student" + id;
         Student student = (Student) cache.get(key);

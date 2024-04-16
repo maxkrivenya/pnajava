@@ -1,19 +1,19 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.MarkDTO;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.StudentService;
 import com.example.apihell.service.utils.MarkDTOMapper;
-import com.example.apihell.service.utils.ProfessorDTOMapper;
 import com.example.apihell.service.utils.SkipDTOMapper;
 import com.example.apihell.service.utils.StudentDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/student")
 @Transactional
+@Validated
 public class StudentController {
     private final StudentService studentService;
     private final StudentDTOMapper studentDTOMapper;
@@ -94,10 +95,9 @@ public class StudentController {
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDTO> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO){
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO) {
         if(!studentService.studentExists(id)){
-           throw new ResourceNotFoundException("no such student!");
-        }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);        }
         Student student = studentDTOMapper.unwrap(studentDTO);
         student.setId(id);
         return new ResponseEntity<>(studentDTOMapper.wrap(studentService.save(student)), HttpStatus.OK);

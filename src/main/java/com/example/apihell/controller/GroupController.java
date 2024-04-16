@@ -1,6 +1,6 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Student;
 import com.example.apihell.service.GroupService;
@@ -27,7 +27,7 @@ public class GroupController {
     public ResponseEntity<Group> getGroupById(@PathVariable("id") String id) {
         Group group = groupService.getGroupById(id);
         if (group == null) {
-            return new ResponseEntity<>(group, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(group, HttpStatus.OK);
         }
@@ -50,10 +50,10 @@ public class GroupController {
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Group> updateGroup(@PathVariable String id, @RequestBody Group group){
+    public ResponseEntity<Group> updateGroup(@PathVariable String id, @RequestBody Group group) {
         Group updatedGroup  = groupService.getGroupById(id);
         if(updatedGroup == null){
-            throw new ResourceNotFoundException("no such group!");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedGroup.setId(group.getId());
         updatedGroup.setDegree(group.getDegree());

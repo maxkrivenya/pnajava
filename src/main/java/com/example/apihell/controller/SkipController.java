@@ -1,5 +1,5 @@
 package com.example.apihell.controller;
-import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.service.SkipService;
@@ -40,10 +40,10 @@ public class SkipController {
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SkipDTO> updateSkip(@PathVariable String id, @RequestBody Skip skip){
+    public ResponseEntity<SkipDTO> updateSkip(@PathVariable String id, @RequestBody Skip skip) {
         Skip updatedSkip  = skipService.getSkipById(id);
         if(updatedSkip == null){
-            throw new ResourceNotFoundException("no such skip!");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedSkip.setId(skip.getId());
         updatedSkip.setDate(skip.getDate());
@@ -57,7 +57,7 @@ public class SkipController {
     public ResponseEntity<String> deleteSkipById(@PathVariable(name="id") String id) {
         Skip skip = skipService.getSkipById(id);
         if(skip==null) {
-            return new ResponseEntity<>("NO SUCH ENTITY", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("NO SUCH ENTITY", HttpStatus.NOT_FOUND);
         }
         skipService.deleteSkip(skip);
         return ResponseEntity.ok("deleted skip " + id + ' ' + skip.getId());

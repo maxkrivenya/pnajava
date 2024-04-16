@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
-    @Nullable
+
     Student getStudentById(String id);
 
     List<Student> getStudentsByGroup(Group group);

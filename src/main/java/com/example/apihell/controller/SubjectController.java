@@ -1,6 +1,6 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Subject;
 import com.example.apihell.model.dto.SubjectDTO;
@@ -61,10 +61,10 @@ public class SubjectController {
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable String id, @RequestBody Subject subject){
+    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable String id, @RequestBody Subject subject) {
         Subject updatedSubject  = subjectService.getSubjectById(id);
         if(updatedSubject == null){
-            throw new ResourceNotFoundException("no such subject!");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedSubject.setId(subject.getId());
         updatedSubject.setName(subject.getName());

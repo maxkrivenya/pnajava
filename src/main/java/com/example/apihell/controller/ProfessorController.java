@@ -1,6 +1,6 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Professor;
 import com.example.apihell.model.dto.ProfessorDTO;
 import com.example.apihell.service.ProfessorService;
@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.*;
 public class ProfessorController {
     private final ProfessorService professorService;
     private final ProfessorDTOMapper professorDTOMapper;
-    private final SubjectDTOMapper subjectDTOMapper;
 
     public ProfessorController(ProfessorService professorService, ProfessorDTOMapper professorDTOMapper, SubjectDTOMapper subjectDTOMapper) {
         this.professorService = professorService;
         this.professorDTOMapper = professorDTOMapper;
-        this.subjectDTOMapper = subjectDTOMapper;
     }
 
     @GetMapping("/{id}")
@@ -44,10 +42,10 @@ public class ProfessorController {
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfessorDTO> updateProfessor(@PathVariable String id, @RequestBody Professor professor){
+    public ResponseEntity<ProfessorDTO> updateProfessor(@PathVariable String id, @RequestBody Professor professor) {
         Professor updatedProfessor  = professorService.getProfessorById(id);
         if(updatedProfessor == null){
-            throw new ResourceNotFoundException("no such professor!");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedProfessor.setId(professor.getId());
         updatedProfessor.setDepartment(professor.getDepartment());

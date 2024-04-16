@@ -1,5 +1,5 @@
 package com.example.apihell.controller;
-import com.example.apihell.exception.ResourceNotFoundException;
+import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Mark;
 import com.example.apihell.model.dto.MarkDTO;
 import com.example.apihell.model.dto.StudentDTO;
@@ -53,10 +53,10 @@ public class MarkController {
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MarkDTO> updateMark(@PathVariable String id, @RequestBody Mark mark){
+    public ResponseEntity<MarkDTO> updateMark(@PathVariable String id, @RequestBody Mark mark) {
         Mark updatedMark  = markService.getMarkById(id);
         if(updatedMark == null){
-            throw new ResourceNotFoundException("no such mark!");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         updatedMark.setId(mark.getId());
         updatedMark.setDate(mark.getDate());
