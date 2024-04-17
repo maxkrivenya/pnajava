@@ -9,9 +9,6 @@ import java.util.LinkedHashMap;
 @Component
 public class CacheComponent {
     private static final Integer  MAX_CACHE_SIZE    = 5;
-    public static final String CACHE_INFO_GET      = "CACHE TAKE   : ";
-    public static final String CACHE_INFO_REMOVE   = "CACHE REMOVE : ";
-    public static final String CACHE_INFO_PUT      = "CACHE PUT    : ";
     public static final String MULTI_CACHE_KEY      = "list_";
     public static final String STUDENT_CACHE_KEY    = "student";
     public static final String PROFESSOR_CACHE_KEY  = "professor";
@@ -24,7 +21,6 @@ public class CacheComponent {
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, Object> eldest) {
             if(size() > MAX_CACHE_SIZE) {
-                log.info(CACHE_INFO_REMOVE + eldest.getKey() + ":" + eldest.getValue());
                 return true;
             }
             return false;
@@ -32,17 +28,14 @@ public class CacheComponent {
     };
 
     public void put(String key, Object value) {
-        log.info(CACHE_INFO_PUT + key);
         CACHE.put(key, value);
     }
 
     public Object get(String key) {
-        log.info(CACHE_INFO_GET + key);
         return CACHE.get(key);
     }
 
     public void remove(String key) {
-        log.info(CACHE_INFO_REMOVE + key);
         CACHE.remove(key);
     }
 

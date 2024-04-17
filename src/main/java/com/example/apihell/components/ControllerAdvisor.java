@@ -45,16 +45,4 @@ public class ControllerAdvisor {
         log.error("error 400");
         return new ResponseEntity<>("check your url bro", HttpStatus.BAD_REQUEST);
     }
-/*
-        @ResponseStatus(HttpStatus.NOT_FOUND)
-        @ExceptionHandler({
-
-
-        })
-        public ResponseEntity<String> handlerFoundException() {
-            log.error("error 404");
-            return new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
-        }
-    }
-*/
 }
