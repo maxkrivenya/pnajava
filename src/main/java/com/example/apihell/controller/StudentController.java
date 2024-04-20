@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -124,5 +125,15 @@ public class StudentController {
     public HttpStatus logCache(){
         studentService.logCache();
         return HttpStatus.NO_CONTENT;
+    }
+
+
+    @GetMapping(path = "/group/{groupId}/average")
+    public ResponseEntity<Double> getAverageScoreInGroup(@PathVariable("groupId") String groupId) {
+        OptionalDouble averageMark = studentService.getAverageScoreInGroup(groupId);
+        if(averageMark.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(averageMark.getAsDouble(), HttpStatus.OK);
     }
 }

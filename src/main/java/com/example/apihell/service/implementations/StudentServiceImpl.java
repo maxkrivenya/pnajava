@@ -2,17 +2,16 @@ package com.example.apihell.service.implementations;
 
 import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Group;
-import com.example.apihell.model.Professor;
+import com.example.apihell.model.Mark;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
 import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.StudentService;
-import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @Slf4j
 @Service
@@ -102,5 +101,14 @@ public class StudentServiceImpl implements StudentService {
 
     public void logCache(){
         cache.log();
+    }
+
+    public OptionalDouble getAverageScoreInGroup(String groupId){
+        return studentRepository.getStudentsByGroupId(groupId)
+                .stream()
+                .flatMap(student -> student.getMarks().stream())
+                .mapToDouble(Mark::getValue)
+                .average()
+                ;
     }
 }

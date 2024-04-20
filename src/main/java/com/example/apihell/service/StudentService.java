@@ -4,6 +4,7 @@ import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 public interface StudentService {
     public Student getStudentById(String id);
@@ -19,4 +20,6 @@ public interface StudentService {
     public boolean studentExists(String id);
 
     List<String> getSameSurnameLike(String surnameLike);
+
+    OptionalDouble getAverageScoreInGroup(String groupId);
 }

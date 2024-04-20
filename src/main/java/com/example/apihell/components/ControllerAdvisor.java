@@ -1,7 +1,11 @@
 package com.example.apihell.components;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,18 +20,22 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+
 @Slf4j
 @Validated
 @ControllerAdvice
 public class ControllerAdvisor {
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({Exception.class,
 
-    })
-    public ResponseEntity<String> handleExceptionServer() {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ObjectNode> handleExceptionServer() throws JsonProcessingException {
         log.error("error 500");
-        return new ResponseEntity<>("check your request body bro. otherwise my bad", HttpStatus.INTERNAL_SERVER_ERROR);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode JSONObject = mapper.createObjectNode();
+        JSONObject.put("value", "check your request body bro");
+        return new ResponseEntity<>(JSONObject, HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -41,8 +49,11 @@ public class ControllerAdvisor {
             ResourceNotFoundException.class,
             NoResourceFoundException.class,
     })
-    public ResponseEntity<String> handleIllegalArgumentException() {
+    public ResponseEntity<ObjectNode> handleIllegalArgumentException() {
         log.error("error 400");
-        return new ResponseEntity<>("check your url bro", HttpStatus.BAD_REQUEST);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode JSONObject = mapper.createObjectNode();
+        JSONObject.put("value", "check your url bro");
+        return new ResponseEntity<>(JSONObject, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

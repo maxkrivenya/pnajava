@@ -1,5 +1,4 @@
 package com.example.apihell.controller;
-import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Mark;
 import com.example.apihell.model.dto.MarkDTO;
 import com.example.apihell.model.dto.StudentDTO;
@@ -47,9 +46,9 @@ public class MarkController {
     }
 
     @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MarkDTO> createMark(@RequestBody Mark mark){
-        MarkDTO savedMark  = markDTOMapper.wrap(markService.save(mark));
-        return new ResponseEntity<>(savedMark, HttpStatus.CREATED);
+    public ResponseEntity<MarkDTO> createMark(@RequestBody MarkDTO markDTO){
+        markService.save(markDTOMapper.unwrap(markDTO));
+        return new ResponseEntity<>(markDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
