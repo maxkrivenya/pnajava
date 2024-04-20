@@ -121,13 +121,6 @@ public class StudentController {
         return new ResponseEntity<>(professors, HttpStatus.OK);
     }
 
-    @GetMapping(path="/cache")
-    public HttpStatus logCache(){
-        studentService.logCache();
-        return HttpStatus.NO_CONTENT;
-    }
-
-
     @GetMapping(path = "/group/{groupId}/average")
     public ResponseEntity<Double> getAverageScoreInGroup(@PathVariable("groupId") String groupId) {
         OptionalDouble averageMark = studentService.getAverageScoreInGroup(groupId);

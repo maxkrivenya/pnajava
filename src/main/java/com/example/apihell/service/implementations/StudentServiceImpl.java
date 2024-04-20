@@ -29,13 +29,11 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudentById(String id){
         String key = "student" + id;
         Student student = (Student) cache.get(key);
-        if (student != null) {
-            return student;
-        }else{
+        if (student == null) {
             student = studentRepository.getStudentById(id);
             cache.put(CacheComponent.STUDENT_CACHE_KEY + id, student);
-            return student;
         }
+        return student;
     }
 
     public List<Student> getStudentsByGroupId(String id){
@@ -92,15 +90,8 @@ public class StudentServiceImpl implements StudentService {
         Student student = (Student)cache.get(cacheKey);
         if(student == null){
             student = studentRepository.getStudentById(id);
-            if(student == null){
-                return false;
-            }
         }
-        return true;
-    }
-
-    public void logCache(){
-        cache.log();
+        return student != null;
     }
 
     public OptionalDouble getAverageScoreInGroup(String groupId){

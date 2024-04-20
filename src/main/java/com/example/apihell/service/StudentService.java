@@ -7,17 +7,15 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 public interface StudentService {
-    public Student getStudentById(String id);
+    Student getStudentById(String id);
 
-    public List<Student> getStudentsByGroupId(String id);
+    List<Student> getStudentsByGroupId(String id);
 
-    public void deleteStudentById(String id);
+    void deleteStudentById(String id);
 
-    public Student save(Student student);
+    Student save(Student student);
 
-    public void logCache();
-
-    public boolean studentExists(String id);
+    boolean studentExists(String id);
 
     List<String> getSameSurnameLike(String surnameLike);
 

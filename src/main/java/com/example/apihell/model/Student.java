@@ -34,11 +34,12 @@ public class Student extends Person {
         this.groupId = groupId;
     }
 
-    public Student(String id, String surname, String name, String patronim, List<Mark> marks, List<Skip> skips, Group group) {
+    public Student(String id, String surname, String name, String patronim, String groupId, List<Mark> marks, List<Skip> skips, Group group) {
         super(id,surname,name,patronim);
         this.marks = marks;
         this.skips = skips;
         this.group = group;
+        this.groupId = groupId;
     }
 
     public List<Mark> getMarks() {
