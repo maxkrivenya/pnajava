@@ -1,5 +1,7 @@
 package com.example.apihell.service;
+import com.example.apihell.model.Group;
 import com.example.apihell.model.Mark;
+import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.service.implementations.StudentServiceImpl;
 import org.junit.Before;
@@ -19,45 +21,30 @@ import static org.mockito.Mockito.*;
 
 public class StudentServiceTest {
 
-    private StudentService studentService;
+    private StudentServiceImpl studentService;
 
-    private List<Mark> marks1;
-    private List<Mark> marks2;
+    private final static List<Mark> marks1 = new ArrayList<>(List.of(
+            new Mark("1", "Date", 10),
+            new Mark("2", "Date", 4)
+    ));
 
-    private Student EXISTING_STUDENT;
+    private final static List<Mark> marks2 = new ArrayList<>(List.of(
+            new Mark("1", "Date", 9)
+    ));
 
-    private Student EXISTING_STUDENT_GROUPMATE;
+    private final static Student EXISTING_STUDENT
+            = new Student("id", "Surname", "Name", "Patronim", "groupExists",
+            marks1, new ArrayList<Skip>(),new Group());
+    private final static Student EXISTING_STUDENT_GROUPMATE
+            = new Student("id2", "Surname2", "Name2", "Patronim2", "groupExists",
+            marks2, new ArrayList<Skip>(), new Group());
+    private final static Student NO_STUDENT
+            = new Student("no id", "no Surname", "no Name", "no Patronim", "no groupExists");
 
-    private Student NO_STUDENT;
-
-    private List<Student> groupmates;
+    private final static List<Student> groupmates = new ArrayList<>(List.of(EXISTING_STUDENT, EXISTING_STUDENT_GROUPMATE));
 
     @Before
     public void setUp() throws Exception {
-
-        marks1 = new ArrayList<>();
-        marks2 = new ArrayList<>();
-
-        marks1.add(new Mark("1", "Date", 10));
-        marks1.add(new Mark("2", "Date", 4));
-        marks2.add(new Mark("1", "Date", 9));
-
-        EXISTING_STUDENT
-                = new Student("id", "Surname", "Name", "Patronim", "groupExists");
-        EXISTING_STUDENT_GROUPMATE
-                = new Student("id2", "Surname2", "Name2", "Patronim2", "groupExists");
-        NO_STUDENT =
-                new Student("no id", "no Surname", "no Name", "no Patronim", "no groupExists");
-
-
-        EXISTING_STUDENT.setMarks(marks1);
-        EXISTING_STUDENT_GROUPMATE.setMarks(marks2);
-
-        groupmates = new ArrayList<>();
-        groupmates.add(EXISTING_STUDENT);
-        groupmates.add(EXISTING_STUDENT_GROUPMATE);
-
-
         studentService = getStudentService();
     }
 
@@ -122,25 +109,16 @@ public class StudentServiceTest {
         }
         expectedAverage /= amt;
 
-        OptionalDouble realAverage = studentService
-                .getStudentsByGroupId(EXISTING_STUDENT.getGroupId())
-                .stream()
-                .flatMap(student -> student.getMarks().stream())
-                .mapToDouble(Mark::getValue)
-                .average();
+        OptionalDouble realAverage = studentService.getAverageScoreInGroup(EXISTING_STUDENT.getGroupId());
 
         assertNotNull(realAverage);
-
         assertEquals(expectedAverage, realAverage.getAsDouble(), 0);
     }
 
     @Test
     public void getAverageScoreInGroupExpectedFalse(){
-
-        List<Student> caseNoGroup = studentService
-                .getStudentsByGroupId(NO_STUDENT.getGroupId());
-
-        assertEquals(Collections.emptyList(), caseNoGroup);
+        OptionalDouble averageReal = studentService.getAverageScoreInGroup(NO_STUDENT.getGroupId());
+        assertFalse(averageReal.isPresent());
     }
 
     @Test
@@ -152,8 +130,8 @@ public class StudentServiceTest {
         assertEquals(student, savedStudent);
     }
 
-    private StudentService getStudentService() {
-        StudentService mock = mock(StudentServiceImpl.class);
+    private StudentServiceImpl getStudentService() {
+        StudentServiceImpl mock = mock(StudentServiceImpl.class);
 
         //studentExists
         when(mock.studentExists(EXISTING_STUDENT.getId())).thenReturn(true);
@@ -169,6 +147,17 @@ public class StudentServiceTest {
 
         //save
         when(mock.save(any(Student.class))).then(returnsFirstArg());
+
+        //average mark in group
+        when(mock.getAverageScoreInGroup(EXISTING_STUDENT.getGroupId())).thenReturn(
+                groupmates.stream()
+                .flatMap(student -> student.getMarks()
+                        .stream())
+                        .mapToDouble(Mark::getValue)
+                        .average()
+        );
+
+        when(mock.getAverageScoreInGroup(NO_STUDENT.getGroupId())).thenReturn(OptionalDouble.empty());
 
         return mock;
     }
