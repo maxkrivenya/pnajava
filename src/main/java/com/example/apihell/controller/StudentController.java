@@ -1,6 +1,5 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.MarkDTO;
 import com.example.apihell.model.dto.SkipDTO;

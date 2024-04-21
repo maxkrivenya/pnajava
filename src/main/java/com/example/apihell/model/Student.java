@@ -3,6 +3,8 @@ import com.example.apihell.model.base.Person;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Builder;
+
 import java.util.List;
 import java.util.Objects;
 

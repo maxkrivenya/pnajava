@@ -1,6 +1,5 @@
 package com.example.apihell.service;
 
-import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 
 import java.util.List;

@@ -5,7 +5,6 @@ import com.example.apihell.model.Group;
 import com.example.apihell.model.Mark;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
-import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,11 @@ import java.util.OptionalDouble;
 @Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final StudentRepository studentRepository;
+    private final StudentService studentRepository;
     private final GroupRepository groupRepository;
     private final CacheComponent cache;
 
-    public StudentServiceImpl(CacheComponent cache, StudentRepository studentRepository, GroupRepository groupRepository) {
+    public StudentServiceImpl(CacheComponent cache, StudentService studentRepository, GroupRepository groupRepository) {
         this.cache = cache;
         this.studentRepository = studentRepository;
         this.groupRepository = groupRepository;
@@ -41,12 +40,15 @@ public class StudentServiceImpl implements StudentService {
         Group group = (Group) cache.get(groupKey);
         if(group == null){
             group = groupRepository.getGroupById(id);
+            if(group == null){
+                return null;
+            }
             cache.put(groupKey, group);
         }
         String studentsKey = CacheComponent.MULTI_CACHE_KEY + CacheComponent.STUDENT_CACHE_KEY + id;
         List<Student> students = (List<Student>) cache.get(studentsKey);
         if(students == null){
-            students = studentRepository.getStudentsByGroup(group);
+            students = studentRepository.getStudentsByGroupId(group.getId());
             cache.put(studentsKey, students);
         }
         return students;
@@ -78,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
 
         String queryParam = "%" + surnameLike + "%";
 
-        if(professors==null){
+        if(professors==null || professors.isEmpty()){
             professors = studentRepository.getSameSurnameLike(queryParam);
             cache.put(cacheKey,professors);
         }
