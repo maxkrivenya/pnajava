@@ -1,9 +1,6 @@
 package com.example.apihell.repository;
 
-import com.example.apihell.model.Group;
-import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
-import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,7 +10,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 
     Student getStudentById(String id);
 
-    List<Student> getStudentsByGroup(Group group);
+    List<Student> getStudentsByGroupId(String groupId);
 
     void deleteStudentById(String id);
 
@@ -24,8 +21,6 @@ public interface StudentRepository extends JpaRepository<Student, String> {
         nativeQuery = true
     )
     List<String> getSameSurnameLike(String parameter);
-
-    List<Student> getStudentsByGroupId(String groupId);
 
     //List<Student> getAll();
 }

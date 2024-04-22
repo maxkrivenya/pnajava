@@ -57,8 +57,7 @@ public class StudentDTOMapperTest {
     private final static Student EXISTING_STUDENT
             = new Student("id", "Surname", "Name", "Patronim", "groupExists",
             marks1,
-            new ArrayList<Skip>(),
-            new Group()
+            new ArrayList<Skip>()
     );
 
     private final Student EXPECTED_STUDENT = new Student(
@@ -66,10 +65,9 @@ public class StudentDTOMapperTest {
             EXISTING_STUDENT_DTO.surname(),
             EXISTING_STUDENT_DTO.name(),
             EXISTING_STUDENT_DTO.patronim(),
-            EXISTING_STUDENT_DTO.group(),
+            EXISTING_STUDENT_DTO.groupId(),
             marksExpected,
-            new ArrayList<>(),
-            new Group()
+            new ArrayList<>()
     );
 
     private final static StudentDTO EXISTING_STUDENT_DTO = new StudentDTO(

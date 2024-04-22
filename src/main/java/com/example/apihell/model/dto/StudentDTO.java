@@ -7,7 +7,7 @@ public record StudentDTO(
         String surname,
         String name,
         String patronim,
-        String group,
+        String groupId,
         List<MarkDTO> marks,
         List<SkipDTO> skips
 )

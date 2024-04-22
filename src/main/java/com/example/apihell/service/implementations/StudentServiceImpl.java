@@ -5,6 +5,7 @@ import com.example.apihell.model.Group;
 import com.example.apihell.model.Mark;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
+import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,11 @@ import java.util.OptionalDouble;
 @Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final StudentService studentRepository;
+    private final StudentRepository studentRepository;
     private final GroupRepository groupRepository;
     private final CacheComponent cache;
 
-    public StudentServiceImpl(CacheComponent cache, StudentService studentRepository, GroupRepository groupRepository) {
+    public StudentServiceImpl(CacheComponent cache, StudentRepository studentRepository, GroupRepository groupRepository) {
         this.cache = cache;
         this.studentRepository = studentRepository;
         this.groupRepository = groupRepository;

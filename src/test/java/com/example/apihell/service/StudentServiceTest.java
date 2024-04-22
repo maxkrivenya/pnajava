@@ -5,6 +5,7 @@ import com.example.apihell.model.Mark;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
+import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.implementations.StudentServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,13 +37,13 @@ public class StudentServiceTest {
 
     private final static Student EXISTING_STUDENT
             = new Student("id", "Surname", "Name", "Patronim", "groupExists",
-            marks1, new ArrayList<Skip>(),new Group());
+            marks1, new ArrayList<Skip>());
     private final static Student EXISTING_STUDENT_GROUPMATE
             = new Student("id2", "Surname2", "Name2", "Patronim2", "groupExists",
-            marks2, new ArrayList<Skip>(), new Group());
+            marks2, new ArrayList<Skip>());
     private final static Student NO_STUDENT
             = new Student("no id", "no Surname", "no Name", "no Patronim", "no groupExists"
-    , new ArrayList<>(), new ArrayList<>(), new Group());
+    , new ArrayList<>(), new ArrayList<>());
 
 
     private final static List<Student> groupmates = new ArrayList<>(
@@ -171,13 +172,13 @@ public class StudentServiceTest {
         assertEquals(Collections.emptyList(), real);
     }
 
-    private StudentService getStudentRepository() {
+    private StudentRepository getStudentRepository() {
 
-        StudentService mock = mock(StudentService.class);
+        StudentRepository mock = mock(StudentRepository.class);
 
         //studentExists
-        when(mock.studentExists(EXISTING_STUDENT.getId())).thenReturn(true);
-        when(mock.studentExists(NO_STUDENT.getId())).thenReturn(false);
+        //when(mock.studentExists(EXISTING_STUDENT.getId())).thenReturn(true);
+        //when(mock.studentExists(NO_STUDENT.getId())).thenReturn(false);
 
         //getById
         when(mock.getStudentById(EXISTING_STUDENT.getId())).thenReturn(EXISTING_STUDENT);
@@ -191,6 +192,7 @@ public class StudentServiceTest {
         when(mock.save(any(Student.class))).then(returnsFirstArg());
 
         //average mark in group
+       /*
         when(mock.getAverageScoreInGroup(EXISTING_STUDENT.getGroupId())).thenReturn(
                 groupmates.stream()
                 .flatMap(student -> student.getMarks()
@@ -200,7 +202,7 @@ public class StudentServiceTest {
         );
 
         when(mock.getAverageScoreInGroup(NO_STUDENT.getGroupId())).thenReturn(OptionalDouble.empty());
-
+*/
         //sameSurnameLike
         when(mock.getSameSurnameLike("%" + EXISTING_STUDENT.getSurname() + "%"))
                 .thenReturn(new ArrayList<>(List.of(EXISTING_STUDENT.getSurname())));

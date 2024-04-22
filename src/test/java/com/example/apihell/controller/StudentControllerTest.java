@@ -41,12 +41,12 @@ public class StudentControllerTest {
             )
     ));
 
-    private static List<MarkDTO> markDTOSExpected = new ArrayList<>(List.of(
+    private static final List<MarkDTO> markDTOSExpected = new ArrayList<>(List.of(
             new MarkDTO(marks1.get(0).getValue(), marks1.get(0).getSubject().getName(), marks1.get(0).getDate()),
             new MarkDTO(marks1.get(1).getValue(), marks1.get(1).getSubject().getName(), marks1.get(1).getDate())
     ));
 
-    private static List<Mark> marksExpected = new ArrayList<>(List.of(
+    private static final List<Mark> marksExpected = new ArrayList<>(List.of(
             new Mark(markDTOSExpected.get(0).date(), markDTOSExpected.get(0).value()),
             new Mark(markDTOSExpected.get(1).date(), markDTOSExpected.get(1).value())
     ));
@@ -54,8 +54,7 @@ public class StudentControllerTest {
     private final static Student EXISTING_STUDENT
             = new Student("id", "Surname", "Name", "Patronim", "groupExists",
             marks1,
-            new ArrayList<Skip>(),
-            new Group()
+            new ArrayList<Skip>()
     );
 
     private final Student EXPECTED_STUDENT = new Student(
@@ -63,10 +62,9 @@ public class StudentControllerTest {
             EXISTING_STUDENT_DTO.surname(),
             EXISTING_STUDENT_DTO.name(),
             EXISTING_STUDENT_DTO.patronim(),
-            EXISTING_STUDENT_DTO.group(),
+            EXISTING_STUDENT_DTO.groupId(),
             marksExpected,
-            new ArrayList<>(),
-            new Group()
+            new ArrayList<>()
     );
 
     private final static StudentDTO EXISTING_STUDENT_DTO = new StudentDTO(
@@ -191,7 +189,7 @@ public class StudentControllerTest {
             return mock;
         }
 
-    public StudentService getStudentService(){
+    public StudentServiceImpl getStudentService(){
         StudentServiceImpl mock = mock(StudentServiceImpl.class);
 
         when(mock.getStudentById(EXISTING_STUDENT.getId())).thenReturn(EXISTING_STUDENT);

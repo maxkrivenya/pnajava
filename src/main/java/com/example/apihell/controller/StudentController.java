@@ -5,6 +5,7 @@ import com.example.apihell.model.dto.MarkDTO;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.StudentService;
+import com.example.apihell.service.implementations.StudentServiceImpl;
 import com.example.apihell.service.utils.MarkDTOMapper;
 import com.example.apihell.service.utils.SkipDTOMapper;
 import com.example.apihell.service.utils.StudentDTOMapper;
@@ -25,12 +26,12 @@ import java.util.OptionalDouble;
 @Transactional
 @Validated
 public class StudentController {
-    private final StudentService studentService;
+    private final StudentServiceImpl studentService;
     private final StudentDTOMapper studentDTOMapper;
     private final MarkDTOMapper markDTOMapper;
     private final SkipDTOMapper skipDTOMapper;
 
-    public StudentController(StudentService studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
+    public StudentController(StudentServiceImpl studentService, StudentDTOMapper studentDTOMapper, MarkDTOMapper markDTOMapper, SkipDTOMapper skipDTOMapper) {
         this.studentService = studentService;
         this.studentDTOMapper = studentDTOMapper;
         this.markDTOMapper = markDTOMapper;
@@ -78,12 +79,12 @@ public class StudentController {
     }
 
     @GetMapping("/group/{id}")
-    public ResponseEntity<List<Student>> getStudentsByGroupId(@PathVariable("id") String id) {
+    public ResponseEntity<List<StudentDTO>> getStudentsByGroupId(@PathVariable("id") String id) {
         List<Student> students = studentService.getStudentsByGroupId(id);
         if (students.isEmpty()) {
-            return new ResponseEntity<>(students, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(students, HttpStatus.OK);
+            return new ResponseEntity<>(students.stream().map(studentDTOMapper::wrap).toList(), HttpStatus.OK);
         }
     }
 
@@ -92,6 +93,12 @@ public class StudentController {
         Student student = studentDTOMapper.unwrap(studentDTO);
         studentService.save(student);
         return new ResponseEntity<>(student, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value="/bulk/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Student>> createMultipleStudents(@RequestBody List<StudentDTO> studentDTOList){
+        studentDTOList.forEach(studentDTO -> studentService.save(studentDTOMapper.unwrap(studentDTO)));
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

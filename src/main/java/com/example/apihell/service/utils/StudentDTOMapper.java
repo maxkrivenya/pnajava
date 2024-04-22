@@ -31,13 +31,12 @@ public class StudentDTOMapper{
         Student student = new Student();
 
         student.setId(studentDTO.id());
-        student.setGroupId(studentDTO.group());
+        student.setGroupId(studentDTO.groupId());
         student.setName(studentDTO.name());
         student.setSurname(studentDTO.surname());
         student.setPatronim(studentDTO.patronim());
         student.setMarks(studentDTO.marks().stream().map(markDTOMapper::unwrap).toList());
         student.setSkips(studentDTO.skips().stream().map(skipDTOMapper::unwrap).toList());
-        student.setGroupId(studentDTO.group());
 
         return student;
     }
