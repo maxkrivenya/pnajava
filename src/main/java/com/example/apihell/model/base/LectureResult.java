@@ -20,6 +20,11 @@ public abstract class LectureResult implements Serializable {
 
     protected LectureResult(){}
 
+    protected LectureResult(String date, Integer value) {
+        this.date = date;
+        this.value = value;
+    }
+
     protected LectureResult(String id, String date, Integer value) {
         this.id = id;
         this.date = date;

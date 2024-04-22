@@ -3,6 +3,7 @@ package com.example.apihell.model;
 import com.example.apihell.model.base.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name="marks")
@@ -27,9 +28,26 @@ public class Mark extends LectureResult {
         super();
     }
 
+    public Mark(String date, Integer value){
+        super(date, value);
+        this.subject = new Subject();
+        this.professor = new Professor();
+    }
+
     public Mark(String id, String date, Integer value) {
         super(id,date,value);
+        this.subject = new Subject();
+        this.professor = new Professor();
     }
+
+    public Mark(String id, String date, Integer value, Student student, Professor professor, Subject subject) {
+        super(id, date, value);
+        this.student = student;
+        this.professor = professor;
+        this.subject = subject;
+    }
+
+
 
     public Student getStudent() { return student; }
 

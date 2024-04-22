@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,15 +26,25 @@ public class Student extends Person {
     @JoinColumn(name = "group-id", insertable=false, updatable=false)
     private Group group;
 
-    public Student(){}
+    public Student(){
+        this.marks = new ArrayList<>();
+        this.skips = new ArrayList<>();
+        this.group = new Group();
+    }
 
     public Student(String id, String surname, String name, String patronim) {
         super(id, surname, name, patronim);
+        this.marks = new ArrayList<>();
+        this.skips = new ArrayList<>();
+        this.group = new Group();
     }
 
     public Student(String id, String surname, String name, String patronim, String groupId) {
         super(id, surname, name, patronim);
         this.groupId = groupId;
+        this.marks = new ArrayList<>();
+        this.skips = new ArrayList<>();
+        this.group = new Group();
     }
 
     public Student(String id, String surname, String name, String patronim, String groupId, List<Mark> marks, List<Skip> skips, Group group) {

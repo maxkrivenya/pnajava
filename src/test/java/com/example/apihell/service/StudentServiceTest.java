@@ -217,8 +217,25 @@ public class StudentServiceTest {
     private CacheComponent getCacheComponent() {
         CacheComponent mock = mock(CacheComponent.class);
 
-        when(mock.get("group" + EXISTING_STUDENT.getGroupId())).thenReturn(group);
-        when(mock.get("group" + NO_STUDENT.getGroupId())).thenReturn(null);
+        //get student
+        when(mock.get(CacheComponent.STUDENT_CACHE_KEY + EXISTING_STUDENT.getId()))
+                .thenReturn(EXISTING_STUDENT);
+        when(mock.get(CacheComponent.STUDENT_CACHE_KEY + NO_STUDENT.getId()))
+                .thenReturn(null);
+
+        //get group
+        when(mock.get(CacheComponent.GROUP_CACHE_KEY + EXISTING_STUDENT.getGroupId()))
+                .thenReturn(group);
+        when(mock.get(CacheComponent.GROUP_CACHE_KEY + NO_STUDENT.getGroupId()))
+                .thenReturn(null);
+
+        //get sameSurnameLike
+        when(mock.get("sameSurnameLike" + EXISTING_STUDENT.getSurname()))
+                .thenReturn(new ArrayList<>(List.of(EXISTING_STUDENT.getSurname())));
+        when(mock.get("sameSurnameLike" + NO_STUDENT.getSurname()))
+                .thenReturn(Collections.emptyList());
+
+
         return mock;
     }
 
