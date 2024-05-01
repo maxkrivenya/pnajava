@@ -20,11 +20,11 @@ public class Subject implements Serializable {
     @Column(name = "semester-id")
     String semesterId;
 
-    @OneToMany(mappedBy ="subject",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy ="subject",cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<Mark> marks;
 
-    @OneToMany(mappedBy ="subject", cascade =CascadeType.REFRESH,fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy ="subject", cascade =CascadeType.REFRESH,fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<Skip> skips;
 

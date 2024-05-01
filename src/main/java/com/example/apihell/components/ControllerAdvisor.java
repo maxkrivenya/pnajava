@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,21 +19,19 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-
 @Slf4j
 @Validated
 @ControllerAdvice
 public class ControllerAdvisor {
-
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ObjectNode> handleExceptionServer() throws JsonProcessingException {
         log.error("error 500");
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode JSONObject = mapper.createObjectNode();
-        JSONObject.put("value", "check your request body bro");
-        return new ResponseEntity<>(JSONObject, HttpStatus.INTERNAL_SERVER_ERROR);
+        ObjectNode jsonObject = mapper.createObjectNode();
+        jsonObject.put("value", "check your request body bro");
+        return new ResponseEntity<>(jsonObject, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -52,8 +49,8 @@ public class ControllerAdvisor {
     public ResponseEntity<ObjectNode> handleIllegalArgumentException() {
         log.error("error 400");
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode JSONObject = mapper.createObjectNode();
-        JSONObject.put("value", "check your url bro");
-        return new ResponseEntity<>(JSONObject, HttpStatus.INTERNAL_SERVER_ERROR);
+        ObjectNode jsonObject = mapper.createObjectNode();
+        jsonObject.put("value", "check your url bro");
+        return new ResponseEntity<>(jsonObject, HttpStatus.BAD_REQUEST);
     }
 }

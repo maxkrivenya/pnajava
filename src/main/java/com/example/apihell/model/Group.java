@@ -28,7 +28,7 @@ public class Group implements Serializable {
     @JsonBackReference
     private List<Student> students;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
             name="exams",
             joinColumns = @JoinColumn(name = "group-id"),

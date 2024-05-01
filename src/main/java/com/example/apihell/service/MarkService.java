@@ -13,5 +13,4 @@ public interface MarkService {
 
     public Mark getMarkById(String id);
 
-    public void logCache();
 }

@@ -1,5 +1,6 @@
 package com.example.apihell.components;
 
+import com.example.apihell.service.CounterService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -11,10 +12,23 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LoggingAspect {
+    private final CounterService counterService;
     private final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+
+    public LoggingAspect(CounterService counterService) {
+        this.counterService = counterService;
+    }
 
     @Pointcut("execution(* com.example.apihell.service.*.*(..))")
     public void serviceMethods() { }
+
+    @Pointcut("execution(* com.example.apihell.controller.*.*(..))")
+    public void controllerMethods() { }
+
+    @Before("controllerMethods()")
+    public void accessCounter(){
+        logger.info("Counter = {}", counterService.incrementAndGet());
+    }
 
     @Before("serviceMethods()")
     public void logServiceMethod(JoinPoint joinPoint) {

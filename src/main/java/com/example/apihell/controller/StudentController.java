@@ -9,7 +9,10 @@ import com.example.apihell.service.implementations.StudentServiceImpl;
 import com.example.apihell.service.utils.MarkDTOMapper;
 import com.example.apihell.service.utils.SkipDTOMapper;
 import com.example.apihell.service.utils.StudentDTOMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/student")
 @Transactional
@@ -39,7 +42,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") String id) {
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") String id) {   
         Student student = studentService.getStudentById(id);
         if (student == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -128,11 +131,15 @@ public class StudentController {
     }
 
     @GetMapping(path = "/group/{groupId}/average")
-    public ResponseEntity<Double> getAverageScoreInGroup(@PathVariable("groupId") String groupId) {
+    public ResponseEntity<ObjectNode> getAverageScoreInGroup(@PathVariable("groupId") String groupId) {
         OptionalDouble averageMark = studentService.getAverageScoreInGroup(groupId);
         if(averageMark.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(averageMark.getAsDouble(), HttpStatus.OK);
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode JSONObject = mapper.createObjectNode();
+        JSONObject.put("group", groupId);
+        JSONObject.put("averageMark", averageMark.getAsDouble());
+        return new ResponseEntity<>(JSONObject, HttpStatus.OK);
     }
 }

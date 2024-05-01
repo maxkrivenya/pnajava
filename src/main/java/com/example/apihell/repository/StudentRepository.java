@@ -21,6 +21,4 @@ public interface StudentRepository extends JpaRepository<Student, String> {
         nativeQuery = true
     )
     List<String> getSameSurnameLike(String parameter);
-
-    //List<Student> getAll();
 }

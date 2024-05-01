@@ -64,9 +64,4 @@ public class ProfessorController {
         return ResponseEntity.ok("deleted professor " + id);
     }
 
-    @GetMapping(path="/cache")
-    public HttpStatus logCache(){
-        professorService.logCache();
-        return HttpStatus.NO_CONTENT;
-    }
 }

@@ -2,7 +2,6 @@ package com.example.apihell.service;
 import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Mark;
-import com.example.apihell.model.Skip;
 import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
 import com.example.apihell.repository.StudentRepository;
@@ -37,10 +36,10 @@ public class StudentServiceTest {
 
     private final static Student EXISTING_STUDENT
             = new Student("id", "Surname", "Name", "Patronim", "groupExists",
-            marks1, new ArrayList<Skip>());
+            marks1, new ArrayList<>());
     private final static Student EXISTING_STUDENT_GROUPMATE
             = new Student("id2", "Surname2", "Name2", "Patronim2", "groupExists",
-            marks2, new ArrayList<Skip>());
+            marks2, new ArrayList<>());
     private final static Student NO_STUDENT
             = new Student("no id", "no Surname", "no Name", "no Patronim", "no groupExists"
     , new ArrayList<>(), new ArrayList<>());
@@ -71,43 +70,43 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void studentExistsExpectedTrue() throws Exception {
+    public void studentExistsExpectedTrue(){
         boolean exists = studentService.studentExists(EXISTING_STUDENT.getId());
         assertTrue(exists);
     }
 
     @Test
-    public void studentExistsExpectedFalse() throws Exception {
+    public void studentExistsExpectedFalse(){
         boolean exists = studentService.studentExists(NO_STUDENT.getId());
         assertFalse(exists);
     }
 
     @Test
-    public void getStudentByIdExpectedTrue() throws Exception {
+    public void getStudentByIdExpectedTrue(){
         Student student = studentService.getStudentById(EXISTING_STUDENT.getId());
         assertEquals(EXISTING_STUDENT, student);
     }
 
     @Test
-    public void getStudentByIdExpectedFalse() throws Exception {
+    public void getStudentByIdExpectedFalse(){
         Student student = studentService.getStudentById(NO_STUDENT.getId());
         assertNull(student);
     }
 
     @Test
-    public void groupTestExpectedTrue() throws Exception {
+    public void groupTestExpectedTrue(){
         List<Student> students = studentService.getStudentsByGroupId(EXISTING_STUDENT.getGroupId());
         assertEquals(groupmates, students);
     }
 
     @Test
-    public void groupTestExpectedFalse() throws Exception {
+    public void groupTestExpectedFalse(){
         List<Student> students = studentService.getStudentsByGroupId(NO_STUDENT.getGroupId());
-        assertNull(students);
+        assertEquals(Collections.emptyList(), students);
     }
 
     @Test
-    public void saveExistingStudentExpectedTrue() throws Exception {
+    public void saveExistingStudentExpectedTrue(){
         Student student = EXISTING_STUDENT_GROUPMATE;
         Student existingStudent = studentService.getStudentById(EXISTING_STUDENT.getId());
         assertNotNull(existingStudent);
@@ -144,7 +143,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void saveNewStudentExpectedTrue() throws Exception {
+    public void saveNewStudentExpectedTrue(){
         Student student = NO_STUDENT;
         Student existingStudent = studentService.getStudentById(student.getId());
         assertNull(existingStudent);
@@ -176,10 +175,6 @@ public class StudentServiceTest {
 
         StudentRepository mock = mock(StudentRepository.class);
 
-        //studentExists
-        //when(mock.studentExists(EXISTING_STUDENT.getId())).thenReturn(true);
-        //when(mock.studentExists(NO_STUDENT.getId())).thenReturn(false);
-
         //getById
         when(mock.getStudentById(EXISTING_STUDENT.getId())).thenReturn(EXISTING_STUDENT);
         when(mock.getStudentById(NO_STUDENT.getId())).thenReturn(null);
@@ -191,18 +186,6 @@ public class StudentServiceTest {
         //save
         when(mock.save(any(Student.class))).then(returnsFirstArg());
 
-        //average mark in group
-       /*
-        when(mock.getAverageScoreInGroup(EXISTING_STUDENT.getGroupId())).thenReturn(
-                groupmates.stream()
-                .flatMap(student -> student.getMarks()
-                        .stream())
-                        .mapToDouble(Mark::getValue)
-                        .average()
-        );
-
-        when(mock.getAverageScoreInGroup(NO_STUDENT.getGroupId())).thenReturn(OptionalDouble.empty());
-*/
         //sameSurnameLike
         when(mock.getSameSurnameLike("%" + EXISTING_STUDENT.getSurname() + "%"))
                 .thenReturn(new ArrayList<>(List.of(EXISTING_STUDENT.getSurname())));
@@ -213,8 +196,7 @@ public class StudentServiceTest {
         return mock;
     }
     private GroupRepository getGroupRepository() {
-        GroupRepository mock = mock(GroupRepository.class);
-        return mock;
+        return mock(GroupRepository.class);
     }
     private CacheComponent getCacheComponent() {
         CacheComponent mock = mock(CacheComponent.class);

@@ -5,13 +5,13 @@ import com.example.apihell.model.Subject;
 import java.util.List;
 
 public interface SubjectService {
-    public List<Subject> getAllByName(String name);
 
-    public Subject getSubjectById(String id);
+    List<Subject> getAllByName(String name);
 
-    public Subject save(Subject subject);
+    Subject getSubjectById(String id);
 
-    public void deleteSubjectById(String id);
+    Subject save(Subject subject);
 
-    public void logCache();
+    void deleteSubjectById(String id);
+
 }
