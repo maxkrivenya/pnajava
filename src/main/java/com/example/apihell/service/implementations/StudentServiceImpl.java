@@ -7,6 +7,7 @@ import com.example.apihell.model.Student;
 import com.example.apihell.repository.GroupRepository;
 import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.StudentService;
+import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
         if(group == null){
             group = groupRepository.getGroupById(id);
             if(group == null){
-                return null;
+                return Collections.emptyList();
             }
             cache.put(groupKey, group);
         }

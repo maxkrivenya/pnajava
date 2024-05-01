@@ -38,7 +38,4 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.save(group);
     }
 
-    public void logCache(){
-        cache.log();
-    }
     }
