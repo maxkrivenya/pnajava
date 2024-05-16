@@ -1,9 +1,6 @@
 package com.example.apihell.model.base;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import org.springframework.context.annotation.Primary;
-
 import java.io.Serializable;
 
 @MappedSuperclass

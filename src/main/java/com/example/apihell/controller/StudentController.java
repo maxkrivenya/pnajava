@@ -4,7 +4,6 @@ import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.MarkDTO;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.model.dto.StudentDTO;
-import com.example.apihell.service.StudentService;
 import com.example.apihell.service.implementations.StudentServiceImpl;
 import com.example.apihell.service.utils.MarkDTOMapper;
 import com.example.apihell.service.utils.SkipDTOMapper;
@@ -12,10 +11,10 @@ import com.example.apihell.service.utils.StudentDTOMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.transaction.Transactional;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
-@CrossOrigin(origins = "http://localhost:5173")
-@RestController
+@CrossOrigin(origins = "*")
+@Controller
 @RequestMapping("/api/student")
 @Transactional
 @Validated
@@ -39,6 +38,19 @@ public class StudentController {
         this.studentDTOMapper = studentDTOMapper;
         this.markDTOMapper = markDTOMapper;
         this.skipDTOMapper = skipDTOMapper;
+    }
+
+    @GetMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StudentDTO> getAllStudents(@RequestBody StudentDTO studentDTO) {
+        if(studentDTO.id().isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Student student = studentService.getStudentById(studentDTO.id());
+        if(student == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        StudentDTO result = studentDTOMapper.wrap(student);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -91,7 +103,7 @@ public class StudentController {
         }
     }
 
-    @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Student> createStudent(@RequestBody StudentDTO studentDTO){
         Student student = studentDTOMapper.unwrap(studentDTO);
         studentService.save(student);
@@ -137,9 +149,9 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode JSONObject = mapper.createObjectNode();
-        JSONObject.put("group", groupId);
-        JSONObject.put("averageMark", averageMark.getAsDouble());
-        return new ResponseEntity<>(JSONObject, HttpStatus.OK);
+        ObjectNode jsonObject = mapper.createObjectNode();
+        jsonObject.put("group", groupId);
+        jsonObject.put("averageMark", averageMark.getAsDouble());
+        return new ResponseEntity<>(jsonObject, HttpStatus.OK);
     }
 }

@@ -3,7 +3,6 @@ package com.example.apihell.model;
 import com.example.apihell.model.base.LectureResult;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name="marks")

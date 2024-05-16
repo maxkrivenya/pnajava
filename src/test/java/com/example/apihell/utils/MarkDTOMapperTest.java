@@ -5,10 +5,7 @@ import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.Subject;
 import com.example.apihell.model.dto.MarkDTO;
-import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.utils.MarkDTOMapper;
-import com.example.apihell.service.utils.SkipDTOMapper;
-import com.example.apihell.service.utils.StudentDTOMapper;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,11 +1,9 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Professor;
 import com.example.apihell.model.dto.ProfessorDTO;
 import com.example.apihell.service.ProfessorService;
 import com.example.apihell.service.utils.ProfessorDTOMapper;
-import com.example.apihell.service.utils.SubjectDTOMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +18,7 @@ public class ProfessorController {
     private final ProfessorService professorService;
     private final ProfessorDTOMapper professorDTOMapper;
 
-    public ProfessorController(ProfessorService professorService, ProfessorDTOMapper professorDTOMapper, SubjectDTOMapper subjectDTOMapper) {
+    public ProfessorController(ProfessorService professorService, ProfessorDTOMapper professorDTOMapper) {
         this.professorService = professorService;
         this.professorDTOMapper = professorDTOMapper;
     }

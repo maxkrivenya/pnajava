@@ -12,5 +12,4 @@ public record StudentDTO(
         List<SkipDTO> skips
 )
 {
-
 }

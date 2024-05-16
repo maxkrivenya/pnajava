@@ -1,8 +1,6 @@
 package com.example.apihell.service.utils;
 
-import com.example.apihell.model.Student;
 import com.example.apihell.model.Subject;
-import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.model.dto.SubjectDTO;
 import org.springframework.stereotype.Service;
 

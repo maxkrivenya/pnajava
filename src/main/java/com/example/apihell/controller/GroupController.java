@@ -1,10 +1,8 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.components.LoggingAspect;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.GroupDTO;
-import com.example.apihell.service.CounterService;
 import com.example.apihell.service.GroupService;
 import com.example.apihell.service.utils.GroupDTOMapper;
 import jakarta.transaction.Transactional;

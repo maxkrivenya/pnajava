@@ -57,8 +57,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public void deleteStudentById(String id){
-        studentRepository.deleteStudentById(id);
         cache.remove(CacheComponent.STUDENT_CACHE_KEY + id);
+        studentRepository.deleteStudentById(id);
     }
 
     public Student save(Student student){

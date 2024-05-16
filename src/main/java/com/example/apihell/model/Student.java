@@ -1,9 +1,6 @@
 package com.example.apihell.model;
 import com.example.apihell.model.base.Person;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Builder;
 
 import java.util.ArrayList;
 import java.util.List;

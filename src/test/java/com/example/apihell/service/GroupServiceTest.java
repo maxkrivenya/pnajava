@@ -2,13 +2,11 @@ package com.example.apihell.service;
 import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.*;
 import com.example.apihell.repository.GroupRepository;
-import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.implementations.GroupServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,20 +35,7 @@ public class GroupServiceTest {
             1,
             "educationType"
     );
-/*
-    private final static List<Subject> subjects = new ArrayList<>(List.of(
-        new Subject("subjectId1",
-                "subjectName1",
-                "subjectFullName1",
-                "subjectSemesterId1"
-        ),
-            new Subject("subjectId2",
-                    "subjectName2",
-                    "subjectFullName2",
-                    "subjectSemesterId2"
-            )
-    ));
-*/
+
     @Before
     public void setUp() {
         groupService = new GroupServiceImpl(

@@ -9,10 +9,7 @@ import com.example.apihell.service.implementations.StudentServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.OptionalDouble;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -151,6 +148,10 @@ public class StudentServiceTest {
         assertEquals(student, savedStudent);
     }
 
+    @Test
+    public void deleteTest() {
+        studentService.deleteStudentById(EXISTING_STUDENT.getId());
+    }
 
     @Test
     public void getSameSurnameExpectedTrue(){
@@ -193,6 +194,8 @@ public class StudentServiceTest {
         when(mock.getSameSurnameLike("%" + NO_STUDENT.getSurname() + "%"))
                 .thenReturn(Collections.emptyList());
 
+
+        when(mock.findById(EXISTING_STUDENT.getId())).thenReturn(Optional.of(EXISTING_STUDENT));
         return mock;
     }
     private GroupRepository getGroupRepository() {
@@ -218,7 +221,6 @@ public class StudentServiceTest {
                 .thenReturn(new ArrayList<>(List.of(EXISTING_STUDENT.getSurname())));
         when(mock.get("sameSurnameLike" + NO_STUDENT.getSurname()))
                 .thenReturn(Collections.emptyList());
-
 
         return mock;
     }

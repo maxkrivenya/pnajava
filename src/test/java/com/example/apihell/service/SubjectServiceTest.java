@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class SubjectServiceTest {
@@ -79,6 +78,11 @@ public class SubjectServiceTest {
     }
 
     @Test
+    public void deleteTest() {
+        subjectService.deleteSubjectById(SAME_NAME_SUBJECT1.getId());
+    }
+
+    @Test
     public void saveNewSubjectExpectedTrue(){
         Subject subject = DOESNT_EXIST_SUBJECT4;
         Subject existingSubject = subjectService.getSubjectById(subject.getId());
@@ -86,11 +90,6 @@ public class SubjectServiceTest {
         Subject savedSubject = subjectService.save(subject);
         assertEquals(subject, savedSubject);
     }
-    /*
-        Subject save(Subject subject);
-
-        void deleteSubjectById(String id);
-    */
 
     private SubjectRepository getSubjectRepository() {
 
@@ -106,7 +105,7 @@ public class SubjectServiceTest {
         when(mock.getSubjectById(DOESNT_EXIST_SUBJECT4.getId())).thenReturn(null);
         when(mock.getSubjectById(noSuchIdExists)).thenReturn(null);
         when(mock.save(DOESNT_EXIST_SUBJECT4)).thenReturn(DOESNT_EXIST_SUBJECT4);
-        
+
         return mock;
     }
 

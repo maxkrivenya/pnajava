@@ -68,13 +68,10 @@ public class MarkServiceTest {
         assertNull(mark);
     }
 
-    /*
-
-    public Mark save(Mark mark);
-
-    public void deleteMarkById(String id);
-
-     */
+    @Test
+    public void deleteTest() {
+        markService.deleteMarkById(marks1.get(0).getId());
+    }
 
     private MarkRepository getMarkRepository() {
 

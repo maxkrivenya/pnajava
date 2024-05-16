@@ -1,5 +1,4 @@
 package com.example.apihell.controller;
-import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Skip;
 import com.example.apihell.model.dto.SkipDTO;
 import com.example.apihell.service.SkipService;

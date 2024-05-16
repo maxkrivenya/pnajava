@@ -1,6 +1,5 @@
 package com.example.apihell.controller;
 
-import com.example.apihell.exception.ErrorResponse;
 import com.example.apihell.model.Group;
 import com.example.apihell.model.Subject;
 import com.example.apihell.model.dto.SubjectDTO;

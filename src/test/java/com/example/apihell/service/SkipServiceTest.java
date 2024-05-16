@@ -68,13 +68,6 @@ public class SkipServiceTest {
         assertNull(skip);
     }
 
-    /*
-
-    public Skip save(Skip skip);
-
-    public void deleteSkipById(String id);
-
-     */
     private SkipRepository getSkipRepository() {
 
         SkipRepository mock = mock(SkipRepository.class);
