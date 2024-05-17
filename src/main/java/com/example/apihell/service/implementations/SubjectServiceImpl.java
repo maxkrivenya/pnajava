@@ -4,14 +4,18 @@ import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Subject;
 import com.example.apihell.repository.SubjectRepository;
 import com.example.apihell.service.SubjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
+
+    @Autowired
     private final SubjectRepository subjectRepository;
     private final CacheComponent cache;
 
+    @Autowired
     public SubjectServiceImpl(CacheComponent cache, SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
         this.cache = cache;

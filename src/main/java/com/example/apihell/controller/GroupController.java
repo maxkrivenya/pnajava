@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/group")
 @Transactional
@@ -28,7 +28,6 @@ public class GroupController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GroupDTO> getGroupById(@PathVariable("id") String id) {
-
         Group group = groupService.getGroupById(id);
         if (group == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

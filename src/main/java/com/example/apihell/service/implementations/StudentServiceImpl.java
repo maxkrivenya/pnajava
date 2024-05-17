@@ -9,6 +9,7 @@ import com.example.apihell.repository.StudentRepository;
 import com.example.apihell.service.StudentService;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,13 @@ import java.util.OptionalDouble;
 @Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
+
     private final StudentRepository studentRepository;
+
     private final GroupRepository groupRepository;
     private final CacheComponent cache;
 
+    @Autowired
     public StudentServiceImpl(CacheComponent cache, StudentRepository studentRepository, GroupRepository groupRepository) {
         this.cache = cache;
         this.studentRepository = studentRepository;
@@ -35,6 +39,10 @@ public class StudentServiceImpl implements StudentService {
             cache.put(CacheComponent.STUDENT_CACHE_KEY + id, student);
         }
         return student;
+    }
+
+    public List<Student> getAllStudents(){
+        return studentRepository.findAll();
     }
 
     public List<Student> getStudentsByGroupId(String id){

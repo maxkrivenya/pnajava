@@ -4,17 +4,21 @@ import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Mark;
 import com.example.apihell.repository.MarkRepository;
 import com.example.apihell.service.MarkService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class MarkServiceImpl implements MarkService {
+
+    @Autowired
     private final MarkRepository markRepository;
     private final CacheComponent cache;
 
+    @Autowired
     public MarkServiceImpl(CacheComponent cache, MarkRepository markRepository) {
-        this.markRepository = markRepository;
         this.cache = cache;
+        this.markRepository = markRepository;
     }
 
     public List<Mark> getMarksByStudentId(String id){

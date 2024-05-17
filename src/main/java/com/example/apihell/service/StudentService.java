@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 public interface StudentService {
+
+    List<Student> getAllStudents();
+
     Student getStudentById(String id);
 
     List<Student> getStudentsByGroupId(String id);

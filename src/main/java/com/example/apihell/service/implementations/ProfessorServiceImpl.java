@@ -5,13 +5,16 @@ import com.example.apihell.model.Professor;
 import com.example.apihell.repository.ProfessorRepository;
 import com.example.apihell.service.ProfessorService;
 import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
+    @Autowired
     private final ProfessorRepository professorRepository;
     private final CacheComponent cache;
 
+    @Autowired
     public ProfessorServiceImpl(CacheComponent cache, ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
         this.cache = cache;

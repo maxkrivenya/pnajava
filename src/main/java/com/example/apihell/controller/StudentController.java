@@ -53,6 +53,24 @@ public class StudentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/like/")
+    public ResponseEntity<List<StudentDTO>> likeStudent(@RequestBody StudentDTO studentDTO) {
+        if(studentDTO == null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
+        List<Student> allStudents = studentService.getAllStudents();
+        if(allStudents.isEmpty()) {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
+        return new ResponseEntity<>(
+                allStudents.stream()
+                        .map(studentDTOMapper::wrap)
+                        .filter(st -> st.id().contains(studentDTO.id()))
+                        .filter(st -> st.name().contains(studentDTO.name()))
+                        .filter(st -> st.surname().contains(studentDTO.surname()))
+                        .filter(st -> st.patronim().contains(studentDTO.patronim()))
+                        .filter(st -> st.groupId().contains(studentDTO.groupId()))
+                        .toList(),
+                HttpStatus.OK);
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") String id) {   
         Student student = studentService.getStudentById(id);
@@ -116,12 +134,12 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDTO> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO) {
-        if(!studentService.studentExists(id)){
+    @PutMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
+        if(!studentService.studentExists(studentDTO.id())){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);        }
         Student student = studentDTOMapper.unwrap(studentDTO);
-        student.setId(id);
+        student.setId(studentDTO.id());
         return new ResponseEntity<>(studentDTOMapper.wrap(studentService.save(student)), HttpStatus.OK);
     }
 

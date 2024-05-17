@@ -4,13 +4,17 @@ import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Group;
 import com.example.apihell.repository.GroupRepository;
 import com.example.apihell.service.GroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GroupServiceImpl implements GroupService {
+
+    @Autowired
     private final GroupRepository groupRepository;
     private final CacheComponent cache;
 
+    @Autowired
     public GroupServiceImpl(GroupRepository groupRepository, CacheComponent cache) {
         this.groupRepository = groupRepository;
         this.cache = cache;

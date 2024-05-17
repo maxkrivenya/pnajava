@@ -4,15 +4,19 @@ import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Skip;
 import com.example.apihell.repository.SkipRepository;
 import com.example.apihell.service.SkipService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class SkipServiceImpl implements SkipService {
+
+    @Autowired
     private final SkipRepository skipRepository;
     private final CacheComponent cache;
 
+    @Autowired
     public SkipServiceImpl(CacheComponent cache, SkipRepository skipRepository) {
         this.skipRepository = skipRepository;
         this.cache = cache;
