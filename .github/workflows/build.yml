@@ -51,3 +51,10 @@ jobs:
         with:
           push: true
           tags: maxkrivenya/pnajava:latest
+  
+  deploy:
+    runs-on: ubuntu-latest 
+    steps:
+     - run: curl https://api.render.com/deploy/srv-cp5o704f7o1s739jaj20?key=IBiIW1MAnRs
+  
+  
