@@ -17,4 +17,4 @@ WORKDIR /apihell/service
 EXPOSE 8080
 
 #ENTRYPOINT ["java", "-jar", "/apihell/service/Pnajava.jar"]
-ENTRYPOINT ["java", "-jar", "/apihell/service/ApiHell-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/target/ApiHell-0.0.1-SNAPSHOT.jar"]
