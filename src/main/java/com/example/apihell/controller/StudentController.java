@@ -40,19 +40,6 @@ public class StudentController {
         this.skipDTOMapper = skipDTOMapper;
     }
 
-    @GetMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDTO> getAllStudents(@RequestBody StudentDTO studentDTO) {
-        if(studentDTO.id().isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Student student = studentService.getStudentById(studentDTO.id());
-        if(student == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        StudentDTO result = studentDTOMapper.wrap(student);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
     @PostMapping(value = "/like/{id}")
     public ResponseEntity<List<StudentDTO>> likeStudent(@PathVariable int id, @RequestBody StudentDTO studentDTO) {
         if(studentDTO == null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
@@ -77,6 +64,29 @@ public class StudentController {
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
 
     }
+
+    @PutMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
+        if(!studentService.studentExists(studentDTO.id())){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);        }
+        Student student = studentDTOMapper.unwrap(studentDTO);
+        student.setId(studentDTO.id());
+        return new ResponseEntity<>(studentDTOMapper.wrap(studentService.save(student)), HttpStatus.OK);
+    }
+
+    @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Student> createStudent(@RequestBody StudentDTO studentDTO){
+        Student student = studentDTOMapper.unwrap(studentDTO);
+        studentService.save(student);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
+        studentService.deleteStudentById(id);
+        return ResponseEntity.ok("deleted student " + id);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") String id) {   
@@ -128,32 +138,10 @@ public class StudentController {
         }
     }
 
-    @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> createStudent(@RequestBody StudentDTO studentDTO){
-        Student student = studentDTOMapper.unwrap(studentDTO);
-        studentService.save(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
-    }
-
     @PostMapping(value="/bulk/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Student>> createMultipleStudents(@RequestBody List<StudentDTO> studentDTOList){
         studentDTOList.forEach(studentDTO -> studentService.save(studentDTOMapper.unwrap(studentDTO)));
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PutMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
-        if(!studentService.studentExists(studentDTO.id())){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);        }
-        Student student = studentDTOMapper.unwrap(studentDTO);
-        student.setId(studentDTO.id());
-        return new ResponseEntity<>(studentDTOMapper.wrap(studentService.save(student)), HttpStatus.OK);
-    }
-
-    @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
-        studentService.deleteStudentById(id);
-        return ResponseEntity.ok("deleted student " + id);
     }
 
     @GetMapping(path="/sameSurname/{surnameLike}")

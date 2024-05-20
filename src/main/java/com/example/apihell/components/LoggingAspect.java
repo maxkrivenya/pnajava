@@ -16,7 +16,11 @@ public class LoggingAspect {
     @Pointcut("execution(* com.example.apihell.service.*.*(..))")
     public void serviceMethods() { }
 
-    @Before("serviceMethods()")
+    @Pointcut("execution(* com.example.apihell.controller.*.*(..))")
+    public void controllerMethods() { }
+
+    //@Before("serviceMethods()")
+    @Before("controllerMethods()")
     public void logServiceMethod(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getTarget().getClass().getName();

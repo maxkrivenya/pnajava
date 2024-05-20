@@ -1,9 +1,7 @@
 package com.example.apihell.controller;
 
 import com.example.apihell.model.Professor;
-import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.ProfessorDTO;
-import com.example.apihell.model.dto.StudentDTO;
 import com.example.apihell.service.ProfessorService;
 import com.example.apihell.service.utils.ProfessorDTOMapper;
 import jakarta.transaction.Transactional;
@@ -60,14 +58,14 @@ public class ProfessorController {
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
-    @PostMapping(value="/new/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Professor> createProfessor(@RequestBody ProfessorDTO professorDTO){
         Professor professor = professorDTOMapper.unwrap(professorDTO);
         professorService.save(professor);
         return new ResponseEntity<>(professor, HttpStatus.CREATED);
     }
 
-    @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfessorDTO> updateProfessor(@PathVariable String id, @RequestBody Professor professor) {
         Professor updatedProfessor  = professorService.getProfessorById(id);
         if(updatedProfessor == null){
@@ -84,10 +82,9 @@ public class ProfessorController {
         return new ResponseEntity<>(professorDTOMapper.wrap(updatedProfessor), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deleteProfessorById(@PathVariable(name="id") String id) {
         professorService.deleteProfessorById(id);
         return ResponseEntity.ok("deleted professor " + id);
     }
-
 }
