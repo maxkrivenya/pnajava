@@ -82,7 +82,7 @@ public class StudentController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<String> deleteGroupById(@PathVariable(name="id") String id) {
+    public ResponseEntity<String> deleteStudentById(@PathVariable(name="id") String id) {
         studentService.deleteStudentById(id);
         return ResponseEntity.ok("deleted student " + id);
     }
