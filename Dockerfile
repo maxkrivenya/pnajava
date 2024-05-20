@@ -4,15 +4,10 @@ ENV TZ="Europe/Minsk"
 RUN groupadd myra && useradd myra -g myra
 RUN install -d -m 0755 -o myra -g myra /apihell/service
 
-
-#COPY . .
-#RUN maven package
-
-COPY target/Pnajava.jar /apihell/service/
-
-WORKDIR /apihell/service
+COPY ./Pnajava.jar /apihell/service
 
 USER myra
+WORKDIR /apihell/service
 
 EXPOSE 8080
 
