@@ -16,6 +16,7 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - run: mvn package
+      - run: cp Pnajava.jar ./target/
   #    - run: mkdir staging && mv target/yb-workload-sim.jar target/yb-workload-sim-${{ env.build-number }}.jar && cp target/*.jar staging
       - uses: actions/upload-artifact@v3
         with:
