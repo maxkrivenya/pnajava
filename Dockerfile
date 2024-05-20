@@ -5,6 +5,7 @@ RUN groupadd myra && useradd myra -g myra
 RUN install -d -m 0755 -o myra -g myra /apihell/service
 
 #COPY ./target/ApiHell-0.0.1-SNAPSHOT.jar /apihell/service/Pnajava.jar
+#COPY ./target/ApiHell-0.0.1-SNAPSHOT.jar /apihell/service/Pnajava.jar
 COPY .mvn .mvn 
 COPY mvnw .
 COPY pom.xml .
