@@ -30,7 +30,7 @@ jobs:
    #       title: "Automated Build ${{ github.run_number }}"
    #       prerelease: true
    #       files: staging/*.jar
-  docker:
+  bzdyak:
     runs-on: ubuntu-latest
     steps:
       -
