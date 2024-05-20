@@ -14,6 +14,7 @@ public class ProfessorDTOMapper{
 
     public ProfessorDTO wrap(Professor professor){
         return new ProfessorDTO(
+                professor.getId(),
                 professor.getSurname(),
                 professor.getName(),
                 professor.getPatronim(),
@@ -26,6 +27,7 @@ public class ProfessorDTOMapper{
     public Professor unwrap(ProfessorDTO professorDTO){
         Professor professor = new Professor();
 
+        professor.setId(professorDTO.id());
         professor.setName(professorDTO.name());
         professor.setSurname(professorDTO.surname());
         professor.setPatronim(professorDTO.patronim());

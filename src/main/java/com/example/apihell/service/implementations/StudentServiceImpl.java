@@ -42,7 +42,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public List<Student> getAllStudents(){
-        return studentRepository.findAll();
+        String cacheKey = CacheComponent.STUDENT_CACHE_KEY + CacheComponent.GET_ALL;
+        List<Student> students = (List<Student>) cache.get(cacheKey);
+        if(students == null){
+            students = studentRepository.findAll();
+            cache.put(cacheKey, students);
+        }
+        return students;
     }
 
     public List<Student> getStudentsByGroupId(String id){
@@ -73,6 +79,7 @@ public class StudentServiceImpl implements StudentService {
         String cacheKey = CacheComponent.STUDENT_CACHE_KEY + student.getId();
         Student existing = (Student)cache.get(cacheKey);
         cache.remove(cacheKey);
+        cache.remove(CacheComponent.STUDENT_CACHE_KEY + CacheComponent.GET_ALL);
         if(existing==null){
             existing = studentRepository.getStudentById(student.getId());
         }

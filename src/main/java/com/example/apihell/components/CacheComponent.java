@@ -16,6 +16,7 @@ public class CacheComponent {
     public static final String MARK_CACHE_KEY       = "mark";
     public static final String SKIP_CACHE_KEY       = "skip";
     public static final String GROUP_CACHE_KEY      = "group";
+    public static final String GET_ALL              = "getAll";
 
     private static final Map<String, Object> CACHE = new LinkedHashMap<>(MAX_CACHE_SIZE, 0.75f, true) {
         @Override

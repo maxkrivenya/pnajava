@@ -2,10 +2,13 @@ package com.example.apihell.service.implementations;
 
 import com.example.apihell.components.CacheComponent;
 import com.example.apihell.model.Group;
+import com.example.apihell.model.Professor;
 import com.example.apihell.repository.GroupRepository;
 import com.example.apihell.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -19,6 +22,16 @@ public class GroupServiceImpl implements GroupService {
         this.groupRepository = groupRepository;
         this.cache = cache;
 
+    }
+
+    public List<Group> findAll(){
+        String cacheKey = CacheComponent.GROUP_CACHE_KEY + CacheComponent.GET_ALL;
+        List<Group> groups = (List<Group>) cache.get(cacheKey);
+        if(groups == null){
+            groups = groupRepository.findAll();
+            cache.put(cacheKey, groups);
+        }
+        return groups;
     }
 
     public Group getGroupById(String id){

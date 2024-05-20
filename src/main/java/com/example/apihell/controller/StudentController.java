@@ -53,21 +53,28 @@ public class StudentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/like/")
-    public ResponseEntity<List<StudentDTO>> likeStudent(@RequestBody StudentDTO studentDTO) {
+    @PostMapping(value = "/like/{id}")
+    public ResponseEntity<List<StudentDTO>> likeStudent(@PathVariable int id, @RequestBody StudentDTO studentDTO) {
         if(studentDTO == null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
         List<Student> allStudents = studentService.getAllStudents();
         if(allStudents.isEmpty()) {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
-        return new ResponseEntity<>(
-                allStudents.stream()
-                        .map(studentDTOMapper::wrap)
-                        .filter(st -> st.id().contains(studentDTO.id()))
-                        .filter(st -> st.name().contains(studentDTO.name()))
-                        .filter(st -> st.surname().contains(studentDTO.surname()))
-                        .filter(st -> st.patronim().contains(studentDTO.patronim()))
-                        .filter(st -> st.groupId().contains(studentDTO.groupId()))
-                        .toList(),
-                HttpStatus.OK);
+        List<StudentDTO> returnValue =  allStudents.stream()
+                .map(studentDTOMapper::wrap)
+                .filter(st -> st.id().contains(studentDTO.id()))
+                .filter(st -> st.name().contains(studentDTO.name()))
+                .filter(st -> st.surname().contains(studentDTO.surname()))
+                .filter(st -> st.patronim().contains(studentDTO.patronim()))
+                .filter(st -> st.groupId().contains(studentDTO.groupId()))
+                .toList();
+        if(returnValue.isEmpty()){return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
+        if(returnValue.size() < 5){return new ResponseEntity<>(returnValue, HttpStatus.OK);}
+        if(returnValue.size() < 5*(id + 1)){
+            returnValue = returnValue.subList(returnValue.size() - 5, returnValue.size());
+        }else{
+            returnValue = returnValue.subList(5 * id, (5 * id) + 5);
+        }
+
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
 
     }
 

@@ -1,8 +1,10 @@
 package com.example.apihell.controller;
 
 import com.example.apihell.model.Group;
+import com.example.apihell.model.Professor;
 import com.example.apihell.model.Student;
 import com.example.apihell.model.dto.GroupDTO;
+import com.example.apihell.model.dto.ProfessorDTO;
 import com.example.apihell.service.GroupService;
 import com.example.apihell.service.utils.GroupDTOMapper;
 import jakarta.transaction.Transactional;
@@ -50,6 +52,35 @@ public class GroupController {
     public ResponseEntity<GroupDTO> createGroup(@RequestBody Group group){
         Group savedGroup  = groupService.save(group);
         return new ResponseEntity<>(groupDTOMapper.wrap(savedGroup), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/like/{page}")
+    public ResponseEntity<List<GroupDTO>> likeStudent(@PathVariable int page, @RequestBody GroupDTO groupDTO) {
+        if(groupDTO == null){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
+        List<Group> allProfessors = groupService.findAll();
+        if(allProfessors.isEmpty()) {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
+        List<GroupDTO> returnValue =  allProfessors.stream()
+                .map(groupDTOMapper::wrap)
+                .filter(st -> st.id().contains(groupDTO.id()))
+                .filter(st -> st.faculty().contains(groupDTO.faculty()))
+                .filter(st -> st.degree().contains(groupDTO.degree()))
+                .filter(st -> st.educationType().contains(groupDTO.educationType()))
+                .toList();
+        if(returnValue.isEmpty()){return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
+
+        if(groupDTO.semesterNumber() != null){
+            returnValue = returnValue.stream().filter(st -> st.semesterNumber().equals(groupDTO.semesterNumber())).toList();
+        }
+
+        if(returnValue.size() < 5){return new ResponseEntity<>(returnValue, HttpStatus.OK);}
+
+        if(returnValue.size() < 5*(page + 1)){
+            returnValue = returnValue.subList(returnValue.size() - 5, returnValue.size());
+        }else{
+            returnValue = returnValue.subList(5 * page, (5 * page) + 5);
+        }
+
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
     @PutMapping(value="/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

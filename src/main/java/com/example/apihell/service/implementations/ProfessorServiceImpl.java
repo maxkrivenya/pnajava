@@ -8,6 +8,8 @@ import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
     @Autowired
@@ -18,6 +20,16 @@ public class ProfessorServiceImpl implements ProfessorService {
     public ProfessorServiceImpl(CacheComponent cache, ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
         this.cache = cache;
+    }
+
+    public List<Professor> getAllProfessors(){
+        String cacheKey = CacheComponent.PROFESSOR_CACHE_KEY + CacheComponent.GET_ALL;
+        List<Professor> professors = (List<Professor>) cache.get(cacheKey);
+        if(professors == null){
+            professors = professorRepository.findAll();
+            cache.put(cacheKey, professors);
+        }
+        return professors;
     }
 
     @Nullable
