@@ -12,11 +12,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
-      - run: mvn clean package -DskipTests
-      - run: mkdir staging && mv target/yb-workload-sim.jar target/yb-workload-sim-${{ env.build-number }}.jar && cp target/*.jar staging
+      - run: mvn package
+  #    - run: mkdir staging && mv target/yb-workload-sim.jar target/yb-workload-sim-${{ env.build-number }}.jar && cp target/*.jar staging
       - uses: actions/upload-artifact@v3
         with:
           name: Pnajava
