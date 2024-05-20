@@ -8,7 +8,7 @@ RUN install -d -m 0755 -o myra -g myra /apihell/service
 #COPY . .
 #RUN maven package
 
-COPY ./target/Pnajava.jar /apihell/service/
+COPY /target/Pnajava.jar /apihell/service/
 
 WORKDIR /apihell/service
 
