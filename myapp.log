@@ -4525,3 +4525,55 @@ Consider the following:
 	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
 	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
 
+2024-05-20T14:22:06.137+03:00  INFO 23535 --- [restartedMain] com.example.apihell.ApiHellApplication   : Starting ApiHellApplication using Java 21.0.2 with PID 23535 (/home/myra/pnajava/target/classes started by myra in /home/myra/pnajava)
+2024-05-20T14:22:06.139+03:00  INFO 23535 --- [restartedMain] com.example.apihell.ApiHellApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-05-20T14:22:06.180+03:00  INFO 23535 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-05-20T14:22:06.180+03:00  INFO 23535 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-05-20T14:22:06.821+03:00  INFO 23535 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-20T14:22:06.866+03:00  INFO 23535 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 6 JPA repository interfaces.
+2024-05-20T14:22:07.095+03:00  WARN 23535 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-05-20T14:22:07.133+03:00  WARN 23535 --- [restartedMain] o.s.xml.DocumentBuilderFactoryUtils      : http://javax.xml.XMLConstants/property/accessExternalDTD property not supported by org.apache.xerces.jaxp.DocumentBuilderFactoryImpl
+2024-05-20T14:22:07.134+03:00  WARN 23535 --- [restartedMain] o.s.xml.DocumentBuilderFactoryUtils      : http://javax.xml.XMLConstants/property/accessExternalSchema property not supported by org.apache.xerces.jaxp.DocumentBuilderFactoryImpl
+2024-05-20T14:22:07.153+03:00  INFO 23535 --- [restartedMain] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2024-05-20T14:22:07.539+03:00  INFO 23535 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-05-20T14:22:07.541+03:00  INFO 23535 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : An older version [1.2.36] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2024-05-20T14:22:07.541+03:00  INFO 23535 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.36] using APR version [1.7.3].
+2024-05-20T14:22:07.544+03:00  INFO 23535 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 3.1.1 30 May 2023]
+2024-05-20T14:22:07.549+03:00  INFO 23535 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-20T14:22:07.550+03:00  INFO 23535 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.18]
+2024-05-20T14:22:07.577+03:00  INFO 23535 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-20T14:22:07.577+03:00  INFO 23535 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1377 ms
+2024-05-20T14:22:07.775+03:00  INFO 23535 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-20T14:22:07.841+03:00  INFO 23535 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-05-20T14:22:07.887+03:00  INFO 23535 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-05-20T14:22:08.021+03:00  INFO 23535 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-20T14:22:08.037+03:00  INFO 23535 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-05-20T14:22:10.229+03:00  INFO 23535 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@34828a31
+2024-05-20T14:22:10.231+03:00  INFO 23535 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-05-20T14:22:10.289+03:00  WARN 23535 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-05-20T14:22:10.945+03:00  INFO 23535 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-20T14:22:12.339+03:00  INFO 23535 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-20T14:22:12.910+03:00  INFO 23535 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-05-20T14:22:13.109+03:00  WARN 23535 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-20T14:22:14.050+03:00  WARN 23535 --- [restartedMain] o.s.x.transform.TransformerFactoryUtils  : http://javax.xml.XMLConstants/property/accessExternalDTD property not supported by net.sf.saxon.TransformerFactoryImpl
+2024-05-20T14:22:14.050+03:00  WARN 23535 --- [restartedMain] o.s.x.transform.TransformerFactoryUtils  : http://javax.xml.XMLConstants/property/accessExternalStylesheet property not supported by net.sf.saxon.TransformerFactoryImpl
+2024-05-20T14:22:14.095+03:00  INFO 23535 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-05-20T14:22:14.141+03:00  INFO 23535 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-05-20T14:22:14.150+03:00  INFO 23535 --- [restartedMain] o.s.s.config.TaskSchedulerRouter         : No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2024-05-20T14:22:14.153+03:00  INFO 23535 --- [restartedMain] com.example.apihell.ApiHellApplication   : Started ApiHellApplication in 8.39 seconds (process running for 9.053)
+2024-05-20T14:23:00.543+03:00  INFO 23535 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-20T14:23:00.543+03:00  INFO 23535 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-20T14:23:00.545+03:00  INFO 23535 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-05-20T14:23:00.673+03:00  INFO 23535 --- [http-nio-8080-exec-2] c.e.apihell.components.LoggingAspect     : Service method invoked - Class: com.example.apihell.service.CounterService, Method: incrementAndGet, Args: []
+2024-05-20T14:23:00.674+03:00  INFO 23535 --- [http-nio-8080-exec-2] c.e.apihell.components.LoggingAspect     : Counter = 1
+2024-05-20T14:23:00.674+03:00  INFO 23535 --- [http-nio-8080-exec-2] c.e.apihell.components.LoggingAspect     : Service method invoked - Class: com.example.apihell.service.implementations.StudentServiceImpl, Method: getAllStudents, Args: []
+2024-05-20T14:23:43.130+03:00  INFO 23535 --- [http-nio-8080-exec-4] c.e.apihell.components.LoggingAspect     : Service method invoked - Class: com.example.apihell.service.CounterService, Method: incrementAndGet, Args: []
+2024-05-20T14:23:43.130+03:00  INFO 23535 --- [http-nio-8080-exec-4] c.e.apihell.components.LoggingAspect     : Counter = 2
+2024-05-20T14:23:43.131+03:00  INFO 23535 --- [http-nio-8080-exec-4] c.e.apihell.components.LoggingAspect     : Service method invoked - Class: com.example.apihell.service.implementations.ProfessorServiceImpl, Method: getAllProfessors, Args: []
+2024-05-20T14:23:48.413+03:00  INFO 23535 --- [http-nio-8080-exec-6] c.e.apihell.components.LoggingAspect     : Service method invoked - Class: com.example.apihell.service.CounterService, Method: incrementAndGet, Args: []
+2024-05-20T14:23:48.413+03:00  INFO 23535 --- [http-nio-8080-exec-6] c.e.apihell.components.LoggingAspect     : Counter = 3
+2024-05-20T14:23:48.413+03:00  INFO 23535 --- [http-nio-8080-exec-6] c.e.apihell.components.LoggingAspect     : Service method invoked - Class: com.example.apihell.service.implementations.GroupServiceImpl, Method: findAll, Args: []
+2024-05-20T14:23:52.629+03:00  INFO 23535 --- [SpringApplicationShutdownHook] .s.m.e.c.DefaultEventPublicationRegistry : No publications outstanding!
+2024-05-20T14:23:52.636+03:00  INFO 23535 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-05-20T14:23:52.641+03:00  INFO 23535 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-05-20T14:23:52.970+03:00  INFO 23535 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
